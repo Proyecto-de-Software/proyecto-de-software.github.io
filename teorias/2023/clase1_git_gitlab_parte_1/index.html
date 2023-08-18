@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Git - Gitlab - Parte 1</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/league.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/base16/zenburn.css" />
+
+    <link rel="stylesheet" href="./_assets/proyecto.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">
+# Proyecto de Software
+
+
+## Cursada 2023
+</script></section><section  data-markdown><script type="text/template"># Sin importar el camino elegido
+
+[Roadmaps del desarrollo](https://roadmap.sh/)</script></section><section  data-markdown><script type="text/template"># Si frontend
+
+![frontend-roadmap](images/frontend-roadmap.png)
+</script></section><section  data-markdown><script type="text/template"># O backend
+
+![backend-roadmap](images/backend-roadmap.png)
+</script></section><section  data-markdown><script type="text/template">
+# ¿Qué veremos hoy?
+
+- Git: sistema de control de versiones.
+- Gitlab: aplicación para administrar repositorios git y proyectos.
+- Infraestructura de trabajo de la cátedra.
+</script></section><section  data-markdown><script type="text/template">
+![git](images/git.png)
+</script></section><section  data-markdown><script type="text/template"># Encuesta inicial
+
+¿Usan o usaron **git** anteriormente?
+
+* **A** - Si, lo uso diariamente por trabajo o facultad.
+* **B** - Si, ocasionalmente.
+* **C** - No, pero sé que es.
+* **D** - No sé que es y nunca lo usé.
+</script></section><section ><section data-markdown><script type="text/template"># ¿Qué es un sistema de control de versiones?
+
+> Es un sistema que registra los cambios realizados a nuestros archivos en el tiempo, de modo de poder volver a una versión anterior en cualquier momento.
+
+![vcs](images/version-control-system.png)
+</script></section><section data-markdown><script type="text/template"># Antes: Sin sistema de control de versiones
+
+* La única forma era generando manualmente copias de los archivos y carpetas.
+
+![no-vcs](images/no-version-control-system.png)
+</script></section><section data-markdown><script type="text/template"># Sistema de control de versiones local
+
+* Se comenzaron a desarrollar utilidades para manejar las revisiones localmente en una DB.
+
+![local-vcs](images/local-version-control-system.png)
+
+* Todas las operaciones son locales, compartir el trabajo con otro desarrollador era difícil. 
+</script></section><section data-markdown><script type="text/template"># Sistema de control de versiones centralizado
+
+* En lugar de tener las revisiones en el disco del desarrollador, se tiene todo en un servidor centralizado. 
+
+![local-vcs](images/centralized-version-control-system.png)
+
+* Los desarrolladores deben descargar y subir las nuevas versiones para compartirlas. 
+</script></section><section data-markdown><script type="text/template"># Sistema de control de versiones distribuido
+
+* Cada desarrollador tiene una copia de todo el repositorio, cada uno trabaja a su ritmo. 
+
+![local-vcs](images/distributed-version-control-system.png)
+
+* Como la mayoría de las operaciones son ahora locales y no necesitan red, la velocidad de desarrollo se incrementó.
+</script></section></section><section ><section data-markdown><script type="text/template"># ¿Qué es Git?
+
+Git es un sistemas de control de versiones distribuido libre diseñado para manejar proyectos con velocidad y eficiencia.
+
+![git_dist](images/git-distribuido.png)
+</script></section><section data-markdown><script type="text/template">
+# Características
+
+* Snapshots, no diferencias
+
+* Casi todas las operaciones son locales
+
+* Tiene integridad
+</script></section><section data-markdown><script type="text/template">
+# Snapshots, no diferencias
+
+* La mayoría de los demás sistemas almacenan la información como una **lista de cambios** en los archivos.
+* Git modela sus datos más como un **conjunto de instantáneas** (snapshots) de un mini sistema de archivos.
+* Por eficiencia, si un archivo no cambió, no vuelve a guardarlo, sólo **referencia** al archivo ya almacenado.</script></section><section data-markdown><script type="text/template">
+# Snapshots, no diferencias
+
+![git_snapshots](images/git-snapshots.png)</script></section><section data-markdown><script type="text/template">
+# Casi todas las operaciones son locales
+
+* La mayoría de las operaciones en Git sólo necesitan archivos y recursos locales para operar.
+* Para navegar por la historia del proyecto, Git no necesita buscarla en el servidor.
+</script></section><section data-markdown><script type="text/template">
+# Tiene integridad
+
+* Todo en Git es verificado mediante una suma de comprobación antes de ser almacenado, y es identificado a partir de ese momento mediante dicho checksum.
+* Esto significa que es imposible cambiar los contenidos de cualquier archivo o directorio sin que Git lo sepa.
+
+* Ejemplo (**SHA-1 de 40 caracteres**):
+
+		ea36b870f9a0e1e6439758b6e681bd329a04db3d
+</script></section></section><section ><section data-markdown><script type="text/template">
+# Instalación de GIT
+
+Linux (Debian/Ubuntu)
+	
+	# apt-get install git
+
+Linux (Arch)
+
+	# pacman -S git
+
+Linux (Fedora)
+			
+	# yum install git
+
+* Mac: https://git-scm.com/download/mac
+* Windows: https://git-scm.com/download/win
+* Integrado con VScode: https://code.visualstudio.com/Docs/editor/versioncontrol
+* Integrado con Eclipse: http://www.eclipse.org/egit/
+</script></section><section data-markdown><script type="text/template"># Obteniendo un repositorio git
+    
+Inicializar un repositorio en un directorio existente
+
+	$ git init
+
+Clonando un repositorio existente
+
+	$ git clone gitlab@git.proyecto.linti.unlp.edu.ar/grupo.git
+	</script></section><section data-markdown><script type="text/template">
+# Directorio .git/
+
+* Cada repositorio Git es almacenado en la carpeta **.git** del directorio en el cual el repositorio ha sido creado.
+* Este directorio contiene la historia completa del repositorio. El archivo **.git/config** contiene la configuración local del repositorio.
+</script></section><section data-markdown><script type="text/template">
+# Configuración del usuario
+
+Configurá tu usuario y mail para Git mediante los siguientes comandos:
+
+	# Configura el usuario que será usado por git
+	# Obviamente deberías usar tu nombre
+	git config --global user.name "John Doe"
+	# Lo mismo para el correo electrónico
+	git config --global user.email "jdoe@example.com"
+</script></section><section data-markdown><script type="text/template">
+# Operaciones Locales
+
+Git tiene tres estados principales en los que se pueden encontrar tus archivos: confirmado (committed), modificado (modified), y preparado (staged). 
+ 
+![git_op](images/git-local-operations.png)
+</script></section><section data-markdown><script type="text/template">
+# Comprobando el estado del directorio de trabajo
+
+	$ git status
+	# On branch master
+	nothing to commit (working directory clean)
+
+![git_status_log](images/git-status-log.png)
+</script></section><section data-markdown><script type="text/template">
+# Creando y modificando contenido
+
+	# Creamos contenido
+	# Agregamos todo (archivos y directorios) al repositorio
+	$ git add .
+	# Hacemos un commit al repositorio
+	$ git commit -m "Initial commit"
+	# Muestra el log (un historial)
+	$ git log
+
+![git_stage](images/git-stage-commit.png)
+</script></section><section data-markdown><script type="text/template"># Ciclo de vida de commits
+
+![git_add](images/git-add.png)
+</script></section><section data-markdown><script type="text/template">
+# Viendo las modificaciones
+
+El comando **git diff** permite al usuario, entre otras cosas, ver los cambios hechos desde el último commit.
+
+	# Mirá los cambios con el comando diff
+	git diff
+	# Comitea con -a sube los cambios de los archivos
+	# pero no agrega automaticamente nuevos archivos
+	git commit -a -m "Hay nuevos cambios"
+ 
+ Comparar commits
+
+	git diff df2db72c 18e19e7a
+ 
+ Comparar ramas
+
+	git diff develop..master</script></section><section data-markdown><script type="text/template">
+# Ciclo de vida de un archivo localmente
+
+![git_life](images/git-file-lifecycle.png)
+</script></section></section><section ><section data-markdown><script type="text/template">
+# Repositorios Remotos
+
+- Son repositorios externos (ejemplo: de coworker, gitlab, github, etc).
+- Puede haber **n** remotos para un repositorio git.
+
+![git_remotes](images/git-remotes.png)
+</script></section><section data-markdown><script type="text/template"># Trabajando con repositorios remotos
+
+Viendo los remotos actuales:
+
+	$ git remote
+	origin
+
+	$ git remote -v
+	origin  git@gitlab.com:proyecto/www.git (fetch)
+	origin  git@gitlab.com:proyecto/www.git (push)
+
+Agregando un nuevo repositorio remoto:
+
+	$ git remote add shortname url
+</script></section><section data-markdown><script type="text/template"># Trabajando con repositorios remotos
+
+Obteniendo cambios del remoto:
+
+	$ git fetch remote
+	$ git pull remote
+
+Subiendo cambios al remoto
+
+	$ git push origin master
+</script></section><section data-markdown><script type="text/template">
+# El workflow completo
+
+![git_work](images/git-workflow.png)
+</script></section></section><section  data-markdown><script type="text/template">
+
+# Referencias de git:
+
+* Git: http://git-scm.com/
+* Libro: Pro Git: http://git-scm.com/book
+* Libro: Ry's Git Tutorial: https://www.smashwords.com/books/view/498426
+* Git Cheatsheet (Github): https://education.github.com/git-cheat-sheet-education.pdf
+* Git Cheatsheet en Español: https://github.com/arslanbilal/git-cheat-sheet/blob/master/other-sheets/git-cheat-sheet-es.md
+* Git Cheatsheet interactivo: http://www.ndpsoftware.com/git-cheatsheet.html
+</script></section><section  data-markdown><script type="text/template"># ¿Alguna consulta hasta acá de git?
+## Continúa en video...</script></section><section ><section data-markdown><script type="text/template">
+![gitlab](images/gitlab_logo.png)
+</script></section><section data-markdown><script type="text/template">
+# ¿Qué es GitLab?
+
+- GitLab es una aplicación opensource que nos permite administrar repositorios en git mediante una interfaz web.
+- Es un clon de http://github.com y es una herramienta muy potente para el desarrollo.
+</script></section><section data-markdown><script type="text/template">
+# Antes que nada ...
+
+- GitLab utiliza **claves SSH** para permitir trabajar con los respositorios.
+- Las claves SSH son utlizadas para establecer una conexión segura entre los repositorios y GitLab. 
+- Con lo cual lo primero que necesitamos hacer es subir nuestra clave **pública** al proyecto.
+- Si no realizamos esto el usuario no podrá subir los cambios realizado en su repositorio local al proyecto de GitLab!!
+</script></section><section data-markdown><script type="text/template">
+# Generando nuevas claves SSH
+
+	ssh-keygen -t rsa -C "your_email@example.com"
+</script></section><section data-markdown><script type="text/template">
+# Agregando la clave SSH
+
+- Ir a a la sección de claves SSh de su perfil del usuario
+
+	https://gitlab.catedras.linti.unlp.edu.ar/-/profile/keys
+
+- Agregar la clave pública
+		
+		.ssh/id_rsa.pub
+
+- Se va a utilizar para identificar y autenticar cada interacción con el servidor
+</script></section><section data-markdown><script type="text/template">
+# Configurando el usuario del repositorio
+
+	git config --global user.name "John Doe"
+	git config --global user.email "johndoe@mail.com"
+</script></section><section data-markdown><script type="text/template">
+# Inicializando el repositorio Git de nuestro proyecto GitLab
+    
+- En GitLab inicialmente tenemos un proyecto que no tiene un repositorio local asignado. 
+- Tenemos dos opciones:
+	- Crear un repositorio vacío y enlazarlo al repositorio local de nuestro proyecto en GitLab.
+	- Utilizar un repositorio ya creado y sólo debemos asignarlo al proyecto de GitLab.
+</script></section><section data-markdown><script type="text/template">
+# Crear un repositorio vacío
+
+Es la opción más común.
+
+	mkdir grupo_1
+	cd grupo_1
+	git init
+	touch README
+	git add README
+	git commit -m 'first commit'
+	git remote add origin gitlab@proyecto.linti.unlp.edu.ar:/grupo_1.git
+	git push -u origin master
+</script></section><section data-markdown><script type="text/template">
+# Utilizando GitLab
+
+Teniendo nuestro respositorio git creado, podemos empezar a utilizarlo y en GitLab tener:
+
+- El último estado de nuestros archivos.
+
+- Seguimiento de los **commits** realizados y las diferencias aplicadas.
+
+- Una red con el crecimiento de las versiones y bifurcaciones que va tomando nuestro repositorio.
+
+- Gráficos con estadísticas de uso.
+
+- Creación y seguimiento de tareas (o **issues**) relativas al proyecto. 
+
+- Una **wiki** con información propia de cada proyecto.
+</script></section><section data-markdown><script type="text/template">
+# Demo
+* https://gitlab.catedras.linti.unlp.edu.ar/
+</script></section><section data-markdown><script type="text/template">
+# Infraestructura de trabajo de la cátedra
+</script></section><section data-markdown><script type="text/template">
+![infra](images/infraestructura_proyecto.png)
+</script></section></section><section  data-markdown><script type="text/template"># Consultas finales</script></section><section  data-markdown><script type="text/template"># Fin
+</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

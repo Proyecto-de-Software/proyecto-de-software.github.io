@@ -1,0 +1,221 @@
+FORMAT: 1A
+HOST: https://admin-grupoXX.proyecto2023.unlp.edu.ar
+
+# Documentación API a implementar
+Documentación online de la api a realizar en el trabajo integrador de la materia
+*Projecto de Software* de la **UNLP**.
+
+## Buscador de Servicios
+En esta documentación describiremos los endpoints que creemos que son escenciales
+para la implementación correcta de la aplicación.
+
+Estos endpionts serán implementados en la _**aplicación privada**_ que les solicitamos
+y consultados/usados desde la _**aplicación pública**_.
+
+::: note
+## Nota
+Recordá que estos endpoints son los mínimos que nos imaginamos desde la cátedra
+como necesarios.
+
+Si dentro del grupo o el doncente asignado consideran que es necesario agregar
+algún otro debido a la particularidades de la solución elegida deberán agregarlos.
+:::
+
+# Data Structures
+
+## PagoData
++ month: 1 (number, required) - Número de mes correspondiente al pago.
++ amount: 100 (string, required) - Monto de pago.
+
+## PagoListData (array)
++ (PagoData)
+
+## DisciplinaData
++ name: Tiro al pichón (string, required) - Nombre de la disciplina.
++ days: Lunes y Miércoles (string, required) - Días en los que se realiza la disciplina.
++ time: de 14 a 16hs (string, required) - Horario donde se realiza la disciplina.
++ teacher: Charlton Heston (string, required) - Nombre de persona a cargo de la misma.
+
+## DisciplinaListData (array)
++ (DisciplinaData)
+
+## ClubData
++ email: clubdeportivovillaelisa@gmail.com (string, required) - Correo electrónico del club
++ phone: `0221 487-0193` (string, required) - Teléfono del club
+
+## ListRequestData
++ status: OK (string, required) - Valor del estado.
++ desciption: Listado de solicitudes realizadas. (string, required) - Descripción del listado de solicitudes.
++ request (RequestData)
+
+## RequestData
++ title: title (string, required) - Título de la solicitud.
++ creation_date: creation_date (string, required) - Fecha de creación de la solicitud (generada por sistema).
++ close_date: close_date (string, required) - Fecha de finalización de la solicitud (generada por sistema).
++ status: status (string, required) - Estado de la solicitud.
++ description: description (string, required) - Descripción de la solicitud.
+
+
+## DocTypeData (enum)
++ `DNI`
++ `Libreta Cívica`
++ `Libreta de Enrolamiento`
+
+## GenderData (enum)
++ `Masculino`
++ `Femenino`
++ `Otros (Por favor especifica)`
++ `Prefiero no decir`
+
+## PerfilData
++ user: usarname (string, required) - Nombre de usuario.
++ email: username@mail.com (string, required) - Correco electrónico.
++ number: 2560 (string, required) - Número de socio.
++ document_type (DocTypeData) - Tipo de documento.
++ document_number: 35.555.555 (string, required) - Número de documento.
++ gender (GenderData) - Género.
++ gender_other: transgénero (string, required) - Género no listado.
++ address: 120 y 50 (string, optional) - Dirección.
++ phone: 221 1212-123 (string, optional) - Teléfono.
+
+# Group Club
+
+## Información del club [/api/club/info]
+
+### Obtiene información de la institución [GET]
+
+Obtiene información importante y de contacto sobre el club.
+
+**Información del endpoint**
+
+<i class="fa fa-times"></i> Requiere autenticación
+
++ Response 200 (application/json)
+    + Attributes (ClubData)
+
+## Información de las disciplinas [/api/club/disciplines]
+
+### Obtiene todas las disciplinas de la entidad [GET]
+
+Obtiene todas las disciplinas que se realizan en la entidad.
+
+**Información del endpoint**
+
+<i class="fa fa-times"></i> Requiere autenticación
+
++ Response 200 (application/json)
+    + Attributes (DisciplinaListData)
+
+# Group Autenticación
+
+## Login [/api/auth]
+
+Se requiere de un token de acceso para acceder a los endpoints de información
+de socio.
+
+### Obtener token [POST]
+
+Permite obtener el un JSON Web Token válido para el usuario y password.
+
+**Información del endpoint**
+
+<i class="fa fa-times"></i> Requiere autenticación
+
++ Request (application/json)
+    + Attributes
+        + user: `john.doe@mail.com` (string, required) - User email address
+        + password: `QXR0mi38a2` (string, required) - User password
+
++ Response 200 (application/json)
+    + Attributes
+        + token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9....` (string) - JSON Web Token.
+
+
+# Group Usuario
+
+## Información de perfil [/api/me/profile]
+
+### Obtener información del usuario logeado [GET]
+
+Obtiene toda la información del perfil del usuario autentificado.
+
+**Información del endpoint**
+
+<i class="fa fa-check"></i> Requiere autenticación
++ Request
+    + Headers
+
+            Authorization: JWT <token>
+
++ Response 200 (application/json)
+    + Attributes (PerfilData)
+    
+## Disciplinas del usuario actual [/api/me/disciplines]
+
+### Obtiene el listado de disciplinas del usuario [GET]
+
+Obtiene la lista de las disciplinas a las que está inscripto el usuario autentificado.
+
+**Información del endpoint**
+
+<i class="fa fa-check"></i> Requiere autenticación
+
++ Request
+    + Headers
+
+            Authorization: JWT <token>
+
++ Response 200 (application/json)
+    + Attributes (DisciplinaListData)
+
+## Pagos del usuario actual [/api/me/payments]
+
+### Obtiene el listado de pagos del usuario [GET]
+
+Obtiene la lista de pagos registrados del usuario autentificado.
+
+**Información del endpoint**
+
+<i class="fa fa-check"></i> Requiere autenticación
+
++ Request
+    + Headers
+
+            Authorization: JWT <token>
+
++ Response 200 (application/json)
+    + Attributes (PagoListData)
+
+### Registra un nuevo pago del socio [POST]
+
+Registra un nuevo pago para el usuario autentificado.
+
+**Información del endpoint**
+
+<i class="fa fa-check"></i> Requiere autenticación
+
++ Request
+    + Headers
+
+            Authorization: JWT <token>
+
++ Response 200 (application/json)
+    + Attributes (PagoListData)
+
+## Listado de solicitudes de servicio realizadas [/api/me/requests]
+
+### Obtiene el listado de solicitudes [GET]
+
+Obtiene el listado de solicitudes realizadas por el usuario autentificado.
+
+**Información del endpoint**
+
+<i class="fa fa-check"></i> Requiere autenticación
+
++ Request
+    + Headers
+
+            Authorization: JWT <token>
+
++ Response 200 (application/json)
+    + Attributes (ListRequestData)

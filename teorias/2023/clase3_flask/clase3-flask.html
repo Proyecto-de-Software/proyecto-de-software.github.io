@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Flask</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/league.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/base16/zenburn.css" />
+
+    <link rel="stylesheet" href="./_assets/proyecto.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">
+# Proyecto de Software
+
+
+## Cursada 2023
+</script></section><section  data-markdown><script type="text/template">
+# Temario
+
+- Flask
+- Templates - Introducción
+
+</script></section><section ><section data-markdown><script type="text/template">
+# Repaso Python</script></section><section data-markdown><script type="text/template">
+# Repasando
+
+- ¿Por qué usamos y promovemos el uso de software libre? <!-- .element: class="fragment" data-fragment-index="1" -->
+- ¿Características de Python? <!-- .element: class="fragment" data-fragment-index="2" -->
+- ¿Desarrollo en el servidor? <!-- .element: class="fragment" data-fragment-index="3" -->
+</script></section><section data-markdown><script type="text/template">
+# Programación en el servidor
+
+![Backend developer-roadmap 2018](images/backendPython.png)
+</script></section><section data-markdown><script type="text/template">
+# Nosotros usaremos Python
+
+## ¿Por qué?
+
+- https://www.tiobe.com/tiobe-index/
+- https://insights.stackoverflow.com/trends?tags=python
+- https://githut.info/
+- https://madnight.github.io/githut/#/pull_requests/
+</script></section><section data-markdown><script type="text/template">
+# Python
+
+- Fue desarrollado por [Guido Van Rossum](https://twitter.com/gvanrossum) a finales de los años 80.
+- El nombre proviene del grupo de cómicos ingleses [Monty Python](https://es.wikipedia.org/wiki/Monty_Python).
+
+- Sitio Oficial: https://python.org/
+- Python Argentina: https://python.org.ar/
+</script></section><section data-markdown><script type="text/template">
+# Características generales
+
+- Es un lenguaje de alto nivel, fácil de aprender. Muy expresivo y legible.
+- Es interpretado.
+- Multiplataforma y multiparadigma.
+- Posee una sintáxis elegante y tipado dinámico y fuerte. 
+- Tiene un manejo eficiente de estructuras de datos de alto nivel. 
+</script></section><section data-markdown><script type="text/template">
+# Sintaxis básica
+
+- **NO** hay declaración de variables: las variables se crean **dinámicamente** cuando se les asigna un valor.
+- Tiene **tipado dinámico**: las variables pueden cambiar de tipo a lo largo del programa.
+- Bloques, identación.
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+# Framework
+
+- Esquema de trabajo que nos permite:
+  - Evitar la escritura de código de manera repetitiva <!-- .element: class="fragment" data-fragment-index="1" -->
+  - Buenas prácticas <!-- .element: class="fragment" data-fragment-index="2" -->
+  - Estructura del código relativamente homogeneo. <!-- .element: class="fragment" data-fragment-index="3" -->
+
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Instalamos un nuevo paquete al entorno, Flask.
+
+```bash
+
+
+poetry env use /home/diego/anaconda3/envs/proyecto2022/bin/python3.10
+poetry add flask
+
+```
+
+![El documento como un árbol](images/poetry5.png)
+
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Hola Mundo
+
+```python
+
+# app.py
+
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+
+- Miramos nuestro código en el browser:
+
+```bash
+
+poetry run flask run
+
+
+```
+
+![Levantamos el servidor](images/flask1.png)
+
+![Levantamos el servidor](images/flask11.png)</script></section><section data-markdown><script type="text/template">
+# Flask
+
+
+- Tips
+
+```bash
+
+poetry shell
+
+flask run
+
+
+```
+
+![Levantamos el servidor](images/flask2.png)
+
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Modificamos nuestro código:
+
+```python
+
+# app.py 
+
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def hello_world():
+    mensaje = 'Hello, World!'
+    return mensaje + 2
+```
+
+![Tenemos un error](images/flask3.png)
+
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Activamos el entorno de desarrollo:
+
+```bash
+
+flask --debug run
+
+```
+
+![Entorno de desarrollo](images/flask4.png)
+
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Ahora podemos ver un poco más:
+
+
+![Entorno de desarrollo](images/flask5.png)
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Antes de continuar vamos a crear algunas carpetas dentro de admin
+    - public
+    - src
+
+
+![Estructura de carpetas](images/flask6.png)
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Vamos a agregar dentro de src dos carpetas
+    - core
+    - web
+
+
+![Estructura de carpetas](images/flask7.png)
+
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Pasamos la creación de la app flask al módulo web.
+
+```python
+# src/web/__init__py
+
+from flask import Flask
+
+
+def create_app():
+    app = Flask(__name__)
+
+    # Define home
+    @app.route("/")
+    def hello_world():
+        return "<p>Hello, World!</p>"
+
+    return app    
+```
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Modificamos app.py
+
+```python
+# app.py
+
+from src.web import create_app
+
+app = create_app()
+
+def main():
+    app.run()
+
+if __name__ == "__main__":
+    main()
+    
+```
+
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Vamos a recibir argumentos
+
+```python
+# src/web/__init__py
+from flask import Flask
+
+def create_app():
+    app = Flask(__name__)
+
+    # Define home
+    @app.route("/")
+    def hello_world():
+        return "<p>Hello, World!</p>"
+
+    @app.route("/personas")
+    def personas():
+        return "personas"
+
+    @app.route("/personas/<string:nombre>")
+    def persona(nombre):
+        nombre = nombre.capitalize()
+        return f"Hola {nombre}"
+
+    return app
+```
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Armamos un html:
+
+```python
+# src/web/__init__py
+from flask import Flask
+
+def create_app():
+    app = Flask(__name__)
+
+    # Define home
+    @app.route("/")
+    def hello_world():
+        mensaje = '<!DOCTYPE html>'
+        mensaje += '<html lang="es"> '
+        mensaje += '<head>'
+        mensaje += '</head>'
+        mensaje += '<body>'
+        mensaje += 'Hola mundo!'
+        mensaje += '</body>'
+        mensaje += '</html>'
+        return mensaje
+
+```
+
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- y otro...:
+
+```python
+# src/web/__init__py
+from flask import Flask
+
+def create_app():
+    app = Flask(__name__)
+
+    ......
+    
+    @app.route("/personas")
+    def personas():
+        mensaje = '<!DOCTYPE html>'
+        mensaje += '<html lang="es"> '
+        mensaje += '<head>'
+        mensaje += '</head>'
+        mensaje += '<body>'
+        mensaje += 'Hola personas!'
+        mensaje += '</body>'
+        mensaje += '</html>'
+        return mensaje
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- y otro...:
+
+```python
+# src/web/__init__py
+from flask import Flask
+
+def create_app():
+    app = Flask(__name__)
+
+    ......
+    
+    @app.route("/personas/<string:nombre>")
+    def persona(nombre):
+        nombre = nombre.capitalize()
+        mensaje = '<!DOCTYPE html>'
+        mensaje += '<html lang="es"> '
+        mensaje += '<head>'
+        mensaje += '</head>'
+        mensaje += '<body>'
+        mensaje += f"Hola {nombre}"
+        mensaje += '</body>'
+        mensaje += '</html>'
+        return mensaje
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+## ¿Problemas? ¿Inconvenientes?
+
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Una solución
+
+```python
+from flask import Flask, render_template
+
+def create_app(static_folder="static"):
+    app = Flask(__name__)
+
+    # Define home
+    @app.route("/")
+    def hello_world():
+        return render_template('index.html')
+    
+    ......
+
+    return app
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- index.html
+
+```html
+<!DOCTYPE html>
+<html lang="es"> 
+    <head>
+        <title>Ejemplo Proyecto</title>
+    </head>
+    <body>
+        <h1>Hola mundo!<h1>
+    </body>
+</html>
+```
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Con variables
+
+```python
+
+    .....
+    
+    @app.route("/personas")
+    def personas():
+        contenido = "Hola personas!"
+        return render_template('index.html', contenido=contenido)
+
+    @app.route("/personas/<string:nombre>")
+    def persona(nombre):
+        nombre = nombre.capitalize()
+        contenido = f"Hola {nombre}"
+        return render_template('index.html', contenido=contenido)
+
+    ....
+
+```
+
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- index.html
+
+```html
+<!DOCTYPE html>
+<html lang="es"> 
+    <head>
+        <title>Ejemplo Proyecto</title>
+    </head>
+    <body>
+        <h1>{{contenido}}<h1>
+    </body>
+</html>
+```
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Condicionales
+
+```python
+
+    ....
+    
+    @app.route("/")
+    def hello_world():
+        contenido = "mundo"
+        return render_template('index.html', contenido=contenido)
+
+    @app.route("/personas")
+    def personas():
+        contenido = "personas"
+        return render_template('index.html', contenido=contenido)
+
+    @app.route("/personas/<string:nombre>")
+    def persona(nombre):
+        nombre = nombre.capitalize()
+        contenido = nombre
+        return render_template('index.html', contenido=contenido)
+
+    ....
+
+```
+
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- index.html
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>Ejemplo Proyecto</title>
+    </head>
+    <body>
+        {% if contenido == "Argentina" %}
+            <h1>La Ciudad Autonónoma de Buenos Aires es la capital de {{contenido}} <h1>
+        {% else %}
+            <h1>Hola {{contenido}} !!<h1>
+        {% endif %}
+    </body>
+</html>
+```
+
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Definimos una lista de issues
+
+```python
+issues = [
+    {
+        "id": 1,
+        "user": "José",
+        "title": "Mi computadora no funciona.",
+        "description": "Mi departamente me compró una nueva computadora y necesito configurarla con todos mis emails y documentos de mi vieja computadora.",
+        "status": "new",
+    },
+    {
+        "id": 2,
+        "user": "María",
+        "title": "No puedo obtener mis emails.",
+        "description": "Estoy tratando de acceder a mi correo desde casa, pero no puedo obtenerlos. Estoy tratando con Outlook en mi casa pero en la oficina tengo Thunderbird.",
+        "status": "in_progress",
+    },
+    {
+        "id": 3,
+        "user": "Rubén",
+        "title": "No puedo imprimir",
+        "description": "Cada vez que trato de imprimir mi presentación el programa se cierra. Esto sólo me pasa con PowerPoint en Word puedo imprimir. Ya me aseguré que la impresora está prendida. Tengo una HP LaserJet 5.",
+        "status": "done",
+    },
+]
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Iteraciones
+
+```python
+
+def create_app(static_folder="static"):
+    
+    .... 
+    
+    @app.route("/issues/")
+    def issues_index():
+        return render_template("issues/index.html", issues=issues)
+
+    return app
+
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- index.html
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>Ejemplo Proyecto</title>
+    </head>
+    <body>
+  <h1>Consultas</h1>
+
+  <table class="index-table box">
+    <thead>
+      <tr>
+        <th>#</th><th>Autor</th><th>Título</th><th>Descripción</th><th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for issue in issues %}
+      <tr>
+        <th>{{ issue.id }}</th><th>{{ issue.user }}</th><th>{{ issue.title }}</th><th>{{ issue.description }}</th><th>{{ issue.status }}</th>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+    </body>
+</html>
+```
+</script></section><section data-markdown><script type="text/template">
+# Flask 
+
+- Hermoso listado
+
+![Link](images/flask8.png)
+
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Un poco de estilo, en los templates index.html ponemos lo siguiente:
+
+```html
+
+    <head>
+        <title>Ejemplo Proyecto</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    </head>
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Flask 
+
+- Un poco de estilo
+
+![Link](images/flask9.png)
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+## ¿Problemas? ¿Inconvenientes?
+
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Url
+
+```python
+    ....
+    @app.route("/issues/")
+    def issues_index():
+        return render_template("issues/index.html", issues=issues)
+    ....
+
+```
+
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- index.html
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>Ejemplo Proyecto</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    </head>
+    <body>
+        {% if contenido == "Argentina" %}
+            <h1>La Ciudad Autonónoma de Buenos Aires es la capital de {{contenido}} <h1>
+        {% else %}
+            <h1>Hola {{contenido}} !!<h1>
+        {% endif %}
+        <a href="{{url_for('issues_index')}}"> Issues </a>
+    </body>
+</html>
+```
+</script></section><section data-markdown><script type="text/template">
+# Flask 
+
+- Url
+
+![Link](images/flask10.png)
+
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Herencia
+- layout.html
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    {% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <title>{% block title %}{% endblock %}</title>
+    {% endblock %}
+  </head>
+  <body>
+    <div id="navbar">
+      {% block navbar %}
+      {% endblock %}
+    </div>
+    <div id="main">
+      {% block content %}
+      {% endblock %}
+    </div>
+    <div id="footer">
+      {% block footer %}
+      {% endblock %}
+    </div>
+  </body>
+</html>
+```
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Herencia
+- index.html
+
+```html
+{% extends "layout.html" %}
+{% block title %}Ejemplo Proyecto{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+        {% if contenido == "Argentina" %}
+            <h1>La Ciudad Autonónoma de Buenos Aires es la capital de {{contenido}} <h1>
+        {% else %}
+            <h1>Hola {{contenido}} !!<h1>
+        {% endif %}
+        <a href="{{url_for('issues_index')}}"> Issues </a>
+{% endblock %}
+```</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Herencia
+- issues/index.html
+
+```html
+{% extends "layout.html" %}
+{% block title %}Consultas{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  <h1>Consultas</h1>
+
+  <table class="index-table box">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Autor</th>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for issue in issues %}
+      <tr>
+        <th>{{ issue.id }}</th>
+        <th>{{ issue.user }}</th>
+        <th>{{ issue.title }}</th>
+        <th>{{ issue.description }}</th>
+        <th>{{ issue.status }}</th>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+```
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Formularios
+- issues/index.html
+
+```html
+{% extends "layout.html" %}
+{% block title %}Consultas{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  ......
+  
+  </table>
+  <form action="{{ url_for('issues_add')}}" method="post">
+    <input type="text" name="id" placeholder="Ingrese el id">
+    <input type="text" name="user" placeholder="Ingrese el autor">
+    <input type="text" name="title" placeholder="Ingrese el título">
+    <input type="text" name="description" placeholder="Ingrese la descripción">
+    <input type="text" name="status" placeholder="Ingrese el estado">
+    <button>Enviar</button>
+  </form>
+  <a href="{{url_for('hello_world')}}"> Volver al inicio </a>
+
+{% endblock %}
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Flask
+
+- Formularios
+
+```python
+from flask import Flask, render_template, request
+
+def create_app(static_folder="static"):
+    app = Flask(__name__, static_folder=static_folder)
+    
+    ....
+    
+    @app.route("/issues/add", methods=["POST"])
+    def issues_add():
+        issue = {"id": request.form.get("id"),
+        "user": request.form.get("user"),
+        "title": request.form.get("title"),
+        "description": request.form.get("description"),
+        "status": request.form.get("status"),
+                 }
+        issues.append(issue)
+        return render_template("issues/index.html", issues=issues)
+
+    ....
+
+```
+
+</script></section></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

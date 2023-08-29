@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Entornos virtuales</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/league.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/base16/zenburn.css" />
+
+    <link rel="stylesheet" href="./_assets/proyecto.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section ><section data-markdown><script type="text/template">
+# Proyecto de Software
+
+
+## Cursada 2023
+</script></section><section data-markdown><script type="text/template">
+# Tema
+
+- Entornos Virtuales.
+
+</script></section><section data-markdown><script type="text/template">
+
+# Entornos Virtuales
+
+- Multiples versiones del lenguajes (Python 2.X, Python 3.X).
+- Multiples versiones de librerías.
+- Requerimientos mínimos.
+</script></section><section data-markdown><script type="text/template">
+# Entornos Virtuales
+- Herramienta que nos permite tener un ambiente para un proyecto con sus dependencias y librerías. <!-- .element: class="fragment" data-fragment-index="1" -->
+- Nos permite trabajar en un mismo equipo con diferentes versiones de lenguaje y paquetes. <!-- .element: class="fragment" data-fragment-index="2" -->
+- Nos ayuda a  replicar el ambiente de desarrollo <!-- .element: class="fragment" data-fragment-index="3" -->
+- Virtualenv, venv, Conda, poetry, ¿otros? <!-- .element: class="fragment" data-fragment-index="4" -->
+
+
+</script></section><section data-markdown><script type="text/template">
+# Entornos Virtuales - Pip
+
+- Pip es un sistema de gestión de paquetes. <!-- .element: class="fragment" data-fragment-index="1" -->
+- Primero, comprobamos si tenemos correctamente instalado pip. <!-- .element: class="fragment" data-fragment-index="2" -->
+
+```shell
+sudo apt-get install python3-pip python3-dev build-essential
+
+``` 
+<!-- .element: class="fragment" data-fragment-index="3" -->
+</script></section><section data-markdown><script type="text/template">
+# Entornos Virtuales - Pip
+
+- Nos facilita conocer cuáles son los paquetes y sus versiones para poder distribuirlo.
+
+
+```bash
+
+pip freeze > requirements.txt
+
+```
+
+- Podemos ver cuáles son los paquetes mirando requirements.txt
+
+![Vemos el contenido de Requirements](images/virtualEnv4.png)
+
+
+</script></section><section data-markdown><script type="text/template">
+# Entornos Virtuales - Pip
+
+- Para desplegar el proyecto en otra plataforma ejecutamos el siguiente comando:
+
+```bash
+
+pip install -r requirements.txt
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Entornos Virtuales
+
+- Instalamos virtualenv
+
+```bash
+
+pip install virtualenv
+
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Entornos Virtuales
+
+- Nos posicionamos en la carpeta del proyecto o, en su defecto, la creamos:
+
+```bash
+
+mkdir miProyecto
+cd miProyecto
+
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Entornos Virtuales
+
+- Inicializamos el entorno virtual:
+
+```bash
+
+virtualenv entornoProyecto
+
+
+```
+
+![Creación del entorno virtual](images/virtualEnv1.png)
+
+</script></section><section data-markdown><script type="text/template">
+# Entornos Virtuales
+
+- Activamos el entorno virtual:
+
+```bash
+
+source entornoProyecto/bin/activate
+
+
+```
+
+![Activación del entorno virtual](images/virtualEnv2.png)
+
+
+- Para desactivar el entorno virtual:
+
+```bash
+
+deactivate
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Entornos Virtuales
+
+- Desde la versión de Python 3.3 contamos con venv
+
+```bash
+
+python3 -m venv /path/to/new/virtual/environment
+
+```
+- Por lo general:
+
+```bash
+
+python3 -m venv venv
+
+
+```
+
+</script></section><section data-markdown><script type="text/template">
+# Entornos Virtuales
+
+- Una herramienta útil para gestionar entornos virtuales es **virtualenvwrapper**:
+
+```bash
+
+pip install virtualenvwrapper
+
+
+```
+
+![Instalamos virtualenwrapper](images/virtualEnv5.png)
+</script></section><section data-markdown><script type="text/template">
+# Poetry
+
+- Gestor de paquetes
+- Gestor de dependencias
+- Entornos virtuales
+</script></section><section data-markdown><script type="text/template">
+# Poetry
+
+```bash
+
+curl -sSL https://install.python-poetry.org | python3 -
+
+
+```
+
+![Instalamos virtualenwrapper](images/poetry1.png)
+</script></section><section data-markdown><script type="text/template">
+# Poetry
+
+```bash
+
+poetry init
+
+
+```
+
+![Instalamos virtualenwrapper](images/poetry2.png)
+
+</script></section><section data-markdown><script type="text/template">
+# Poetry
+
+![Instalamos virtualenwrapper](images/poetry3.png)
+</script></section><section data-markdown><script type="text/template">
+# Poetry
+
+![Instalamos virtualenwrapper](images/poetry4.png)
+</script></section><section data-markdown><script type="text/template">
+# Poetry
+
+## Algunos comandos útiles
+
+```bash
+
+poetry self update
+poetry env info
+poetry new admin
+poetry add flask=2.2.2
+poetry add pytest --group dev
+poetry run flask --version
+poetry build
+
+
+```
+</script></section><section data-markdown><script type="text/template">
+
+
+# Enlaces útiles
+
+```url
+https://pypi.org/project/virtualenv/
+https://virtualenv.pypa.io/en/stable/
+https://github.com/pyenv/pyenv#simple-python-version-management-pyenv
+https://docs.conda.io/projects/conda/en/latest/commands.html#conda-vs-pip-vs-virtualenv-commands
+https://python-poetry.org
+https://www.paradigmadigital.com/dev/poetry-gestor-paquetes-python/
+https://www.jetbrains.com/help/pycharm/poetry.html
+
+```
+
+
+
+
+
+
+</script></section></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

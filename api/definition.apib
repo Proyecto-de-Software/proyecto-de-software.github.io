@@ -30,14 +30,18 @@ algún otro debido a la particularidades de la solución elegida deberán agrega
 ## PagoListData (array)
 + (PagoData)
 
-## DisciplinaData
-+ name: Tiro al pichón (string, required) - Nombre de la disciplina.
-+ days: Lunes y Miércoles (string, required) - Días en los que se realiza la disciplina.
-+ time: de 14 a 16hs (string, required) - Horario donde se realiza la disciplina.
-+ teacher: Charlton Heston (string, required) - Nombre de persona a cargo de la misma.
+## InstitucionData
++ name: Institución #1 (string, required) - Nombre de la Institución.
++ information: Información adicional (string, required) - Información de la Institución.
++ address: Calle 50 N° 1234 (string, required) - Dirección de la Institución.
++ location: latitude, longitude (string, required) - Nombre de persona a cargo de la misma.
++ web: www.institucion1.com (string, required) - Web de la Institución.
++ days and opening hours: Lunes a viernes de 8 a 18hs (string, required) - Días y horarios de atención.
++ contact information: info@institution.com (string, required) - Información de contacto.
++ enabled: SI (string, required) - Habilitado SI o NO.
 
-## DisciplinaListData (array)
-+ (DisciplinaData)
+## InstitucionListData (array)
++ (InstitucionData)
 
 ## ClubData
 + email: clubdeportivovillaelisa@gmail.com (string, required) - Correo electrónico del club
@@ -49,11 +53,23 @@ algún otro debido a la particularidades de la solución elegida deberán agrega
 + request (RequestData)
 
 ## RequestData
-+ title: title (string, required) - Título de la solicitud.
++ title: a title (string, required) - Título de la solicitud.
 + creation_date: creation_date (string, required) - Fecha de creación de la solicitud (generada por sistema).
 + close_date: close_date (string, required) - Fecha de finalización de la solicitud (generada por sistema).
 + status: status (string, required) - Estado de la solicitud.
 + description: description (string, required) - Descripción de la solicitud.
+
+## ListServiceData
++ status: OK (string, required) - Valor del estado.
++ desciption: Listado de servicios. (string, required) - Descripción del listado de servicios.
++ request (ServiceData)
+
+## ServiceData
++ name: name (string, required) - Nombre del servicio.
++ description: a description (string, required) - Descripción del servicio.
++ laboratory: laboratory name (string, required) - Nombre del Laboratorio que presta el servicio.
++ keywords: a list of keywords (string, required) - Lista de palabras clave.
++ enabled: enabled (string, required) - Servicio habilitado SI o NO.
 
 
 ## DocTypeData (enum)
@@ -78,13 +94,13 @@ algún otro debido a la particularidades de la solución elegida deberán agrega
 + address: 120 y 50 (string, optional) - Dirección.
 + phone: 221 1212-123 (string, optional) - Teléfono.
 
-# Group Club
+# Group Instituciones
 
-## Información del club [/api/club/info]
+## Información de la Institucion [/api/info]
 
 ### Obtiene información de la institución [GET]
 
-Obtiene información importante y de contacto sobre el club.
+Obtiene información importante y de contacto sobre la Institución.
 
 **Información del endpoint**
 
@@ -93,18 +109,18 @@ Obtiene información importante y de contacto sobre el club.
 + Response 200 (application/json)
     + Attributes (ClubData)
 
-## Información de las disciplinas [/api/club/disciplines]
+## Información de las Instituciones [/api/institutions]
 
-### Obtiene todas las disciplinas de la entidad [GET]
+### Obtiene todas las Instituciones de la entidad [GET]
 
-Obtiene todas las disciplinas que se realizan en la entidad.
+Obtiene todas las Instituciones que se realizan en la entidad.
 
 **Información del endpoint**
 
 <i class="fa fa-times"></i> Requiere autenticación
 
 + Response 200 (application/json)
-    + Attributes (DisciplinaListData)
+    + Attributes (InstitucionListData)
 
 # Group Autenticación
 
@@ -166,7 +182,7 @@ Obtiene la lista de las disciplinas a las que está inscripto el usuario autenti
             Authorization: JWT <token>
 
 + Response 200 (application/json)
-    + Attributes (DisciplinaListData)
+    + Attributes (InstitucionListData)
 
 ## Pagos del usuario actual [/api/me/payments]
 
@@ -202,7 +218,10 @@ Registra un nuevo pago para el usuario autentificado.
 + Response 200 (application/json)
     + Attributes (PagoListData)
 
-## Listado de solicitudes de servicio realizadas [/api/me/requests]
+## Listado de solicitudes de servicio realizadas [/api/requests/{id}]
+
++ Parameters
+    + id - Id de usuario???.
 
 ### Obtiene el listado de solicitudes [GET]
 
@@ -219,3 +238,65 @@ Obtiene el listado de solicitudes realizadas por el usuario autentificado.
 
 + Response 200 (application/json)
     + Attributes (ListRequestData)
+
+
+## Carga una solicitud de servicio [/api/requests/{id} POST]
+
++ Parameters
+    + id - Id de usuario???.
+
+### Obtiene el listado de solicitudes [POST]
+
+Carga una solicitud solicitud de servicio por un usuario autentificado.
+
+**Información del endpoint**
+
+<i class="fa fa-check"></i> Requiere autenticación
+
++ Request
+    + Headers
+
+            Authorization: JWT <token>
+
++ Response 200 (application/json)
+    + Attributes (ListRequestData)
+
+
+## Listado de servicios [/api/services]
+
+### Obtiene el listado de servicios [GET]
+
+Obtiene el listado de servicios.
+
+**Información del endpoint**
+
+<i class="fa fa-check"></i> Requiere autenticación
+
++ Request
+    + Headers
+
+            Authorization: JWT <token>
+
++ Response 200 (application/json)
+    + Attributes (ListServiceData)
+
+## Detalle del servicio [/api/services/{id}]
+
++ Parameters
+    + id - Id del servicio.
+
+### Obtiene el listado de servicios [GET]
+
+Obtiene el detalle del servicio.
+
+**Información del endpoint**
+
+<i class="fa fa-check"></i> Requiere autenticación
+
++ Request
+    + Headers
+
+            Authorization: JWT <token>
+
++ Response 200 (application/json)
+    + Attributes (ListServiceData)

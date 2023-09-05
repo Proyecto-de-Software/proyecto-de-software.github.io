@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>MVC</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/league.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/base16/zenburn.css" />
+
+    <link rel="stylesheet" href="./_assets/proyecto.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">
+# Proyecto de Software
+
+
+## Cursada 2023
+</script></section><section  data-markdown><script type="text/template">
+# Temario
+
+- MVC
+</script></section><section ><section data-markdown><script type="text/template">
+
+# Patrón MVC
+</script></section><section data-markdown><script type="text/template">
+# Model – View - Controller
+
+
+* Tres componentes:
+	* Modelo
+	* Vista
+	* Controlador
+
+* El principio más importante de la arquitectura MVC es la **separación del código del programa en tres capas**, dependiendo de su naturaleza. 
+* La lógica relacionada con los datos se incluye en el modelo, el código de la presentación en la vista y la lógica de la aplicación en el controlador. 
+</script></section><section data-markdown><script type="text/template">
+# MVC
+
+* Reduce la complejidad, facilita la reutilización y acelera el proceso de comunicación entre capas.
+
+![MVC](images/mvc1.png)<!-- .element height="50%" width="50%" -->
+
+https://realpython.com/the-model-view-controller-mvc-paradigm-summarized-with-legos/
+</script></section><section data-markdown><script type="text/template">
+# Variaciones del MVC original
+
+* MTV en Django - Particularidades
+* Model <!-- .element: class="fragment" data-fragment-index="1" -->
+* Template <!-- .element: class="fragment" data-fragment-index="2" -->
+* View <!-- .element: class="fragment" data-fragment-index="3" -->
+</script></section><section data-markdown><script type="text/template">
+# Buenas Prácticas MVC
+
+La idea central detrás de MVC es la **reutilización de código** y la **separación de intereses**.
+</script></section><section data-markdown><script type="text/template">
+# Buenas Prácticas MVC - Modelo
+
+
+* Puede contener:
+	* La lógica necesaria para asegurar que los datos cumplen los requerimientos (validaciones).
+	* Código de manipulación de datos.
+* NO puede contener:
+	* En general, nada que se relacione con el usuario final directamente.
+	* Se debe evitar HTML embebido o cualquier código de presentación. 
+</script></section><section data-markdown><script type="text/template">
+# Buenas Prácticas MVC - Vista
+
+
+* Puede contener:
+	* Código de presentación, formatear y dibujar los datos. 
+* NO puede contener:
+	* Código que realice consultas a la BD.
+</script></section><section data-markdown><script type="text/template">
+# Buenas Prácticas MVC  - Controlador
+
+
+* Puede contener:
+	* Creación de instancias del Modelo para pasarle los datos necesarios. 
+* NO puede contener:
+	* Código que realice consultas a la BD (SQL embebido).
+	* Se debe evitar HTML embebido o cualquier código de presentación. 
+</script></section><section data-markdown><script type="text/template">
+
+# Aplicación Típica SIN MVC
+
+* Aplicación típica que no sigue MVC tiene todo el código en el mismo lugar.
+
+```python
+#encoding: utf-8
+import pymysql
+
+from flask import Flask, g
+
+
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello_world():
+    #CREATE USER 'proyecto'@'localhost' IDENTIFIED BY 'password1';
+    #GRANT ALL PRIVILEGES ON *.* TO 'proyecto'@'localhost';
+    SECRET_KEY = "dev"
+    DEBUG = True
+    DB_HOST = 'localhost'
+    DB_USER = 'proyecto'
+    DB_PASS = 'password1'
+    DB_NAME = 'proyecto'
+    #Creamos la conexión
+    g.db = pymysql.connect(
+            host=DB_HOST,
+            user=DB_USER,
+            password=DB_PASS,
+            db=DB_NAME,
+            cursorclass=pymysql.cursors.DictCursor
+            )
+
+    mensaje = '<!DOCTYPE html>'
+    mensaje +=  '<html lang="en"> '
+    mensaje +=  '<head>'
+    mensaje += '</head>'
+    mensaje += '<body>'
+
+    sql = "SELECT * FROM issues"
+
+    cursor = g.db.cursor()
+    cursor.execute(sql)
+    issues = cursor.fetchall()
+    mensaje += '<table>'
+    
+    mensaje += '<tr>'
+    for field in issues[0].keys():
+        mensaje += '<th>'
+        mensaje += field
+        mensaje += '</th>'
+    mensaje += '</tr>'
+    
+    for issue in issues:
+        mensaje += '<tr>'
+        for field in issue.values():
+            mensaje += '<td>'        
+            mensaje += str(field)
+            mensaje += '</td>'  
+        mensaje += '</tr>'
+    mensaje += '</table>' 
+    mensaje += '</body>'
+    mensaje += '</html>'
+
+    #Cerramos conexión a la BBDD
+    db = g.pop('db', None)
+    if db is not None:
+        db.close()
+
+    return mensaje 
+```
+</script></section><section data-markdown><script type="text/template">
+
+# Flask
+
+## ¿Problemas? ¿Inconvenientes?
+
+</script></section><section data-markdown><script type="text/template">
+# MVC - Configuración
+
+src/web/config.py
+
+```python
+from os import environ
+
+
+class Config(object):
+    """Base configuration."""
+
+    SECRET_KEY = "secret"
+    DEBUG = False
+    TESTING = False
+
+
+class ProductionConfig(Config):
+    """Production configuration."""
+
+    pass
+
+
+class DevelopmentConfig(Config):
+    """Development configuration."""
+
+    DEBUG = True
+
+
+class TestingConfig(Config):
+    """Testing configuration."""
+
+    TESTING = True
+
+
+config = {
+    "development": DevelopmentConfig,
+    "test": TestingConfig,
+    "production": ProductionConfig,
+}
+
+```
+</script></section><section data-markdown><script type="text/template">
+# MVC – Separando el modelo
+
+src/core/issue.py
+
+```python
+issues = [
+    {
+        "id": 1,
+        "user": "José",
+        "title": "Mi computadora no funciona.",
+        "description": "Mi departamente me compró una nueva computadora y necesito configurarla con todos mis emails y documentos de mi vieja computadora.",
+        "status": "new",
+    },
+    {
+        "id": 2,
+        "user": "María",
+        "title": "No puedo obtener mis emails.",
+        "description": "Estoy tratando de acceder a mi correo desde casa, pero no puedo obtenerlos. Estoy tratando con Outlook en mi casa pero en la oficina tengo Thunderbird.",
+        "status": "in_progress",
+    },
+    {
+        "id": 3,
+        "user": "Rubén",
+        "title": "No puedo imprimir",
+        "description": "Cada vez que trato de imprimir mi presentación el programa se cierra. Esto sólo me pasa con PowerPoint en Word puedo imprimir. Ya me aseguré que la impresora está prendida. Tengo una HP LaserJet 5.",
+        "status": "done",
+    },
+]  
+
+```</script></section><section data-markdown><script type="text/template">
+# MVC – Separando el modelo
+
+src/web/\_\_init__.py
+
+```python
+from flask import Flask, render_template, request
+from src.core.issue import issues
+
+.....
+```
+</script></section><section data-markdown><script type="text/template">
+# MVC - El controlador
+
+src/web/\_\_init__.py
+
+```python
+
+def create_app(static_folder="static"):
+    app = Flask(__name__, static_folder=static_folder)
+
+    ....
+    
+    @app.route("/issues/")
+    def issues_index():
+        return render_template("issues/index.html", issues=issues)
+
+    @app.route("/issues/add", methods=["POST"])
+    def issues_add():
+        issue = {
+            "id": request.form.get("id"),
+            "user": request.form.get("user"),
+            "title": request.form.get("title"),
+            "description": request.form.get("description"),
+            "status": request.form.get("status"),
+        }
+        issues.append(issue)
+        return render_template("issues/index.html", issues=issues)
+
+
+```
+</script></section><section data-markdown><script type="text/template">
+# MVC - El controlador - Blueprint
+
+src/web/controllers/issue.py
+
+```python
+
+from flask import Blueprint, render_template, request
+from src.core.issue import issues
+
+issue_blueprint = Blueprint("issues", __name__, url_prefix="/issues")
+
+@issue_blueprint.route("/")
+def issues_index():
+    return render_template("issues/index.html", issues=issues)
+
+@issue_blueprint.route("/issues/add", methods=["POST"])
+def issues_add():
+    issue = {
+        "id": request.form.get("id"),
+        "user": request.form.get("user"),
+        "title": request.form.get("title"),
+        "description": request.form.get("description"),
+        "status": request.form.get("status"),
+    }
+    issues.append(issue)
+    return render_template("issues/index.html", issues=issues)
+
+
+```
+</script></section><section data-markdown><script type="text/template">
+# MVC - El controlador - Blueprint
+
+src/web/\_\_init__.py
+
+```python
+from src.web.controllers.issue import issue_blueprint
+
+def create_app(static_folder="static"):
+    app = Flask(__name__, static_folder=static_folder)
+
+    ....
+    
+    app.register_blueprint(issue_blueprint)
+
+    return app
+
+```
+</script></section><section data-markdown><script type="text/template"># MVC – Separando la Vista
+
+src/web/templates/index.html
+
+```html
+{% extends "layout.html" %}
+{% block title %}Ejemplo Proyecto{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+        {% if contenido == "Argentina" %}
+            <h1>La Ciudad Autonónoma de Buenos Aires es la capital de {{contenido}} <h1>
+        {% else %}
+            <h1>Hola {{contenido}} !!<h1>
+        {% endif %}
+        <a href="{{url_for('issues.issues_index')}}"> Issues </a>
+{% endblock %}
+```</script></section><section data-markdown><script type="text/template"># MVC - Vista
+
+src/web/templates/issues/index.html
+
+```html
+<form action="{{ url_for('issues.issues_add')}}" method="post">
+    <input type="text" name="id" placeholder="Ingrese el id">
+    <input type="text" name="user" placeholder="Ingrese el autor">
+    <input type="text" name="title" placeholder="Ingrese el título">
+    <input type="text" name="description" placeholder="Ingrese la descripción">
+    <input type="text" name="status" placeholder="Ingrese el estado">
+    <button>Enviar</button>
+</form>
+<a href="{{url_for('hello_world')}}"> Volver al inicio </a>
+   
+```
+</script></section><section data-markdown><script type="text/template"># MVC - Extras
+
+src/web/templates/error.html
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='error.css') }}" />
+    {% endblock %}
+    <title>Error!</title>
+  </head>
+  <body>
+    <h1>{{ error_name }}</h1>
+    <p class="zoom-area"><b>Error!</b> {{ error_description }} </p>
+      <div class="link-container">
+        <a href="{{ url_for('hello_world') }}" class="more-link">Go to the homepage</a>
+      </div>
+  </body>
+</html>
+   
+```
+</script></section><section data-markdown><script type="text/template">
+# MVC - Extras
+
+src/web/helpers/handler.py
+
+```python
+from flask import render_template
+
+
+def not_found_error(e):
+    kwargs = {
+        "error_name": "404 Not Found Error",
+        "error_description": "La url a la que quiere acceder no existe",
+    }
+    return render_template("error.html", **kwargs), 404
+
+
+def generic_error(e):
+    kwargs = {
+        "error_name": "500 Internal Server Error",
+        "error_description": "Error interno del servidor",
+    }
+    return render_template("error.html", **kwargs), 500
+```
+</script></section><section data-markdown><script type="text/template">
+# MVC - Extras
+
+src/web/\_\_init__.py
+
+```python
+from src.web.helpers import handler
+
+
+def create_app(static_folder="static"):
+    app = Flask(__name__, static_folder=static_folder)
+
+    ....
+    
+    app.register_blueprint(issue_blueprint)
+
+    # Error handlers
+    app.register_error_handler(404, handler.not_found_error)
+    app.register_error_handler(500, handler.generic_error)
+
+    return app
+```
+</script></section><section data-markdown><script type="text/template">
+# Para seguir viendo:
+
+* MVC -> http://es.wikipedia.org/wiki/Modelo_Vista_Controlador#Frameworks_MVC
+
+</script></section></section><section  data-markdown><script type="text/template">
+
+# Seguimos en la próxima ...
+
+```url
+
+https://flask.palletsprojects.com/en/2.2.x/quickstart/
+
+```
+
+
+
+
+
+
+</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

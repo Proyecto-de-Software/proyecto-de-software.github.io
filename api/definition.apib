@@ -184,24 +184,6 @@ Obtiene la lista de las disciplinas a las que está inscripto el usuario autenti
 + Response 200 (application/json)
     + Attributes (InstitucionListData)
 
-## Pagos del usuario actual [/api/me/payments]
-
-### Obtiene el listado de pagos del usuario [GET]
-
-Obtiene la lista de pagos registrados del usuario autentificado.
-
-**Información del endpoint**
-
-<i class="fa fa-check"></i> Requiere autenticación
-
-+ Request
-    + Headers
-
-            Authorization: JWT <token>
-
-+ Response 200 (application/json)
-    + Attributes (PagoListData)
-
 ### Registra un nuevo pago del socio [POST]
 
 Registra un nuevo pago para el usuario autentificado.
@@ -217,6 +199,25 @@ Registra un nuevo pago para el usuario autentificado.
 
 + Response 200 (application/json)
     + Attributes (PagoListData)
+
+
+## Listado de solicitudes de servicio realizadas [/api/requests]
+
+### Obtiene el listado de solicitudes [POST]
+
+Obtiene el listado de solicitudes realizadas por el usuario autentificado.
+
+**Información del endpoint**
+
+<i class="fa fa-check"></i> Requiere autenticación
+
++ Request
+    + Headers
+
+            Authorization: JWT <token>
+
++ Response 200 (application/json)
+    + Attributes (ListRequestData)
 
 ## Listado de solicitudes de servicio realizadas [/api/requests/{id}]
 
@@ -239,6 +240,24 @@ Obtiene el listado de solicitudes realizadas por el usuario autentificado.
 + Response 200 (application/json)
     + Attributes (ListRequestData)
 
+
+## Listado de solicitudes de servicio realizadas por el usuario logueado [/api/me/requests]
+
+### Obtiene el listado de solicitudes del usuario logueado [GET]
+
+Obtiene el listado de solicitudes realizadas por el usuario autentificado.
+
+**Información del endpoint**
+
+<i class="fa fa-check"></i> Requiere autenticación
+
++ Request
+    + Headers
+
+            Authorization: JWT <token>
+
++ Response 200 (application/json)
+    + Attributes (ListRequestData)
 
 ## Carga una solicitud de servicio [/api/requests/{id} POST]
 

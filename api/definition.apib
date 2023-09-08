@@ -146,7 +146,7 @@ Permite obtener el un JSON Web Token válido para el usuario y password.
 
 ### Obtener información del usuario logeado [GET]
 
-Obtiene toda la información del perfil del usuario autentificado.
+Obtiene toda la información del perfil del usuario autenticado.
 
 **Información del endpoint**
 
@@ -162,9 +162,9 @@ Obtiene toda la información del perfil del usuario autentificado.
 
 ## Listado de solicitudes de servicio realizadas [/api/requests]
 
-### Obtiene el listado de solicitudes [POST]
+### Obtiene el listado de solicitudes [GET]
 
-Obtiene el listado de solicitudes realizadas por el usuario autentificado.
+Obtiene el listado de solicitudes realizadas por el usuario autenticado.
 
 **Información del endpoint**
 
@@ -178,14 +178,14 @@ Obtiene el listado de solicitudes realizadas por el usuario autentificado.
 + Response 200 (application/json)
     + Attributes (ListRequestData)
 
-## Listado de solicitudes de servicio realizadas [/api/requests/{id}]
+## Obtiene la solicitud de servicio [/api/requests/{id}]
 
 + Parameters
-    + id - Id de usuario???.
+    + id - Id de la solicitud de servicio.
 
-### Obtiene el listado de solicitudes [GET]
+### Obtiene la solicitud de servicio [GET]
 
-Obtiene el listado de solicitudes realizadas por el usuario autentificado.
+Obtiene la solicitud realizada por el usuario autenticado.
 
 **Información del endpoint**
 
@@ -204,7 +204,7 @@ Obtiene el listado de solicitudes realizadas por el usuario autentificado.
 
 ### Obtiene el listado de solicitudes del usuario logueado [GET]
 
-Obtiene el listado de solicitudes realizadas por el usuario autentificado.
+Obtiene el listado de solicitudes realizadas por el usuario autenticado.
 
 **Información del endpoint**
 
@@ -218,14 +218,33 @@ Obtiene el listado de solicitudes realizadas por el usuario autentificado.
 + Response 200 (application/json)
     + Attributes (ListRequestData)
 
-## Carga una solicitud de servicio [/api/requests/{id} POST]
+## Carga una solicitud de servicio [/api/requests POST]
+
+### Carga una solicitud de servicio [POST]
+
+Carga una solicitud solicitud de servicio por un usuario autenticado.
+
+**Información del endpoint**
+
+<i class="fa fa-check"></i> Requiere autenticación
+
++ Request
+    + Headers
+
+            Authorization: JWT <token>
+
++ Response 200 (application/json)
+    + Attributes (ListRequestData)
+
+
+## Carga una nota en la solicitud de servicio [/api/requests/{id}/notes]
 
 + Parameters
-    + id - Id de usuario???.
+    + id - Id de la solicitud de servicio.
 
-### Obtiene el listado de solicitudes [POST]
+### Carga una nota en la solicitud de servicio [POST]
 
-Carga una solicitud solicitud de servicio por un usuario autentificado.
+Carga una nota en la solicitud de servicio por un usuario autenticado.
 
 **Información del endpoint**
 
@@ -263,9 +282,28 @@ Obtiene el listado de servicios.
 + Parameters
     + id - Id del servicio.
 
-### Obtiene el listado de servicios [GET]
+### Obtiene el detalle del servicio [GET]
 
 Obtiene el detalle del servicio.
+
+**Información del endpoint**
+
+<i class="fa fa-check"></i> Requiere autenticación
+
++ Request
+    + Headers
+
+            Authorization: JWT <token>
+
++ Response 200 (application/json)
+    + Attributes (ListServiceData)
+
+
+## Listado de tipos de servicios [/api/services-types]
+
+### Obtiene el listado de tipos de servicios [GET]
+
+Obtiene el listado de tipos de servicios.
 
 **Información del endpoint**
 

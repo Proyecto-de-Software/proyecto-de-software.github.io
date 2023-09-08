@@ -23,13 +23,6 @@ algún otro debido a la particularidades de la solución elegida deberán agrega
 
 # Data Structures
 
-## PagoData
-+ month: 1 (number, required) - Número de mes correspondiente al pago.
-+ amount: 100 (string, required) - Monto de pago.
-
-## PagoListData (array)
-+ (PagoData)
-
 ## InstitucionData
 + name: Institución #1 (string, required) - Nombre de la Institución.
 + information: Información adicional (string, required) - Información de la Institución.
@@ -165,40 +158,6 @@ Obtiene toda la información del perfil del usuario autentificado.
 
 + Response 200 (application/json)
     + Attributes (PerfilData)
-    
-## Disciplinas del usuario actual [/api/me/disciplines]
-
-### Obtiene el listado de disciplinas del usuario [GET]
-
-Obtiene la lista de las disciplinas a las que está inscripto el usuario autentificado.
-
-**Información del endpoint**
-
-<i class="fa fa-check"></i> Requiere autenticación
-
-+ Request
-    + Headers
-
-            Authorization: JWT <token>
-
-+ Response 200 (application/json)
-    + Attributes (InstitucionListData)
-
-### Registra un nuevo pago del socio [POST]
-
-Registra un nuevo pago para el usuario autentificado.
-
-**Información del endpoint**
-
-<i class="fa fa-check"></i> Requiere autenticación
-
-+ Request
-    + Headers
-
-            Authorization: JWT <token>
-
-+ Response 200 (application/json)
-    + Attributes (PagoListData)
 
 
 ## Listado de solicitudes de servicio realizadas [/api/requests]

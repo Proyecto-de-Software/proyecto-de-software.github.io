@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>ORM</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/league.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/base16/zenburn.css" />
+
+    <link rel="stylesheet" href="./_assets/proyecto.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">
+# Proyecto de Software
+
+
+## Cursada 2023
+</script></section><section  data-markdown><script type="text/template">
+# Temas de hoy
+
+- Repaso Sesiones
+- Repaso Acceso a Bases de Datos.
+- ORM</script></section><section ><section data-markdown><script type="text/template">
+# Repasando: Manejo de sesiones
+
+- ¿Qué es una sesión?<!-- .element: class="fragment" data-fragment-index="1" -->
+- ¿Porqué son necesarias?<!-- .element: class="fragment" data-fragment-index="2" -->
+- ¿Qué son las cookies? <!-- .element: class="fragment" data-fragment-index="3" -->
+- ¿Para qué sirven las cookies? <!-- .element: class="fragment" data-fragment-index="4" -->
+- ¿Dónde se alojan las cookies? <!-- .element: class="fragment" data-fragment-index="5" -->
+- ¿Dónde se aloja la sesión? <!-- .element: class="fragment" data-fragment-index="6" -->
+</script></section><section data-markdown><script type="text/template">
+# De nuevo: ¿Dónde se aloja la sesión en flask?
+
+* Depende... <!-- .element: class="fragment" data-fragment-index="1" -->
+* Tradicionalmente (en lenguajes como PHP) la sesión es almacenada en un archivo en el servidor, el cliente guarda una cookie que SÓLO posee el sessionID para identificarla. <!-- .element: class="fragment" data-fragment-index="2" -->
+</script></section><section data-markdown><script type="text/template">
+# Sesiones en flask
+
+* Por defecto Flask usa sesiones basadas en cookies (**session cookie**).
+* La información de sesión se almacena **en el cliente** en una cookie firmada con una **secret key**. 
+* Cualquier modificación a la cookie queda invalidada por su firma. Pero es **visible en todo momento** en el cliente.
+* No es aconsejable guardar información sensible en una session cookie.
+
+Veamos una de estas sesiones en http://localhost:5000/iniciar_sesion decodificadas con https://github.com/noraj/flask-session-cookie-manager
+</script></section><section data-markdown><script type="text/template">
+# Sesiones en flask - Flask-Session 
+
+* Flask posee extrensiones como **Flask-Session** que permiten un mejor manejo de las sesiones.
+* Con Flask-Session podemos elegir diferentes lugares donde almacenar la sesión en el servidor:
+  * redis
+  * memcached
+  * **filesystem**
+  * mongodb
+  * sqlalchemy
+* Instalamos: **poetry add Flask-Session**.</script></section><section data-markdown><script type="text/template">
+# Uso de Flask-Session 
+
+    from flask_session import Session
+    # Configuración inicial de la app
+    app = Flask(__name__)
+    app.config.from_object(Config)
+    #Server Side session
+    app.config['SESSION_TYPE'] = 'filesystem'
+    Session(app)
+
+* Modifiquenos la app y veamos de nuevo... http://localhost:5000/iniciar_sesion
+
+Referencias:
+* Sesiones en flask: https://overiq.com/flask-101/sessions-in-flask/
+* Flask-Session: https://flask-session.readthedocs.io/en/latest/
+</script></section></section><section ><section data-markdown><script type="text/template">
+# Accediendo a Bases de Datos
+
+</script></section><section data-markdown><script type="text/template">
+# Lenguaje SQL (Structured Query Language)
+
+- Sentencias insert, update, select, etc....
+- Ejemplos:
+  - select * from tabla where condición
+  - insert into tabla (campos) values (valores)
+  - update tabla set campo1='valor1' where condición
+</script></section><section data-markdown><script type="text/template">
+
+# Importante
+
+
+## **MySQL**, **PostgreSQL**: motores de base de datos
+
+## **SQL**: lenguaje de consulta
+</script></section><section data-markdown><script type="text/template">
+# pgAdmin
+
+- Interfaz de Administración de la Base de Datos PostgreSQL
+- Podemos exportar e importar a varios formatos
+
+![pgAdmin](images/pgadmin1.png)
+
+- Sitio oficial: [https://www.pgadmin.org/](https://www.pgadmin.org/)
+- pgAdmin de la cátedra: [https://sql.proyecto20212.linti.unlp.edu.ar/](https://sql.proyecto2022.linti.unlp.edu.ar/)
+
+</script></section><section data-markdown><script type="text/template">
+# Acceso a BBDD – PostgreSQL
+
+
+- Vamos a acceder a través de psycopg2.
+
+```bash
+sudo apt-get install libpq-dev
+```
+
+
+```bash
+
+poetry add psycopg2
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Acceso a BBDD – PostgreSQL
+
+```python
+
+import psycopg2, psycopg2.extras
+
+class Issue:
+    def getAll(self):
+        conn = psycopg2.connect(
+            host="localhost",
+            database="proyecto_db",
+            user="proyecto_db",
+            password="proyecto_db")
+
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+        cur.execute('select * from issues')
+        issues = cur.fetchall()
+        print(issues)
+        cur.close()
+        conn.close()
+        return issues
+
+    def insert (self, issue):
+        conn = psycopg2.connect(
+                host="localhost",
+                database="proyecto_db",
+                user="proyecto_db",
+                password="proyecto_db")
+
+        cur = conn.cursor()
+        cur.execute(f"insert into issues (\"user\", title, description, status) values ('{issue['user']}', '{issue['title']}', '{issue['description']}', '{issue['status']}')")
+        conn.commit()
+        cur.close()
+        conn.close()
+
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Acceso a BBDD – PostgreSQL
+
+```python
+# src/core/db.py
+
+import psycopg2, psycopg2.extras
+
+def get_conn():
+    conn = psycopg2.connect(
+        host="localhost",
+        database="proyecto_db",
+        user="proyecto_db",
+        password="proyecto_db")
+
+    return conn
+```
+</script></section><section data-markdown><script type="text/template">
+# Acceso a BBDD – PostgreSQL
+
+- Antes de continuar, usamos config.py
+
+```python
+# src/web/config.py
+
+....
+
+class DevelopmentConfig(Config):
+    """Development configuration."""
+
+    DEBUG = True
+    DB_SERVER = "localhost"
+    DB_DATABASE = "proyecto_db"
+    DB_USER = "proyecto_db"
+    DB_PASSWORD = "proyecto_db"
+    DB_PORT = "5432"
+    DATABASE_URI = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}:{DB_PORT}/{DB_DATABASE}"
+    
+....
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Acceso a BBDD – PostgreSQL
+
+- Antes de continuar, usamos config.py
+
+```python
+# src/core/db.py
+
+import psycopg2, psycopg2.extras
+from flask import current_app
+
+def get_conn():
+    conn = psycopg2.connect(
+        host=current_app.config.get("DB_SERVER"),
+        database=current_app.config.get("DB_DATABASE"),
+        user=current_app.config.get("DB_USER"),
+        password=current_app.config.get("DB_PASSWORD"))
+
+    return conn
+```
+
+</script></section><section data-markdown><script type="text/template">
+# Ahora bien ...
+
+- ¿Qué pasa si queremos migrar de motor de BDD?
+- ¿Qué pasa si queremos tener múltiples BDD conectadas?
+</script></section></section><section ><section data-markdown><script type="text/template">
+# Una vuelta de rosca más -> **ORM**
+
+![ORM](images/orm1.png)
+
+</script></section><section data-markdown><script type="text/template">
+# ORM - Object-Relational Mapping
+
+- Mapeo de objetos a base de datos relacionales.
+- Permite acceder a una base de datos relacional como si fuera orientada a objetos.
+- Transforma las llamadas a los objetos en consultas SQL, que permiten independizar el motor de BD utilizado en la aplicación.
+- De acuerdo a la implementación se utiliza una sintaxis diferente.
+</script></section><section data-markdown><script type="text/template">
+# ¿Por qué?
+
+- BBDD relacionales
+  - Datos escalares: números, cadenas de texto, etc…
+
+- Aplicaciones orientadas a objetos.
+  - Objetos con propiedades y métodos.
+- ¿Problema?
+  - Convertir los objetos en datos escalares para grabar los datos en la base de datos y volver a convertirlos en objetos al recuperarlos.
+</script></section><section data-markdown><script type="text/template">
+# ORM
+
+- Ventajas
+  - Abstracción a la BBDD.
+  - Reutilización de código.
+
+- Desventajas
+  - Otra capa intermedia.
+  - Otro lenguaje de consulta.
+
+- Algunos ORMs
+  - SQLAlchemy
+  - Peewee
+  - Django ORM
+  
+</script></section><section data-markdown><script type="text/template">
+# SQLAlchemy: agregamos una capa de abstracción
+
+- * Ver: [SQLAlchemy](https://www.sqlalchemy.org/)
+
+- Herramientas de Abstracción y ORM (mapea objeto a relacional)
+- Múltiples motores de bases de datos: https://docs.sqlalchemy.org/en/14/dialects/index.html
+</script></section><section data-markdown><script type="text/template">
+# Comparando
+
+- A mayor abstracción menos control .
+- Al abstraernos es posible que se compliquen algunas funciones propias del motor que queremos usar.
+- ¿La abstracción es necesaria?
+
+</script></section><section data-markdown><script type="text/template">
+# ORM - SQLAchemy
+
+- Agregamos SQLAlchemy
+
+```bash
+
+poetry add SQLAlchemy
+
+```
+
+![SQLAlchemy](images/orm2.png)
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo SQLAlchemy
+
+```python
+# src/core/db.py
+
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import scoped_session, sessionmaker
+
+engine = create_engine(f"postgresql://proyecto_db:proyecto_db@localhost:5432/proyecto_db", echo=True, future=True)
+
+db_session = scoped_session(sessionmaker(autocommit=False,
+                                         autoflush=False,
+                                         bind=engine))
+Base = declarative_base()
+Base.query = db_session.query_property()
+
+
+def init_db():
+    # import all modules here that might define models so that
+    # they will be registered properly on the metadata.  Otherwise
+    # you will have to import them first before calling init_db()
+
+    Base.metadata.create_all(bind=engine)
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo SQLAlchemy
+
+```python
+# src/core/board/issue.py
+
+from sqlalchemy import Column
+from sqlalchemy import Integer
+from sqlalchemy import String
+from src.core.db import Base
+
+class Issue(Base):
+    __tablename__ = "issues"
+    id = Column(Integer, primary_key=True)
+    title = Column(String, nullable=False)
+    description = Column(String, nullable=False)
+    status = Column(String, nullable=False)
+    user = Column(String, nullable=False)
+
+    def __init__(self, title=None, description=None, status=None, user=None):
+        self.title = title
+        self.status = status
+        self.description = description
+        self.user = user
+
+    def __repr__(self):
+        return f"Issue(id={self.id!r}, title={self.title!r})"
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo SQLAlchemy
+
+
+```python
+# src/web/__init__.py
+....
+from src.core.db import db_session
+
+def create_app(env="development", static_folder="static"):
+    ....
+    @app.teardown_appcontext
+    def shutdown_session(exception=None):
+        db_session.remove()
+    
+    return app
+    
+....
+
+```
+</script></section><section data-markdown><script type="text/template">
+# ORM - Flask-SQLAchemy
+
+- Agregamos Flask-SQLAlchemy
+
+```bash
+
+poetry add Flask-SQLAlchemy
+
+```
+
+![Flask-SQLAlchemy](images/orm3.png)
+
+- Breve diferencia entre [SQLAlchemy y Flask-SQLAlchemy](https://zaxrosenberg.com/flask-set-up-sqlalchemy-orm-vs-flask_sqlalchemy-orm/)
+</script></section><section data-markdown><script type="text/template">
+# # Ejemplo Flask-SQLAchemy
+
+- Antes de continuar, modificamos config.py
+
+```python
+# src/web/config.py
+
+....
+
+class DevelopmentConfig(Config):
+    """Development configuration."""
+
+    DEBUG = True
+    DB_SERVER = "localhost"
+    DB_DATABASE = "proyecto_db"
+    DB_USER = "proyecto_db"
+    DB_PASSWORD = "proyecto_db"
+    DB_PORT = "5432"
+    SQLALCHEMY_DATABASE_URI = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}:{DB_PORT}/{DB_DATABASE}"
+
+....
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo Flask-SQLAchemy
+
+```python
+# src/core/db.py
+
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
+
+def init_db(app):
+    db.init_app(app)
+    db.create_all()
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo Flask-SQLAchemy
+
+```python
+# src/core/board/issue.py
+
+from sqlalchemy import Column
+from sqlalchemy import Integer
+from sqlalchemy import String
+from src.core.db import db
+
+class Issue(db.Model):
+    __tablename__ = "issues"
+    id = Column(Integer, primary_key=True)
+    title = Column(String, nullable=False)
+    description = Column(String, nullable=False)
+    status = Column(String, nullable=False)
+    user = Column(String, nullable=False)
+
+    def __init__(self, title=None, description=None, status=None, user=None):
+        self.title = title
+        self.status = status
+        self.description = description
+        self.user = user
+
+    def __repr__(self):
+        return f"Issue(id={self.id!r}, title={self.title!r})"
+```
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo Flask-SQLAchemy
+
+
+```python
+# src/web/__init__.py
+....
+from src.core.db import db.session
+
+def create_app(env="development", static_folder="static"):
+    ....
+    @app.teardown_appcontext
+    def shutdown_session(exception=None):
+        db.session.remove()
+    
+    return app
+    
+....
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo Flask-SQLAchemy
+
+```python
+# src/web/controllers/issue.py
+
+from flask import render_template, request, Blueprint
+from src.core.board.issue import Issue
+from src.core.db import db
+
+issue_blueprint = Blueprint("issues", __name__, url_prefix="/issues")
+
+
+@issue_blueprint.route("/")
+def issues_index():
+    issues = Issue.query.all()
+    return render_template("issues/index.html", issues=issues)
+
+
+@issue_blueprint.route("/add", methods=["POST"])
+def issues_add():
+    data_issue = {# "id": request.form.get("id"),
+             "user": request.form.get("user"),
+             "title": request.form.get("title"),
+             "description": request.form.get("description"),
+             "status": request.form.get("status"),
+             }
+    issue = Issue(**data_issue)
+    db.session.add(issue)
+    db.session.commit()
+    issues = Issue.query.all()
+    return render_template("issues/index.html", issues=issues)
+
+```
+</script></section><section data-markdown><script type="text/template"># Lo que viene....
+
+- Integrar sesiones, ORM, login
+
+</script></section></section><section  data-markdown><script type="text/template"># Fin                                            
+
+
+
+
+</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

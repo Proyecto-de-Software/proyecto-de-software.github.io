@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>BBDD</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/league.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/base16/zenburn.css" />
+
+    <link rel="stylesheet" href="./_assets/proyecto.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">
+# Proyecto de Software
+
+
+## Cursada 2023
+</script></section><section  data-markdown><script type="text/template">
+# Tema
+
+- Acceso a Bases de Datos.
+</script></section><section ><section data-markdown><script type="text/template">
+# Accediendo a Bases de Datos
+
+</script></section><section data-markdown><script type="text/template">
+# Lenguaje SQL (Structured Query Language)
+
+- Sentencias insert, update, select, etc....
+- Ejemplos:
+  - select * from tabla where condición
+  - insert into tabla (campos) values (valores)
+  - update tabla set campo1='valor1' where condición
+</script></section><section data-markdown><script type="text/template">
+
+# Importante
+
+
+## **MySQL**, **PostgreSQL**: motores de base de datos
+
+## **SQL**: lenguaje de consulta
+</script></section><section data-markdown><script type="text/template">
+# pgAdmin
+
+- Interfaz de Administración de la Base de Datos PostgreSQL
+- Podemos exportar e importar a varios formatos
+
+![pgAdmin](images/pgadmin1.png)<!-- .element height="75%" width="75%" -->
+
+- Sitio oficial de [pgAdmin](https://www.pgadmin.org/)
+- pgAdmin de la cátedra: [https://sql.proyecto2022.linti.unlp.edu.ar/](https://sql.proyecto2022.linti.unlp.edu.ar/)
+</script></section><section data-markdown><script type="text/template">
+# pgAdmin
+
+
+
+![pgAdmin](images/pgadmin2.png)<!-- .element height="75%" width="75%" -->
+
+
+</script></section><section data-markdown><script type="text/template">
+# Acceso a BBDD – PostgreSQL
+
+- Vamos a acceder a través de psycopg2.
+
+- En Ubuntu 20.04 tuve que instalar:
+
+```bash
+
+sudo apt-get install libpq-dev
+
+```
+
+- Luego 
+
+
+```bash
+
+poetry add psycopg2
+
+```
+
+</script></section><section data-markdown><script type="text/template">
+# Acceso a BBDD – PostgreSQL
+
+```python
+#src/core/issue.py
+
+import psycopg2
+
+conn = psycopg2.connect(
+        host="localhost",
+        database="proyecto_db",
+        user="proyecto_db",
+        password="proyecto_db")
+
+cur = conn.cursor()
+
+cur.execute('select * from issues')
+issues = cur.fetchall()
+cur.close()
+conn.close()
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Acceso a BBDD – PostgreSQL
+
+- Algún cambio en el controlador o en la vista?
+- Que piensan?
+- Probamos...
+
+</script></section><section data-markdown><script type="text/template">
+# Acceso a BBDD – PostgreSQL
+
+![MVC](images/bbdd1.png)
+</script></section><section data-markdown><script type="text/template">
+# Acceso a BBDD – PostgreSQL
+
+```python
+
+import psycopg2, psycopg2.extras
+
+class Issue:
+    def getAll(self):
+        conn = psycopg2.connect(
+            host="localhost",
+            database="proyecto_db",
+            user="proyecto_db",
+            password="proyecto_db")
+
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+        cur.execute('select * from issues')
+        issues = cur.fetchall()
+        print(issues)
+        cur.close()
+        conn.close()
+        return issues
+
+    def insert (self, issue):
+        conn = psycopg2.connect(
+                host="localhost",
+                database="proyecto_db",
+                user="proyecto_db",
+                password="proyecto_db")
+
+        cur = conn.cursor()
+        cur.execute(f"insert into issues (\"user\", title, description, status) values ('{issue['user']}', '{issue['title']}', '{issue['description']}', '{issue['status']}')")
+        conn.commit()
+        cur.close()
+        conn.close()
+
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Acceso a BBDD – PostgreSQL
+
+```python
+
+from flask import render_template, request, Blueprint
+from src.core.issue import Issue
+
+issue_blueprint = Blueprint("issues", __name__, url_prefix="/issues")
+
+
+@issue_blueprint.route("/")
+def issues_index():
+    issue = Issue()
+    issues = issue.getAll()
+    return render_template("issues/index.html", issues=issues)
+
+
+@issue_blueprint.route("/add", methods=["POST"])
+def issues_add():
+    data_issue = {"id": request.form.get("id"),
+             "user": request.form.get("user"),
+             "title": request.form.get("title"),
+             "description": request.form.get("description"),
+             "status": request.form.get("status"),
+             }
+    issue = Issue()
+    issue.insert(data_issue)
+    issues = issue.getAll()
+    return render_template("issues/index.html", issues=issues)
+
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Ahora bien ...
+
+- ¿Qué pasa si queremos migrar de motor de BDD?
+- ¿Qué pasa si queremos tener múltiples BDD conectadas?
+- ¿Qué pasa cuando queremos incorporar otro modelo?
+</script></section><section data-markdown><script type="text/template"># Enlaces
+
+- PostgreSQL: [https://www.postgresql.org/](https://www.postgresql.org/)
+- PgAdmin de la cátedra: [https://sql.proyecto2023.linti.unlp.edu.ar](https://sql.proyecto2023.linti.unlp.edu.ar)
+- https://www.digitalocean.com/community/tutorials/how-to-use-a-postgresql-database-in-a-flask-application
+- https://badcodernocookie.com/pg_config-executable-not-found/
+</script></section></section><section  data-markdown><script type="text/template"># Fin                                            
+
+
+
+
+</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

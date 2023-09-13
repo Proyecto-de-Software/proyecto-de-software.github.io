@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Intro JS - DOM</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/league.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/base16/zenburn.css" />
+
+    <link rel="stylesheet" href="./_assets/proyecto.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">
+# Proyecto de Software
+</script></section><section  data-markdown><script type="text/template">
+# ¿Qué abordaremos en este video?
+
+- Una introducción al lenguaje JavaScript
+- DOM: una descripción más detallada.
+</script></section><section  data-markdown><script type="text/template">
+# Procesamiento en el cliente
+
+![Front-end developer-roadmap](images/front-endJS.png)
+</script></section><section ><section data-markdown><script type="text/template">
+# ¿Qué sabemos de los scripts?
+
+- Los scripts son pequeños programas que se incluyen en el documento html.
+- Si el navegador NO puede ejecutar scripts, se puede utilizar la etiqueta **noscript**:
+
+```html
+	<script>
+	       alert("Hola!")
+	__SCRIPT_END__
+	<noscript>Este navegador no soporta o no tiene habilitado los scripts.</noscript> 
+```</script></section><section data-markdown><script type="text/template"># ¿Dónde se ubican los scripts?
+
+Pueden estar incluidos directamente en el documento html o en archivos externos.
+
+```html
+
+<html> 
+	<head>
+		<script  src="misScripts.js">
+		__SCRIPT_END__
+	</head>
+	<body>
+		<script>
+		...código....
+		__SCRIPT_END__
+	</body>
+</html>
+```</script></section><section data-markdown><script type="text/template">
+# ¿Siempre JavaScript?
+
+- Es el lenguaje de scripts por defecto. 
+- A partir de HTML5.2 quedó [obsoleto](https://www.w3.org/TR/html5/obsolete.html#obsolete) especificar el lenguaje de script.
+- Aunque existe el atributo **type**, no es necesario para indicar el lenguaje.
+
+```html
+	<script type="text/javascript" >
+	...código....
+	__SCRIPT_END__
+
+```</script></section><section data-markdown><script type="text/template"># type="module"
+
+- El atributo type puede usarse para indicar que el script es un  [module script](https://html.spec.whatwg.org/multipage/webappapis.html#module-script).
+- Un módulo es un script que puede **importarse** cuando sea necesario. 
+- [+ Info](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Modules)
+
+```html
+	<script type="module" src="mi_modulo.js">__SCRIPT_END__>
+
+```
+</script></section><section data-markdown><script type="text/template">
+# JavaScript: características básicas
+
+- El estándar es el [EcmaScript 262](https://www.ecma-international.org/ecma-262/).
+- JavaScript es un lenguaje de programación interpretado, multiparadigma y dinámico. 
+- Puede correr tanto en el cliente como en el servidor. 
+- **NOSOTROS lo usaremos en forma client-side**: ¿dónde está el intérprete?
+</script></section><section data-markdown><script type="text/template">
+# Forma de ejecución: atributos async y defer
+	
+![Ejecución JS](images/executionJS.png)
+
+- Sacado de https://www.josefzacek.cz/blog/whats-the-difference-between-async-vs-defer-attributes/
+
+- [+ Info](https://www.w3.org/TR/html52/semantics-scripting.html#element-attrdef-script-defer)
+</script></section><section data-markdown><script type="text/template">
+# La consola: probemos... 
+
+```javascript
+
+	parseInt("1234");
+	parseInt("11",2);
+	parseInt("0x10");
+	parseInt("hola");
+	Math.sqrt(9);
+	Number.MAX_VALUE;
+	
+	"proyecto".length;
+	"proyecto".charAt(2);
+	"proyecto de desarrollo".replace("desarrollo", "software");
+	"proyecto".toUpperCase();
+	
+	var arreglo = new Array("uno", 2, "tres");
+	arreglo[3]="3333";
+	
+	var frutas= new Array();
+	frutas["citricos"]=new Array("naranja", "pomelo");
+	frutas["otros"]=new Array("manzana", "pera");
+	frutas["citricos"];
+	frutas.citricos;
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Seguimos probando...
+
+- Veamos un [script simple](ejemplos/primer_script.html) en un documento HTML.
+- Más ejemplos en estos [tutoriales](https://developer.mozilla.org/es/docs/Web/JavaScript).
+</script></section><section data-markdown><script type="text/template">
+# Funciones en JavaScript
+
+```javascript
+function nombreFuncion(par1, par2, par3) {
+  // código
+}
+	
+```
+[Algunos ejemplos](ejemplos/01_JS.html)
+
+</script></section><section data-markdown><script type="text/template">
+
+# Hablamos de scripts, pero...
+
+¿Para qué los utilizamos en nuestros desarrollos?
+
+Si queremos cambiar el contenido dinámicamente de mi página, o hacer validaciones, entre otras muchas cosas ¿qué necesitamos? <!-- .element: class="fragment" data-fragment-index="1" -->
+</script></section></section><section ><section data-markdown><script type="text/template">
+# DOM: el modelo de objetos del documento
+</script></section><section data-markdown><script type="text/template">
+# DOM: el modelo de objetos del documento
+
+- El modelo de objetos del documento es una **API**, que permite acceder a los contenidos de un documento HTML. 
+- Proporciona una **representación** estructurada, **orientada a objetos**, de los elementos individuales y el contenido del documento, con métodos para recuperar y fijar las propiedades de dichos objetos. 
+- Proporciona métodos para agregar y eliminar objetos al documento. 
+- También proporciona una **interfaz estándar** para trabajar con **eventos**.
+- La especificación en: [https://dom.spec.whatwg.org/](https://dom.spec.whatwg.org/) 
+</script></section><section data-markdown><script type="text/template">
+# El documento se ve como un **árbol de nodos**
+
+- Cada nodo tiene sus propios métodos y propiedades, pero todos implementan la [interfaz Node](https://dom.spec.whatwg.org/#node): un conjunto común de métodos y propiedades relacionadas con la estructura de árbol del documento. 
+- Por ejemplo: **insertBefore()**, **appendChild()**, **removeChild()**, entre otras.
+- Por ejemplo: **firstChild**, **lastChild**, **childNodes**, **parentNode**, entre otras.
+</script></section><section data-markdown><script type="text/template">
+# En un documento HTML
+
+- El documento entero es un **nodo documento**.
+- Cada elemento HTML es un **nodo elemento**.
+- Los textos  que aparecen en las páginas son **nodos de texto**.
+</script></section><section data-markdown><script type="text/template">
+# El documento
+
+- La raíz del árbol es el **objeto document**, que implementa la [interfaz Document](https://dom.spec.whatwg.org/#interface-document). 
+- El objeto document tiene sólo un elemento hijo, dado por **document.documentElement**.
+- **document.documentElement** corresponde al elemento **&lt;html&gt;** y tiene dos hijos: **&lt;head&gt;** y **&lt;body&gt;**
+![El documento como un árbol](images/dom.png)
+</script></section><section data-markdown><script type="text/template"># Interfaz Document
+
+- La [interfaz Document](https://dom.spec.whatwg.org/#interface-document) proporciona métodos para acceder y crear otros nodos en el árbol del documento tales como: 
+	- **getElementById()**
+	- **getElementsByTagName()**
+	- **getElementsByClassName()**
+	- **createElement()**
+	- entre otros...</script></section><section data-markdown><script type="text/template">
+# DOM – Algunas herramientas
+
+![DOm inspectorl](images/dom4.png)
+</script></section><section data-markdown><script type="text/template">
+# Recorriendo el árbol
+
+Miremos el siguiente código:
+
+
+```html
+
+<html> 
+	<head>
+		<title> DOM </title>
+	</head>
+	<body>
+		<h1> Algo interesante ... </h1>
+		<p>  Mmmm es interesante? </p>
+	</body>
+</html>
+```
+
+- ¿A qué elemento hace referencia: **document.documentElement.lastChild.firstElementChild.tagName**?
+</script></section><section data-markdown><script type="text/template">
+# Accediendo a los nodos
+
+- A través del atributo **id**, podemos utilizar el método: **document.getElementById()**
+- Para recuperar todos los elementos de un mismo tipo, se puede usar el método: **document.getElementsByTagName()** o **getElementsByClassName()**.
+
+- Veamos un [ejemplo sencillo](ejemplos/ejemplosDOM/00-ejemploDOM.html).
+
+</script></section><section data-markdown><script type="text/template">
+# Accediendo a nodos: querySelector y querySelectorAll
+
+
+```html
+<script>
+	var primer_parrafo = document.querySelector("p.especial");
+	primer_parrafo.style.color = "blue";
+__SCRIPT_END__
+```
+	 	 
+```html
+<script>
+	var x = document.querySelectorAll("p.especial");
+	for (var i = 0; i<x.length; i++)
+	{ 
+	  x[i].style.color = "blue";
+  }
+__SCRIPT_END__
+```
+</script></section><section data-markdown><script type="text/template">
+
+# Muchas librerías JS brindan atajos 
+
+- Atajos a las funciones de DOM en JQuery:
+	-  **document.getElementById("p1")** vs. **$("#p1")**
+	-  **document.getElementByTagName("p")** vs.  **$("p")**
+- JQuery usa los selectores CSS para acceder a los elementos:
+	- **$("p.intro"):** todos los elementos **&lt;p&gt;** con class="intro".
+	- **$(".intro"):** todos los elementos con class=”intro”
+	- **$("p#demo"):** todos los elementos **&lt;p&gt;** id="demo".
+	- **$(this):** el elemento actual
+	- **$("ul li:odd"):** los **&lt;li&gt;** impares dentro de **&lt;ul&gt;**
+</script></section><section data-markdown><script type="text/template">
+# Modificando el árbol
+
+- La interfaz document incluye métodos que permiten modificar el árbol de nodos: **createElement**, **createTextNode**
+- **Ejemplo**: quiero crear una lista en forma dinámica....
+
+```javascript
+
+	...
+	var lista=document.createElement("ul");
+	var item=document.createElement("li");
+
+	....
+	lista.appendChild(item);
+	....
+	document.documentElement.lastChild.appendChild(lista);
+	....
+```
+
+- Veamos [este ejemplo de listas](ejemplos/ejemplosDOM/01-domsencillo.html)
+
+</script></section><section data-markdown><script type="text/template">
+# Tipos de nodos
+
+
+- **Nodos elementos**: corresponden a las etiquetas del documento. Pueden tener nodos hijos, que pueden ser otros elementos o nodos de texto. 
+- **Nodos de texto**: representan contenido, o simplemente caracteres. Tienen un nodo padre y, posiblemente, nodos del mismo nivel, pero no pueden tener nodos hijos.
+
+- En realidad hay más...
+</script></section><section data-markdown><script type="text/template">
+# Nodos de texto
+
+- Los nodos de texto no tienen un atributo **id**.
+- No se pueden acceder mediante los métodos **getElementById()** o **getElementsByTagName()**.
+- **Se acceden a través de su nodo padre.**
+
+- Ejemplo: 
+
+```html
+	.....
+	<p id='p1'> Texto inicial ....</p>
+	<script>
+	....
+	document.getElementById('p1').firstChild.nodeValue='Otro';
+	__SCRIPT_END__
+
+```
+
+- [Completamos](ejemplos/ejemplosDOM/02-domsencillo1.html) el ejemplo anterior.
+- nodeValue vs innerHTML.
+</script></section></section><section ><section data-markdown><script type="text/template">
+# DOM y eventos
+</script></section><section data-markdown><script type="text/template">
+# DOM también contempla... 
+
+... un [sistema de eventos](https://www.w3.org/TR/uievents/) genérico que permita registrar **manejadores** de eventos, describir el **flujo de eventos** a través de la estructura del árbol y proveer **información contextual** sobre cada evento.
+
+- También define un subconjunto común de los sistemas de eventos actuales. 
+</script></section><section data-markdown><script type="text/template">
+# Modelo de eventos
+
+- ¿Qué es un evento? ¿Cuándo se produce?
+- La especificación de DOM: <!-- .element: class="fragment" data-fragment-index="1" -->
+	- Define y explica la propagación y registro de eventos.   <!-- .element: class="fragment" data-fragment-index="1" -->
+	- Define la <!-- .element: class="fragment" data-fragment-index="1" --> [interfaz Event](https://dom.spec.whatwg.org/#interface-event).  <!-- .element: class="fragment" data-fragment-index="1" -->
+	- Define cómo se interpreta el flujo de eventos una vez producido.  <!-- .element: class="fragment" data-fragment-index="2" --></script></section><section data-markdown><script type="text/template">
+# Flujo de eventos
+
+![Flujo de eventos](images/domFlujoEventos1.png)
+
+Imagen obtenida de [w3.org](https://www.w3.org/TR/uievents/#dom-event-architecture)
+</script></section><section data-markdown><script type="text/template">
+# Manejadores de eventos
+
+```javascript
+
+	function manejador(evento) {
+		// 
+		// "evento" se crea implícitamente y contiene la
+		// info sobre  el evento producido.
+		//
+		}
+		var elem=document.getElementById('p1');
+		elem.onmouseover = manejador;
+```
+
+**manejador** es un objeto function.
+
+</script></section><section data-markdown><script type="text/template">
+# Escuchadores de eventos
+
+- Los objetos DOM también pueden ser registrados como **escuchadores de eventos**. 
+- Esta característica puede ser utilizada para asignar múltiples manejadores para un evento dado. 
+- Los métodos básicos son: **addEventListener** y **removeEventListener**
+</script></section><section data-markdown><script type="text/template">
+# Escuchadores de eventos: ejemplo
+
+
+```javascript
+
+	var elem = document.getElementById('p1');
+	elem.addEventListener("mouseover", f1, true):
+	elem.addEventListener("mouseout", f2, true):
+	.......
+
+	elem.removeEventListener("mouseover", f1, true);
+
+
+	elem.addEventListener("mouseover", f1, true):
+	elem.addEventListener("mouseover", f1, false):
+```
+</script></section></section><section ><section data-markdown><script type="text/template"># Un poco más de JavaScript</script></section><section data-markdown><script type="text/template">
+# Excepciones en JavaScript
+
+- Se pueden lanzar excepciones usando la sentencia **throw**.
+- Se manejan con la sentencia **try...catch**.
+- Un [ejemplo de la w3schools](https://www.w3schools.com/js/tryit.asp?filename=tryjs_throw_error)
+- **finally** opcional.
+- Más info [developer.mozilla](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/try...catch)
+</script></section><section data-markdown><script type="text/template">
+# Objetos y JavaScript
+
+
+```javascript
+
+var mi_cancion = {
+        "titulo": "Ruta 66", 
+        "interprete": "Pappo", 
+        }
+```
+```javascript
+	function Musica(titulo, interprete){
+		this.titulo=titulo;
+		this.interprete=interprete;
+	}
+	var mi_musica= new Array();
+	mi_musica[0]= new Musica(
+		"Desconfio",
+		"Pappo");
+	mi_musica[1]= new Musica(
+		"Sussy Cadillac",
+		"Riff");
+	mi_musica[2]= new Musica(
+		"Llegara la paz",
+		"Pappo's Blues");
+		
+```
+
+- ¿Qué representa la función Musica?
+- ¿**this**?
+</script></section><section data-markdown><script type="text/template">
+# Agregando métodos
+
+```javascript
+    function Musica(titulo, interprete){
+        this.titulo=titulo;
+        this.interprete=interprete;
+        this.es_solo_Pappo = function(){return (this.interprete == "Pappo")};
+    }
+    var mi_musica= new Array();
+    mi_musica[0]= new Musica(
+        "Desconfio",
+        "Pappo");
+    mi_musica[1]= new Musica(
+        "Sussy Cadillac",
+        "Riff");
+    mi_musica[2]= new Musica(
+        "Llegara la paz",
+        "Pappo's Blues");
+
+    for (var i = 0; i<mi_musica.length; i++){ 
+         objeto = mi_musica[i];
+         if (objeto.es_solo_Pappo()){
+    	     console.log(objeto.titulo)}
+    }
+
+```
+- Probamos el [ejemplo](ejemplos/objetosJS.html).</script></section><section data-markdown><script type="text/template">
+# Objetos y JavaScript
+
+## Ahora con class
+
+```javascript
+class Musica{
+    constructor (titulo, interprete){
+	this.titulo=titulo;
+	this.interprete=interprete;
+    }
+    es_solo_Pappo () {
+	return this.interprete == "Pappo";
+    }
+}
+
+```
+- ¿Qué diferencias hay con la función Musica?
+- ¡Las clases NO son objetos! 
+- Más info en este [artículo sobre modelo de objetos. ](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Details_of_the_Object_Model)
+- Y en la [definición del estándar](https://www.ecma-international.org/ecma-262/10.0/index.html#sec-objects) </script></section><section data-markdown><script type="text/template"># Getters y setters  
+```javascript
+class Musica{
+    constructor (titulo, interprete){
+    this.titulo = titulo;
+    this.interprete = interprete;
+    this.language = ""
+    }
+    get es_solo_Pappo () {
+        return this.interprete == "Pappo";
+    }
+    get resumen () {
+        return this.titulo + ":" + this.interprete +"("+this.language+")";
+    }
+    set idioma (idioma) {
+        this.language = idioma;
+    }
+}
+
+var objeto = new Musica("El Hombre Suburbano", "Pappo's Blues");
+console.log(objeto.resumen);
+objeto.idioma = "Español";
+console.log(objeto.resumen);
+
+```
+[+ Info en este ejemplo de w3school](https://www.w3schools.com/js/js_object_accessors.asp)</script></section><section data-markdown><script type="text/template">
+# El prototipo
+
+> Recordemos que **JavaScript es un lenguaje basado en prototipos**.
+
+```javascript
+class Musica{
+    constructor (titulo, interprete){
+    this.titulo = titulo;
+    this.interprete = interprete;
+    }
+   get resumen () {
+        return this.titulo + ":" + this.interprete +"("+this.album+")";
+    }
+}
+
+var objeto = new Musica("Ruta 66", "Pappo");
+var objeto1 = new Musica("Mi vieja", "Pappo");
+console.log(objeto.resumen);
+Musica.prototype.album = "Blues local"
+console.log(objeto.resumen);
+
+```
+- Probemos lo mismo con objeto1. ¿Qué efecto tiene modificar la propiedad **prototype**?
+</script></section><section data-markdown><script type="text/template"># Herencia
+
+- Todos los objetos JavaScript heredan propiedades y métodos de un prototipo:
+	- Los objetos Array heredan de Array.prototype.
+	- Los objetos Musica heredan de Musica.prototype.
+	 
+- **Object.prototype** está al tope de la cadena de herencia de prototipos. 
+
+```javascript
+console.log(Musica.prototype);
+
+```
+</script></section></section><section  data-markdown><script type="text/template"># Creando subclases
+
+```javascript
+   class Jugador {
+       constructor(nombre, juego){
+          this.nom = nombre;
+          this.juego = juego;
+       }
+       get nombre() {
+            return this.nom;
+        }
+    }
+    class JugadorDeFIFA extends Jugador {
+        constructor(nombre, plataforma){
+            super(nombre, 'FIFA');
+            this.dispositivo = plataforma;
+        }
+        get plataforma(){
+            return this.dispositivo;
+        }
+    }
+    var nico =  new JugadorDeFIFA('Nico Villalba', 'PS4');
+    console.log(nico.plataforma);
+    console.log(nico.nombre);
+    
+    
+```
+- ¿super()?
+- ¿JugadorDeFIFA.prototype?
+</script></section><section ><section data-markdown><script type="text/template"># Y surgió JSON ...
+
+- [JSON](https://www.json.org/): **J**ava**S**cript **O**bject **N**otation.
+- Surge como una forma de definir objetos en JavaScript.
+
+```javascript
+	var mi_cancion = {
+		"titulo": "Lily Malone", 
+		"interprete": "Riff", 
+		}
+
+```
+- Es un formato ligero para el envío y recepción de datos.
+</script></section><section data-markdown><script type="text/template">
+# JSON
+
+- JSON se basa en dos estructuras:
+
+	- Objetos: una colección de pares de nombre/valor
+	- Arreglos: una lista ordenada de objetos
+
+```javascript
+
+	pappo1 = {
+		"titulo": "Blues para mi guitarra", 
+		"interprete": "Pappo", 
+		}
+	pappo2 = {
+		"titulo": "El hombre suburbano", 
+		"interprete": "Pappo", 
+		}		
+	coleccion= [pappo1, pappo2];
+```
+
+```javascript
+	var mi_musica = [
+		{titulo: "Desconfio",
+		interprete: "Pappo"
+		},
+		{titulo: "Sussy Cadillac",
+		interprete: "Riff"
+		}.
+		{titulo: "Llegará la paz",
+		interprete: "Pappo's Blues"
+		}
+		];
+		
+```
+</script></section><section data-markdown><script type="text/template">
+# MUY usado
+
+- Veamos este ejemplo: https://developers.mercadolibre.com.ar/es_ar/categorias-y-publicaciones#close
+- ¿Conocen la [central meteorológica]( http://clima.info.unlp.edu.ar) de la facultad? Miremos estos [datos](http://clima.info.unlp.edu.ar/last)
+- Hay alternativas como XML y YAML.
+</script></section></section><section ><section data-markdown><script type="text/template">
+
+# Librerías/frameworks JavaScript
+
+- En [javascripting.com](https://www.javascripting.com/) hay una lista de más de 1000 registradas.
+- No todas con el mismo objetivo.
+- Para desarrollo en los últimos años...
+
+![Librerías JS TOP](images/libJSTop.png)
+</script></section><section data-markdown><script type="text/template">
+# ¿jQuery en la actualidad?
+## Para desarrollos sencillos
+
+- Aún actualmente, muy usada: https://w3techs.com/technologies/overview/javascript_library/all
+- Atajos a las funciones de DOM:
+  -  **document.getElementById("p1")** vs. **$("#p1")**
+  -  **document.getElementByTagName("p")** vs.  **$("p")**
+- JQuery usa los selectores CSS para acceder a los elementos:
+  - **$("p.intro"):** todos los elementos **&lt;p&gt;** con class="intro".
+  - **$(".intro"):** todos los elementos con class=”intro”
+  - **$("p#demo"):** todos los elementos **&lt;p&gt;** id="demo".
+  - **$(this):** el elemento actual
+  - **$("ul li:odd"):** los **&lt;li&gt;** impares dentro de **&lt;ul&gt;**
+</script></section></section><section  data-markdown><script type="text/template">
+# Seguimos la próxima mejor...
+</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

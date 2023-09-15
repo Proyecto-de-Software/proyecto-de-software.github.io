@@ -24,46 +24,51 @@ algún otro debido a la particularidades de la solución elegida deberán agrega
 # Data Structures
 
 ## InstitucionData
-+ name: Institución #1 (string, required) - Nombre de la Institución.
-+ information: Información adicional (string, required) - Información de la Institución.
-+ address: Calle 50 N° 1234 (string, required) - Dirección de la Institución.
-+ location: latitude, longitude (string, required) - Nombre de persona a cargo de la misma.
-+ web: www.institucion1.com (string, required) - Web de la Institución.
-+ days and opening hours: Lunes a viernes de 8 a 18hs (string, required) - Días y horarios de atención.
-+ contact information: info@institution.com (string, required) - Información de contacto.
-+ enabled: SI (string, required) - Habilitado SI o NO.
++ name: `Institución #1` (string) - Nombre de la Institución.
++ information: `Información adicional` (string) - Información de la Institución.
++ address: `Calle 50 N° 1234` (string) - Dirección de la Institución.
++ location: `latitude, longitude` (string) - Nombre de persona a cargo de la misma.
++ web: `www.institucion1.com` (string) - Web de la Institución.
++ `days_and_opening_hours`: `Lunes a viernes de 8 a 18hs` (string) - Días y horarios de atención.
++ email: `info@institution.com` (string) - Información de contacto.
++ enabled: false (boolean) - Habilitado SI o NO.
 
-## InstitucionListData (array)
-+ (InstitucionData)
-
-## ClubData
-+ email: clubdeportivovillaelisa@gmail.com (string, required) - Correo electrónico del club
-+ phone: `0221 487-0193` (string, required) - Teléfono del club
-
-## ListRequestData
-+ status: OK (string, required) - Valor del estado.
-+ desciption: Listado de solicitudes realizadas. (string, required) - Descripción del listado de solicitudes.
-+ request (RequestData)
+## InstitucionListData
++ data (array[InstitucionData]) - Lista de intituciones.
++ page: `1` (number) - Número de página actual.
++ `per_page`: `10` (number) - Cantidad de elementos por página.
++ total: `25` (number) - Total de elementos en la lista.
 
 ## RequestData
-+ title: a title (string, required) - Título de la solicitud.
-+ creation_date: creation_date (string, required) - Fecha de creación de la solicitud (generada por sistema).
-+ close_date: close_date (string, required) - Fecha de finalización de la solicitud (generada por sistema).
-+ status: status (string, required) - Estado de la solicitud.
-+ description: description (string, required) - Descripción de la solicitud.
++ title: `a title` (string) - Título de la solicitud.
++ creation_date: `2023-10-10` (string) - Fecha de creación de la solicitud (generada por sistema).
++ close_date: `2023-12-11` (string) - Fecha de finalización de la solicitud (generada por sistema).
++ status: `created` (string) - Estado de la solicitud.
++ description: `a long description` (string) - Descripción de la solicitud.
 
-## ListServiceData
-+ status: OK (string, required) - Valor del estado.
-+ desciption: Listado de servicios. (string, required) - Descripción del listado de servicios.
-+ request (ServiceData)
+# RequestListData
++ data (array[RequestData]) - Lista de solicitudes.
++ page: `1` (number) - Número de página actual.
++ per_page: `10` (number) - Cantidad de elementos por página.
++ total: `25` (number) - Total de elementos en la lista.
 
 ## ServiceData
-+ name: name (string, required) - Nombre del servicio.
-+ description: a description (string, required) - Descripción del servicio.
-+ laboratory: laboratory name (string, required) - Nombre del Laboratorio que presta el servicio.
-+ keywords: a list of keywords (string, required) - Lista de palabras clave.
-+ enabled: enabled (string, required) - Servicio habilitado SI o NO.
++ name: `service name` (string) - Nombre del servicio.
++ description: `a description` (string) - Descripción del servicio.
++ laboratory: `laboratory name` (string) - Nombre del Laboratorio que presta el servicio.
++ keywords: `a list of keywords` (string) - Lista de palabras clave.
++ enabled: false (boolean) - Servicio habilitado SI o NO.
 
+## ServiceListData
++ data (array[ServiceData]) - Lista de servicios.
++ page: `1` (number) - Número de página actual.
++ per_page: `10` (number) - Cantidad de elementos por página.
++ total: `25` (number) - Total de elementos en la lista.
+
+## ServiceTypeData (enum)
++ `Análisis`
++ `Consultoría`
++ `Desarrollo`
 
 ## DocTypeData (enum)
 + `DNI`
@@ -77,43 +82,14 @@ algún otro debido a la particularidades de la solución elegida deberán agrega
 + `Prefiero no decir`
 
 ## PerfilData
-+ user: usarname (string, required) - Nombre de usuario.
-+ email: username@mail.com (string, required) - Correco electrónico.
-+ number: 2560 (string, required) - Número de socio.
++ user: `usarname` (string) - Nombre de usuario.
++ email: `username@mail.com` (string) - Correco electrónico.
 + document_type (DocTypeData) - Tipo de documento.
-+ document_number: 35.555.555 (string, required) - Número de documento.
++ document_number: `35.555.555` (string) - Número de documento.
 + gender (GenderData) - Género.
-+ gender_other: transgénero (string, required) - Género no listado.
-+ address: 120 y 50 (string, optional) - Dirección.
-+ phone: 221 1212-123 (string, optional) - Teléfono.
-
-# Group Instituciones
-
-## Información de la Institucion [/api/info]
-
-### Obtiene información de la institución [GET]
-
-Obtiene información importante y de contacto sobre la Institución.
-
-**Información del endpoint**
-
-<i class="fa fa-times"></i> Requiere autenticación
-
-+ Response 200 (application/json)
-    + Attributes (ClubData)
-
-## Información de las Instituciones [/api/institutions]
-
-### Obtiene todas las Instituciones de la entidad [GET]
-
-Obtiene todas las Instituciones que se realizan en la entidad.
-
-**Información del endpoint**
-
-<i class="fa fa-times"></i> Requiere autenticación
-
-+ Response 200 (application/json)
-    + Attributes (InstitucionListData)
++ gender_other: `transgénero` (string) - Género no listado.
++ address: `120 y 50` (string) - Dirección.
++ phone: `221 1212-123` (string) - Teléfono.
 
 # Group Autenticación
 
@@ -138,9 +114,37 @@ Permite obtener el un JSON Web Token válido para el usuario y password.
 + Response 200 (application/json)
     + Attributes
         + token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9....` (string) - JSON Web Token.
+            
++ Response 400 (application/json)
+  + Attributes (object)
+      - error: Parámetros inválidos (string)
+      
+# Group Instituciones
 
+## Información de las Instituciones [/api/institutions{?page,per_page}]
 
-# Group Usuario
+### Obtiene todas las Instituciones de la entidad [GET]
+
+Obtiene todas las Instituciones que se realizan en la entidad.
+
+**Información del endpoint**
+
+<i class="fa fa-times"></i> Requiere autenticación
+
++ Parameters
+  + page: 2 (integer, optional) - Número de página actual.
+        + Default: 1
+  + per_page: 10 (integer, optional) - Cantidad de elementos por página.
+        + Default: 1
+
++ Response 200 (application/json)
+    + Attributes (InstitucionListData)
+            
++ Response 400 (application/json)
+  + Attributes (object)
+      - error: Parámetros inválidos (string)
+
+# Group Perfil
 
 ## Información de perfil [/api/me/profile]
 
@@ -151,57 +155,21 @@ Obtiene toda la información del perfil del usuario autenticado.
 **Información del endpoint**
 
 <i class="fa fa-check"></i> Requiere autenticación
-+ Request
++ Request (application/json)
     + Headers
 
             Authorization: JWT <token>
 
 + Response 200 (application/json)
     + Attributes (PerfilData)
+            
++ Response 400 (application/json)
+  + Attributes (object)
+      - error: Parámetros inválidos (string)
 
-# Group Scolicitudes de Servicio
+# Group Solicitudes de Servicio
 
-## Listado de solicitudes de servicio realizadas [/api/requests]
-
-### Obtiene el listado de solicitudes [GET]
-
-Obtiene el listado de solicitudes realizadas por el usuario autenticado.
-
-**Información del endpoint**
-
-<i class="fa fa-check"></i> Requiere autenticación
-
-+ Request
-    + Headers
-
-            Authorization: JWT <token>
-
-+ Response 200 (application/json)
-    + Attributes (ListRequestData)
-
-## Obtiene la solicitud de servicio [/api/requests/{id}]
-
-+ Parameters
-    + id - Id de la solicitud de servicio.
-
-### Obtiene la solicitud de servicio [GET]
-
-Obtiene la solicitud realizada por el usuario autenticado.
-
-**Información del endpoint**
-
-<i class="fa fa-check"></i> Requiere autenticación
-
-+ Request
-    + Headers
-
-            Authorization: JWT <token>
-
-+ Response 200 (application/json)
-    + Attributes (ListRequestData)
-
-
-## Listado de solicitudes de servicio realizadas por el usuario logueado [/api/me/requests]
+## Listado de solicitudes de servicio realizadas por el usuario logueado [/api/me/requests{?page,per_page}]
 
 ### Obtiene el listado de solicitudes del usuario logueado [GET]
 
@@ -211,15 +179,50 @@ Obtiene el listado de solicitudes realizadas por el usuario autenticado.
 
 <i class="fa fa-check"></i> Requiere autenticación
 
-+ Request
++ Parameters
+  + page: 2 (integer, optional) - Número de página actual.
+        + Default: 1
+  + per_page: 10 (integer, optional) - Cantidad de elementos por página.
+        + Default: <config>
+
++ Request (application/json)
     + Headers
 
             Authorization: JWT <token>
 
 + Response 200 (application/json)
-    + Attributes (ListRequestData)
+    + Attributes (RequestListData)
+            
++ Response 400 (application/json)
+  + Attributes (object)
+      - error: Parámetros inválidos (string)
 
-## Carga una solicitud de servicio [/api/requests POST]
+## Obtiene la solicitud de servicio [/api/me/requests/{id}]
+
++ Parameters
+    + id: 123 (number, required) - Id de la solicitud de servicio.
+
+### Obtiene la solicitud de servicio [GET]
+
+Obtiene la solicitud realizada por el usuario autenticado.
+
+**Información del endpoint**
+
+<i class="fa fa-check"></i> Requiere autenticación
+
++ Request (application/json)
+    + Headers
+
+            Authorization: JWT <token>
+
++ Response 200 (application/json)
+    + Attributes (RequestData)
+            
++ Response 400 (application/json)
+  + Attributes (object)
+      - error: Parámetros inválidos (string)
+
+## Carga una solicitud de servicio [/api/me/requests]
 
 ### Carga una solicitud de servicio [POST]
 
@@ -229,19 +232,28 @@ Carga una solicitud solicitud de servicio por un usuario autenticado.
 
 <i class="fa fa-check"></i> Requiere autenticación
 
-+ Request
++ Request (application/json)
+    + Attributes
+        + title: `a title` (string, required) - Título de la solicitud.
+        + description: `a long description` (string, required) - Descripción de la solicitud.
+
     + Headers
 
             Authorization: JWT <token>
 
-+ Response 200 (application/json)
-    + Attributes (ListRequestData)
++ Response 201 (application/json)
+    + Attributes
+        + id: 123 (number) - Id de la solicitud de servicio.
+        + Include RequestData
+            
++ Response 400 (application/json)
+  + Attributes (object)
+      - error: Parámetros inválidos (string)
 
-
-## Carga una nota en la solicitud de servicio [/api/requests/{id}/notes]
+## Carga una nota en la solicitud de servicio [/api/me/requests/{id}/notes]
 
 + Parameters
-    + id - Id de la solicitud de servicio.
+    + id: 123 (number) - Id de la solicitud de servicio.
 
 ### Carga una nota en la solicitud de servicio [POST]
 
@@ -251,16 +263,26 @@ Carga una nota en la solicitud de servicio por un usuario autenticado.
 
 <i class="fa fa-check"></i> Requiere autenticación
 
-+ Request
++ Request (application/json)
+    + Attributes
+        + text: `a long description` (string, required) - Descripción de la solicitud.
+
     + Headers
 
             Authorization: JWT <token>
 
-+ Response 200 (application/json)
-    + Attributes (ListRequestData)
++ Response 201 (application/json)
+    + Attributes
+        + id: 1 (number, required) - Id de la nota asociada.
+        + text: `a long description` (string, required) - Descripción de la solicitud.
+            
++ Response 400 (application/json)
+  + Attributes (object)
+      - error: Parámetros inválidos (string)
 
+# Group Servicios
 
-## Listado de servicios [/api/services]
+## Listado de servicios [/api/services{?page,per_page}]
 
 ### Obtiene el listado de servicios [GET]
 
@@ -270,18 +292,26 @@ Obtiene el listado de servicios.
 
 <i class="fa fa-check"></i> Requiere autenticación
 
-+ Request
++ Parameters
+  + page: 2 (integer, optional) - Número de página actual.
+        + Default: 1
+  + per_page: 10 (integer, optional) - Cantidad de elementos por página.
+        + Default: <config>
+
++ Request (application/json)
     + Headers
 
             Authorization: JWT <token>
 
 + Response 200 (application/json)
-    + Attributes (ListServiceData)
+    + Attributes (ServiceListData)
+            
++ Response 400 (application/json)
+  + Attributes (object)
+      - error: Parámetros inválidos (string)
 
 ## Detalle del servicio [/api/services/{id}]
 
-+ Parameters
-    + id - Id del servicio.
 
 ### Obtiene el detalle del servicio [GET]
 
@@ -291,14 +321,22 @@ Obtiene el detalle del servicio.
 
 <i class="fa fa-check"></i> Requiere autenticación
 
++ Parameters
+    + id: 123 - Id del servicio.
+    
 + Request
     + Headers
 
             Authorization: JWT <token>
 
 + Response 200 (application/json)
-    + Attributes (ListServiceData)
+    + Attributes (ServiceData)
+            
++ Response 400 (application/json)
+  + Attributes (object)
+      - error: Parámetros inválidos (string)
 
+# Group Tipos de servicios
 
 ## Listado de tipos de servicios [/api/services-types]
 
@@ -316,4 +354,35 @@ Obtiene el listado de tipos de servicios.
             Authorization: JWT <token>
 
 + Response 200 (application/json)
-    + Attributes (ListServiceData)
+    + Attributes 
+        + data (array, fixed-type)
+            + `Análisis`
+            + `Consultoría`
+            + `Desarrollo`
+
++ Response 400 (application/json)
+  + Attributes (object)
+      - error: Parámetros inválidos (string)
+
+# Group Busqueda
+
+## Buscador de servicios [/api/search{?q,type,page,per_page}]
+
+### Obtiene un listado de servicios [GET]
+
+Obtiene un listado de tipos habilitado, filtrado por el criterio de búsqueda.
+
++ Parameters
+  + q (string, required) - El término de búsqueda principal.
+  + type (string, optional) - El tipo de búsqueda opcional.
+  + page: 2 (integer, optional) - Número de página actual.
+        + Default: 1
+  + per_page: 10 (integer, optional) - Cantidad de elementos por página.
+        + Default: <config>
+
++ Response 200 (application/json)
+    + Attributes (ServiceListData)
+    
++ Response 400 (application/json)
+  + Attributes (object)
+      - error: Parámetros inválidos (string)

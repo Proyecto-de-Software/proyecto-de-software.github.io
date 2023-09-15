@@ -95,8 +95,7 @@ algún otro debido a la particularidades de la solución elegida deberán agrega
 
 ## Login [/api/auth]
 
-Se requiere de un token de acceso para acceder a los endpoints de información
-de socio.
+Se requiere de un token de acceso para acceder a los endpoints con información del usuario registrado.
 
 ### Obtener token [POST]
 
@@ -125,7 +124,7 @@ Permite obtener el un JSON Web Token válido para el usuario y password.
 
 ### Obtiene todas las Instituciones de la entidad [GET]
 
-Obtiene todas las Instituciones que se realizan en la entidad.
+Obtiene todas las Instituciones dadas de alta en el sistema.
 
 **Información del endpoint**
 
@@ -282,36 +281,28 @@ Carga una nota en la solicitud de servicio por un usuario autenticado.
 
 # Group Servicios
 
-## Listado de servicios [/api/services{?page,per_page}]
+## Buscador de servicios [/api/services/search{?q,type,page,per_page}]
 
-### Obtiene el listado de servicios [GET]
+### Obtiene un listado de servicios [GET]
 
-Obtiene el listado de servicios.
-
-**Información del endpoint**
-
-<i class="fa fa-check"></i> Requiere autenticación
+Obtiene un listado de tipos habilitado, filtrado por el criterio de búsqueda.
 
 + Parameters
+  + q (string, required) - El término de búsqueda principal.
+  + type (string, optional) - El tipo de búsqueda opcional.
   + page: 2 (integer, optional) - Número de página actual.
         + Default: 1
   + per_page: 10 (integer, optional) - Cantidad de elementos por página.
         + Default: <config>
 
-+ Request (application/json)
-    + Headers
-
-            Authorization: JWT <token>
-
 + Response 200 (application/json)
     + Attributes (ServiceListData)
-            
+    
 + Response 400 (application/json)
   + Attributes (object)
       - error: Parámetros inválidos (string)
 
-## Detalle del servicio [/api/services/{id}]
-
+## Obtener servicio [/api/services/{id}]
 
 ### Obtiene el detalle del servicio [GET]
 
@@ -319,7 +310,7 @@ Obtiene el detalle del servicio.
 
 **Información del endpoint**
 
-<i class="fa fa-check"></i> Requiere autenticación
+<i class="fa fa-times"></i> Requiere autenticación
 
 + Parameters
     + id: 123 - Id del servicio.
@@ -346,7 +337,7 @@ Obtiene el listado de tipos de servicios.
 
 **Información del endpoint**
 
-<i class="fa fa-check"></i> Requiere autenticación
+<i class="fa fa-times"></i> Requiere autenticación
 
 + Request
     + Headers
@@ -360,29 +351,6 @@ Obtiene el listado de tipos de servicios.
             + `Consultoría`
             + `Desarrollo`
 
-+ Response 400 (application/json)
-  + Attributes (object)
-      - error: Parámetros inválidos (string)
-
-# Group Busqueda
-
-## Buscador de servicios [/api/search{?q,type,page,per_page}]
-
-### Obtiene un listado de servicios [GET]
-
-Obtiene un listado de tipos habilitado, filtrado por el criterio de búsqueda.
-
-+ Parameters
-  + q (string, required) - El término de búsqueda principal.
-  + type (string, optional) - El tipo de búsqueda opcional.
-  + page: 2 (integer, optional) - Número de página actual.
-        + Default: 1
-  + per_page: 10 (integer, optional) - Cantidad de elementos por página.
-        + Default: <config>
-
-+ Response 200 (application/json)
-    + Attributes (ServiceListData)
-    
 + Response 400 (application/json)
   + Attributes (object)
       - error: Parámetros inválidos (string)

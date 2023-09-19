@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>REST</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/league.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/base16/zenburn.css" />
+
+    <link rel="stylesheet" href="./_assets/proyecto.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">
+# Proyecto de Software
+
+
+## Cursada 2023
+</script></section><section  data-markdown><script type="text/template">
+# Temario
+
+- Api Rest.
+
+</script></section><section ><section data-markdown><script type="text/template">
+# API REST
+
+- ¿Qué es una API REST?
+</script></section><section data-markdown><script type="text/template">
+# Servicios web
+
+* Un **servicio web** es una tecnología que utiliza un conjunto de **protocolos** y **estándares** para intercambiar datos entre aplicaciones.
+* Algo importante: lograr **interoperabilidad**.
+* Uso de estándares abiertos
+
+	* XML-RPC, JSON-RPC
+	* WSDL: Web Services Description Language
+	* SOAP: Simple Object Access Protocol
+	* ¿Rest?
+</script></section><section data-markdown><script type="text/template">
+# Servicios web
+
+![Servicio Web](images/serviciosWeb1.png)
+
+
+* Ejemplo típico con WSDL y SOAP
+</script></section><section data-markdown><script type="text/template">
+# ¿Qué es REST?
+
+* **REpresentational State Transfer**: arquitectura de desarrollo web que se apoya totalmente en el estándar HTTP.
+* REST nos permite crear servicios y aplicaciones que pueden ser usadas por **cualquier dispositivo o cliente que entienda HTTP**, por lo que es más simple y convencional que otras alternativas que se han usado en los últimos diez años como SOAP y XML-RPC.
+* REST fue definido por Roy Fielding (coautor de la especificación HTTP) en el año 2000.
+</script></section><section data-markdown><script type="text/template">
+# REST
+
+* Los sistemas que siguen los principios REST se los denomina también RESTful.
+* Se basa en **HTTP** para intercambiar información.
+* **SIN estado**.
+* Se piensa en los **recursos** como una entidad que puede ser accedido públicamente.
+* Cada objeto tiene su propia URL y puede ser fácilmente cacheado, copiado y guardado como marcador.
+</script></section><section data-markdown><script type="text/template">
+# Recordemos que ....
+
+* Una petición HTTP consta de:
+	* Una **URL** y un **método** de acceso (GET, POST, PUT,...).
+	* **Cabeceras**. Meta-información de la petición.
+	* **Cuerpo del mensaje** (opcional).
+</script></section><section data-markdown><script type="text/template">
+![HTTP_Model](images/HTTP_Model.jpg)
+</script></section><section data-markdown><script type="text/template">
+# Métodos HTTP
+
+* **GET**: usado para solicitar un recurso al servidor.
+* **PUT**: usado para modificar un recurso existente en el servidor.
+* **POST**: usado para crear un nuevo recurso en el servidor.
+* **DELETE**: usado para  eliminar un recurso en el servidor.
+</script></section><section data-markdown><script type="text/template">
+# ¿POST = GET + PUT + DELETE?
+
+* Por lo general, las peticiones de tipo **PUT** y **DELETE** son realizadas a través de peticiones **POST**.
+* La petición **POST** se utiliza tanto para crear, borrar o actualizar un recurso.
+* Pero hay una diferencia: **POST NO es idempotente**.
+</script></section><section data-markdown><script type="text/template">
+# Métodos HTTP
+
+![Método HTTP](images/verbsHTTP.png)
+
+* Los métodos HTTP **Seguros** son aquellos que no modifican los recursos.
+* Los métodos HTTP **Idempotentes** son aquellos que pueden ser llamados múltiples veces y generarán el mismo resultado.
+* Más info ver: [rfc7231](http://tools.ietf.org/html/rfc7231) y [rfc5789](http://tools.ietf.org/html/rfc5789)
+</script></section><section data-markdown><script type="text/template">
+![Api Rest](images/rest-api.png)<!-- .element height="75%" width="75%" -->
+
+* Ref: https://medium.com/@audira98/why-should-we-choose-rest-client-server-model-to-develop-web-apps-c3bb2451b13a
+</script></section><section data-markdown><script type="text/template">
+# Accediendo a los recursos
+
+* La implementación del recurso decide qué información es visible o no desde el exterior, y qué representaciones de dicho recurso se soportan.
+* Podríamos pensar en:
+
+	* HTML
+	* XML
+	* JSON
+
+* Ejemplo:  ¿consultamos los [feriados de 2023](http://nolaborables.com.ar/API/v2/feriados/2023)?
+</script></section><section data-markdown><script type="text/template">
+# Accediendo a los recursos
+
+* Probemos con **curl**:
+
+```bash
+	curl -X GET https://api.mercadolibre.com/categories/MLA5725
+```
+
+* Otros ejemplos:
+
+	* API REST de Mercado Libre: https://developers.mercadolibre.com.ar/
+	* Google Translate (es necesario API_KEY): https://developers.google.com/apis-explorer/#p/translate/v2/
+	* El clima en OpenWeatherMap (es necesario API_KEY): [clima en La Plata](https://openweathermap.org/api)
+	* Algunas API rest públicas: [en desarrolloweb.com](https://desarrolloweb.com/colecciones/api-rest-uso-publico-libre)</script></section><section data-markdown><script type="text/template">
+# Ventajas / Desventajas
+
+* Separación cliente/servidor.
+* Simplicidad.
+* Seguridad.
+* Uso de estándares.
+* Escalabilidad.
+* Cambio de esquema: usando REST podemos tener varios servidores donde unos no saben que los otros existen.
+
++Info: https://desarrolloweb.com/articulos/ventajas-inconvenientes-apirest-desarrollo.html
+</script></section><section data-markdown><script type="text/template">
+# Generando API REST
+
+* A mano.... o,
+* Muchos frameworks que facilitan el desarrollo:
+
+	* Django: https://www.django-rest-framework.org/tutorial/quickstart/
+	* Flask: https://flask-restful.readthedocs.io/en/latest/quickstart.html
+</script></section><section data-markdown><script type="text/template">
+
+# Referencias Rest
+
+* http://martinfowler.com/articles/richardsonMaturityModel.html
+* http://restcookbook.com/Miscellaneous/richardsonmaturitymodel/
+* http://www.restapitutorial.com/lessons/whatisrest.html
+* http://asiermarques.com/2013/conceptos-sobre-apis-rest/
+* http://rest.elkstein.org/
+* http://restfulwebapis.org/rws.html
+* https://restfulapi.net/
+* https://www.paradigmadigital.com/dev/introduccion-django-rest-framework/
+* https://flask-restful.readthedocs.io/en/latest/
+
+</script></section></section><section  data-markdown><script type="text/template"># Fin                                            
+
+
+
+</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

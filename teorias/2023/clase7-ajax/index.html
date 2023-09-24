@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>AJAX/Fetch API</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/league.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/base16/zenburn.css" />
+
+    <link rel="stylesheet" href="./_assets/proyecto.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"># Proyecto de Software
+</script></section><section  data-markdown><script type="text/template"># Seguimos con el procesamiento en el cliente
+
+![Front-end-roadmap](images/frontend_roadmap.png) <!-- .element width="50%" -->
+
+* Fuente: https://roadmap.sh/frontend
+</script></section><section  data-markdown><script type="text/template"># Temario
+- Peticiones asincrónicas: 
+  - AJAX
+  - Fetch API
+  - Async/Await
+- CORS</script></section><section  data-markdown><script type="text/template"># Peticiones asincrónicas
+</script></section><section ><section data-markdown><script type="text/template"># AJAX: Asynchronous JAvascript + XML  
+![ajax](images/XMLHttpRequest.png) <!-- .element width="20%" --></script></section><section data-markdown><script type="text/template">
+# AJAX
+
+- NO es una tecnología, sino una combinación de varias tecnologías.
+- AJAX incluye:
+  - Presentación basada en estándares usando **HTML** y **CSS**;
+  - Exhibición e interacción dinámicas usando **DOM**;
+  - Intercambio y manipulación de datos usando **XML** y **XSLT**; 
+    - Nosotros usaremos JSON.
+  - Recuperación de datos asincrónica usando **XMLHttpRequest**;
+  - **JavaScript**  como lenguaje de programación.
+</script></section><section data-markdown><script type="text/template">
+# AJAX
+
+- Comenzó a ser popular a partir del año 2005, con Google Suggest.
+
+- El objetivo es crear interfaces de usuario más amigables, similares a las de las PC de escritorio, sin afectar los tiempos y el esquema de navegación. 
+- **¡¡IMPORTANTE!!** El feedback al usuario.
+</script></section><section data-markdown><script type="text/template">
+# Funcionamiento AJAX
+
+![Ejecución AJAX](images/ajax1.png)
+</script></section><section data-markdown><script type="text/template">
+# El objeto XMLHttpRequest
+
+- Es un objeto que permite realizar requerimientos HTTP al servidor web desde cualquier lenguaje de script client-side SIN recargar la página.
+- La especificación en [Web Hypertext Application Technology Working Group (WHATWG)](https://xhr.spec.whatwg.org/) 
+</script></section><section data-markdown><script type="text/template">
+# El objeto XMLHttpRequest (cont.)
+
+- Algunas propiedades...
+  - **onreadystatechange**: manejador de evento para un cambio de estado. 
+  - **readyState**: el estado del objeto:
+    * 0 = UNSENT
+    * 1 = OPENED
+    * 2 = HEADERS_RECEIVED
+    * 3 = LOADING
+    * 4 = DONE 
+    
+- A partir de Level 2 se definieron [más eventos/manejadores](https://xhr.spec.whatwg.org/#event-handlers)
+</script></section><section data-markdown><script type="text/template">
+# El objeto XMLHttpRequest (cont.)
+
+- Algunas propiedades (cont.)...
+  - **responseText**: retorna la respuesta como texto.
+  - **responseXML**: retorna la respuesta como XML que puede ser manipulado usando DOM. 
+- Algunos métodos...
+  - **open("method", "URL", async, "uname", "pswd")**: especifica el método, URL y otros atributos opcionales del requerimiento:
+
+    * El método puede ser  "GET", "POST", o "PUT"
+    * La URL puede ser una URL completa o relativa
+    * El parámetro **async** especifica si el requerimiento debe ser manejado en forma asincrónica o no (true o false) 
+</script></section><section data-markdown><script type="text/template">
+# Ejemplos utilizando XMLHttpRequest (async)
+
+* AJAX de la forma tradicional en forma asincrónica:
+
+```javascript
+    function buscarAsync() {
+      xhr = new XMLHttpRequest();
+      var param = document.getElementById('interprete').value; 
+      var url = "http://localhost:5000/musicos?name=" + escape(param);
+      xhr.open("GET", url , true); 
+      xhr.onreadystatechange = cargoInfo; 
+      xhr.send();
+    }
+    function cargoInfo() {
+      document.getElementById('readyState').textContent = xhr.readyState ;
+      document.getElementById('status').textContent = xhr.status;
+     if (xhr.readyState == 4) 
+     {  if (xhr.status == 200) {
+        rta_json = JSON.parse(xhr.responseText);
+        if (rta_json.musician){
+          document.getElementById('info').textContent = rta_json.musician.description;
+        }
+        else {
+          document.getElementById('info').textContent = "No encontrado";
+        }
+      }
+      else alert("Algo anda mal");
+     }
+    }
+```
+
+- Ver [ejemplo ajax asincrónico](http://localhost:5000/ejemplo_ajax)
+</script></section><section data-markdown><script type="text/template">
+# Ejemplos utilizando XMLHttpRequest (sync)
+
+* AJAX de la forma tradicional en forma sincrónica (DEPRECATED): 
+
+```javascript
+    function buscarSync() {
+      xhr = new XMLHttpRequest();
+      var param = document.getElementById('interprete').value; 
+      var url = "http://localhost:5000/musicos?name=" + escape(param);
+      xhr.open("GET", url , false); 
+      xhr.send();
+      
+      if (xhr.status == 200) {
+        rta_json = JSON.parse(xhr.responseText);
+        if (rta_json.musician){
+          document.getElementById('info').textContent = rta_json.musician.description;
+        }
+        else {
+          document.getElementById('info').textContent = "No encontrado";
+        }
+      }
+    }
+```
+
+- Ver [ejemplo ajax sincrónico](http://localhost:5000/ejemplo_ajax)
+</script></section></section><section ><section data-markdown><script type="text/template">
+# AJAX con JQuery
+![jquery](images/jquery.png) <!-- .element width="20%" -->
+</script></section><section data-markdown><script type="text/template">
+# Antes hablemos de librerías/frameworks Javascript
+
+- Contienen soluciones ya implementadas, sólo debemos usarlas. 
+- El objetivo es **simplificar el desarrollo**. Pero... **¡Hay muchas!**
+- Todos los años aparecen nuevas.  Ver [artículo...](https://stackoverflow.blog/2018/01/11/brutal-lifecycle-javascript-frameworks/).
+- Las más consultadas según Stackoverflow agrupadas en [frameworks JS](https://insights.stackoverflow.com/trends?tags=jquery%2Cangularjs%2Cangular%2Creactjs) y [smaller frameworks JS](https://insights.stackoverflow.com/trends?tags=meteor%2Cbackbone.js%2Cember.js%2Cvue.js%2Cknockout.js%2Credux).
+
+![Librerías JS](images/libsJS.png) <!-- .element width="49%" -->
+![Librerías JS](images/libsJSsmall.png) <!-- .element width="49%" --></script></section><section data-markdown><script type="text/template">
+# Librerías/frameworks Javascript
+
+- Tendencias de JS en [Github](https://github.com/trending/javascript).
+- Las librerías [más utilizadas](https://kinsta.com/es/blog/bibliotecas-javascript/) y [JavaScripting](https://www.javascripting.com/).
+- **No todas con el mismo objetivo.**
+- Para desarrollo en los últimos años...
+
+![Librerías JS TOP](images/libJSTop.png) <!-- .element width="30%" -->
+</script></section><section data-markdown><script type="text/template">
+# ¿jQuery en la actualidad?
+## Para desarrollos sencillos
+
+- Aún actualmente, muy usada: https://w3techs.com/technologies/overview/javascript_library/all
+- Atajos a las funciones de DOM:
+  -  **document.getElementById("p1")** vs. **$("#p1")**
+  -  **document.getElementByTagName("p")** vs.  **$("p")**
+- JQuery usa los selectores CSS para acceder a los elementos:
+  - **$("p.intro"):** todos los elementos **&lt;p&gt;** con class="intro".
+  - **$(".intro"):** todos los elementos con class=”intro”
+  - **$("p#demo"):** todos los elementos **&lt;p&gt;** id="demo".
+  - **$(this):** el elemento actual
+  - **$("ul li:odd"):** los **&lt;li&gt;** impares dentro de **&lt;ul&gt;**</script></section><section data-markdown><script type="text/template">
+# JQuery: AJAX
+
+- Veamos un ejemplo de [ajax con JQuery](http://localhost:5000/ejemplo_ajax_jquery)
+
+```javascript
+
+  $.ajax({
+    url: '/ruta/hasta/pagina',
+    type: 'POST',
+    async: true,
+    data: 'parametro1=valor1&parametro2=valor2',
+    success: procesaRespuesta,
+    error: muestraError
+  });
+```</script></section></section><section ><section data-markdown><script type="text/template">
+![fetch](images/fetch.png) <!-- .element width="40%" -->
+</script></section><section data-markdown><script type="text/template">
+# Fetch API
+
+- Introducidas en ECMAScript 2015(ES6).
+- La API Fetch proporciona una interfaz para recuperar recursos.
+- Fetch ofrece una definición genérica de los objetos **Request** y **Response**.
+- El método **fetch()** toma un argumento obligatorio, la ruta de acceso al recurso que desea recuperar.
+- Devuelve una **Promise** que resuelve en **Response** a esa petición, sea o no correcta.
+- Es el reemplazo natural del objeto **XMLHttpRequest**.</script></section><section data-markdown><script type="text/template">
+# Promesas JS
+
+> Una **Promise** es un objeto que representa la eventual finalización o falla de una operación asincrónica. (Ref. [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise))
+
+![JS Promises](images/js_promises.png)
+</script></section><section data-markdown><script type="text/template">
+# Fetch API
+- En **fetch()** las **promises** pueden encadenarse utilizando varios **.then()** y un **.catch()** si alguna promise falla, permitiendo establecer lógica entre varios requerimientos. 
+
+![JS Chained Promises](images/js_promises_chain.png)
+</script></section><section data-markdown><script type="text/template"># Fetch API
+- Veamos un ejemplo: http://localhost:5000/ejemplo_ajax_fetch
+
+```javascript
+  function checkStatus(response) {
+    if (response.status >= 200 && response.status < 300) {
+      return Promise.resolve(response)
+    } else {
+      return Promise.reject(new Error(response.statusText))
+    }
+  }
+  function parseJson(response) {
+    return response.json()
+  }
+  function buscarFetch(){
+    fetch('http://localhost:5000/all_musicos')
+      .then(checkStatus)
+      .then(parseJson)
+      .then(function(data) {
+        console.log('Request succeeded with JSON response', data);
+        document.getElementById('info').textContent = JSON.stringify(data.musician);
+      }).catch(function(error) {
+        console.log('Request failed', error);
+        document.getElementById('error').textContent = error; 
+      });
+  }
+```
+- Referencia [Api Fetch](https://developer.mozilla.org/es/docs/Web/API/Fetch_API)
+</script></section></section><section ><section data-markdown><script type="text/template">
+![async](images/async.png) <!-- .element width="40%" -->
+</script></section><section data-markdown><script type="text/template">
+# Funciones async
+
+- Introducidas en ECMAScript 2017(ES8), las funciones **async** facilitan trabajar con promesas.
+- Define una función **asincrónica** que utiliza una **Promise** para retornar su resultado.
+</script></section><section data-markdown><script type="text/template">
+# Operador await 
+
+- El operador **await** es utilizado para esperar por un **Promise**. 
+- Sólo puede ser utilizada dentro de una función **async**.
+- Causa que la función **async** quede **pausada** hasta que la promesa se resuelva.
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo Async/Await con Fetch
+* Veamos un ejemplo: http://localhost:5000/ejemplo_ajax_async_await
+
+```javascript
+  async function getPostsAsync() 
+  {
+    let response = await fetch(`https://jsonplaceholder.typicode.com/posts`);
+    let data = await response.json()
+    document.getElementById('info').textContent = JSON.stringify(data);
+  }
+```
+
+* Referencia [async](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Sentencias/funcion_asincrona) y [await](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Operadores/await	).
+</script></section></section><section ><section data-markdown><script type="text/template">
+# ¿Alguno sabe qué es **CORS**?
+</script></section><section data-markdown><script type="text/template">
+# CORS
+
+* **Cross-Origin Resource Sharing** (CORS)
+* **CORS** es un mecanismo para permitir realizar peticiones de dominios cruzados utilizando Javascript.
+* Por defecto **los navegadores actuales bloquean estas peticiones** si no se encuentran bien configurados tantos los clientes como los servidores. 
+</script></section><section data-markdown><script type="text/template">
+# CORS
+
+![CORS](images/CORS.png)
+ </script></section><section data-markdown><script type="text/template">
+# El caso más simple
+
+![CORS-server](images/CORS-server.png)
+ </script></section><section data-markdown><script type="text/template">
+# Diagrama completo 
+
+![CORS-complete](images/CORS-complete.png)
+</script></section><section data-markdown><script type="text/template">
+# Referencias CORS
+
+* https://enable-cors.org/
+* https://developer.mozilla.org/es/docs/Web/HTTP/Access_control_CORS
+</script></section></section><section  data-markdown><script type="text/template"># Algunas guías de estilo Javascript
+* Crockford: https://www.crockford.com/code.html
+* Airbnb: https://github.com/airbnb/javascript
+* Google: https://google.github.io/styleguide/jsguide.html
+* Standard: https://standardjs.com/</script></section><section  data-markdown><script type="text/template">
+# ¿Dudas?
+</script></section><section  data-markdown><script type="text/template"># Seguimos la próxima ...
+</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

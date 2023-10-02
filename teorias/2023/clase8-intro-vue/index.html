@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Frameworks JS - Intro Vue</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/league.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/base16/zenburn.css" />
+
+    <link rel="stylesheet" href="./_assets/proyecto.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"># Proyecto de Software
+</script></section><section  data-markdown><script type="text/template">
+# Temario
+- Microservicios
+- Frameworks JS
+- Intro Vue
+</script></section><section ><section data-markdown><script type="text/template"># Arquitectura de Microservicios
+</script></section><section data-markdown><script type="text/template">
+# Microservicios
+
+- Las aplicaciones se dividen en sus componentes más pequeños, independientes entre sí. <!-- .element: class="fragment" data-fragment-index="1" -->
+- A diferencia del enfoque tradicional y monolítico de las aplicaciones, en el que todo se encuentra en una única pieza. <!-- .element: class="fragment" data-fragment-index="2" -->
+- Los microservicios funcionan en conjunto para llevar a cabo las mismas tareas que la aplicación monolítica. <!-- .element: class="fragment" data-fragment-index="3" -->
+- Los microservicios facilitan la escalabilidad de todo el sistema, se despliegan según se vayan necesitando. <!-- .element: class="fragment" data-fragment-index="4" -->
+- Pueden tener distintas tecnologías entre sí. <!-- .element: class="fragment" data-fragment-index="5" -->  
+- Al ser más pequeños, son mas simples de mantener y actualizar. <!-- .element: class="fragment" data-fragment-index="6" -->  
+</script></section><section data-markdown><script type="text/template">
+# Arquitectura Monolítica vs Arquitectura de Microservicios
+
+![microservices](images/microservices.png)
+</script></section><section data-markdown><script type="text/template">
+# ¿Cómo comunico un servicio con otro?
+
+- Actualmente la opción más utilizada es mediante APIs HTTP/REST con JSON. <!-- .element: class="fragment" data-fragment-index="1" -->
+- Incluso puede centralizarse la comunicación utilizando un API Gateway. <!-- .element: class="fragment" data-fragment-index="2" -->
+- En dicho API Gateway puede implementarse una capa de seguridad, que ante una petisión verifique si el cliente tiene permisos de acceso. <!-- .element: class="fragment" data-fragment-index="3" -->
+</script></section><section data-markdown><script type="text/template">
+# Microservicios: API Gateway
+
+![API-gateway](images/API-gateway.png)
+</script></section><section data-markdown><script type="text/template"># Para seguir leyendo de Microservicios
+
+* AWS: https://aws.amazon.com/es/microservices/
+* Redhat: https://www.redhat.com/es/topics/microservices
+* Video en español: https://www.youtube.com/watch?v=9R2hFwIPGnQ
+</script></section></section><section ><section data-markdown><script type="text/template">
+# Frameworks JS
+</script></section><section data-markdown><script type="text/template"># ¿Qué és un framework JS?
+
+* Trabajar con **JS pelado** es complejo. Por eso nació **jQuery**(2006) para facilitar el desarrollo.
+* jQuery sigue estando muy extendido. **Stackoverflow survey [2021](https://insights.stackoverflow.com/survey/2021#most-popular-technologies-webframe), [2022](https://survey.stackoverflow.co/2022/#section-most-popular-technologies-web-frameworks-and-technologies)** y [2023](https://survey.stackoverflow.co/2023/#most-popular-technologies-webframe).
+* El poder de cómputo de los clientes web **aumenta día a día**.
+* Las aplicaciones web implementan **cada vez más funcionalidades y complejidad**, con lo que jQuery se queda corto.
+</script></section><section data-markdown><script type="text/template"># Demasiadas herramientas y frameworks JS:
+
+https://en.wikipedia.org/wiki/List_of_JavaScript_libraries
+![JSTools](images/jstools.png)</script></section><section data-markdown><script type="text/template">
+# Elección de un framework JS: Front-end path
+
+![Roadmap](images/jsframework-roadmap.png)  <!-- .element width="50%" -->
+
+[Developer Roadmap](https://roadmap.sh/frontend)
+</script></section><section data-markdown><script type="text/template">
+# ¿Por qué existen los framework JS? 
+</script></section><section data-markdown><script type="text/template"># La verdadera razón:
+
+![js_frameworks](images/js_frameworks.png)
+
+[Artículo Medium](https://medium.com/dailyjs/the-deepest-reason-why-modern-javascript-frameworks-exist-933b86ebc445)</script></section><section data-markdown><script type="text/template">
+# Para seguir leyendo: JS Frameworks
+* Comparacíon de Frameworks JS (2018): https://tinyurl.com/comparacionLibsJS
+* Mejor Framework JS (2021): https://codersera.com/blog/best-javascript-frameworks/
+* State of JS (2020): https://platzi.com/blog/stack-javascript-2020/
+* Última edición (2022): https://2022.stateofjs.com/en-US/libraries/
+* Entendiendo los frameworks JS: https://developer.mozilla.org/es/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks
+</script></section></section><section ><section data-markdown><script type="text/template">
+# Vue.js</script></section><section data-markdown><script type="text/template"># Vue.js roadmap
+
+![vue-roadmap](images/vue-roadmap.png) <!-- .element width="50%" -->
+
+https://roadmap.sh/vue
+</script></section><section data-markdown><script type="text/template"># Características
+
+* Vue.js es un framework de JavaScript para front-end.
+
+* Facilidad de aprendizaje y uso con respecto a otros frameworks como **ReactJS**.
+
+* Mejor rendimiento comparado con **AngularJS**.
+
+* Vue.js es un framework **progresivo**. Tiene la facilidad para usarlo y adaptarlo a proyectos tanto grandes como pequeños.
+
+* Ha tenido un grán crecimiento. Veamos su comunidad en [Github](https://github.com/collections/front-end-javascript-frameworks).
+</script></section><section data-markdown><script type="text/template"># Características
+
+* Es un framework "reactivo" que implementa **"two way data-binding"**: enlace de datos en dos direcciones (entre la vista y el modelo) de una manera muy eficiente y rápida.
+
+![2way](images/two-way-data-binding.jpg)
+</script></section><section data-markdown><script type="text/template"># Características
+
+* Se basa en el patrón **Model-View-Viewmodel**
+
+![MVVM](images/mvvm.png)
+</script></section><section data-markdown><script type="text/template"># Características
+
+* Vue.js, está más enfocado hacia la vista, y **puede ser implementado en el HTML de cualquier proyecto web** sin requerir cambios drásticos .
+
+* Los navegadores modernos poseen la extensión **Vue.js devtools** [devtools.vuejs.org](https://devtools.vuejs.org/) que nos asiste en el desarrollo.
+
+* Vue.js soporta todos los browsers que sean compatibles con [ES5-compliant](https://kangax.github.io/compat-table/es5/). (Ver [Versiones JS](https://www.w3schools.com/Js/js_versions.asp).)
+</script></section><section data-markdown><script type="text/template">
+# Instalación VueJS:
+
+* Descargando el js e incluyéndolo directamente en un tag **```<script>```**.
+
+* Linkear directamente desde una **CDN** (Content Delivery Network).
+
+Vue 3 (Versión actual):
+
+```html
+<script src="https://unpkg.com/vue@3/dist/vue.global.js">__SCRIPT_END__
+```
+
+Vue 2 (Versión LST - finaliza el 31/12/2023 ):
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/vue@2">__SCRIPT_END__
+```
+
+No recomendada para nuevos proyectos.
+  </script></section><section data-markdown><script type="text/template">
+# Instalación VueJS:
+
+* Intalar Vue via **npm** (manejador de paquetes por defecto para Node.js):
+ 
+```bash
+npm create vue@latest
+```
+
+Se utiliza un setup guiado basado en [Vite](https://vitejs.dev/).
+  
+```bash
+cd NOMBRE_PROYECTO
+npm install
+npm run dev
+
+```
+
+* Esta es la opción recomendada para para **proyectos más grandes**. 
+* Node.js versión >= 16.0 requerida.</script></section><section data-markdown><script type="text/template">
+# Incluyendolo de una CDN:
+
+Veamos [hello_world](./ejemplos/0_hello_world/index.html).
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mi primera aplicaci&oacute;n Vue</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js">__SCRIPT_END__
+</head>
+<body>
+  <div id="app">
+    <h2>{{ message }}</h2>
+  </div>
+
+  <script>
+    const HelloVueApp = {
+      data() {
+        return {
+          message: 'Hola Vue!!!'
+        }
+      }
+    }
+   vue_app = Vue.createApp(HelloVueApp).mount('#app')
+  __SCRIPT_END__
+</body>
+</html>
+```
+Los datos y DOM están ahora relacionados utilizando **{{}}**. Modifiquemos **vue_app.message**.
+</script></section></section><section  data-markdown><script type="text/template"># ¿Dudas?
+</script></section><section  data-markdown><script type="text/template"># Seguimos con vuejs en video y la próxima semana...
+</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

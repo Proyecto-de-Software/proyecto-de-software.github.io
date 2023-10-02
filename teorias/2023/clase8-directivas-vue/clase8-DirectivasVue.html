@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Directivas Vue</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/league.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/base16/zenburn.css" />
+
+    <link rel="stylesheet" href="./_assets/proyecto.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"># Proyecto de Software
+</script></section><section ><section data-markdown><script type="text/template">
+# Directivas Vue
+</script></section><section data-markdown><script type="text/template"># Directivas Vue
+* Son atributos específicos de Vue que comienzan con *v-*.
+  * **v-text**, **v-once**, **v-html**.
+  * **v-bind**, **v-model**.
+  * Condicionales: **v-if**, **v-else**, **v-else-if**.
+  * Bucles: **v-for**.
+  * Eventos: **v-on**.
+  * **v-show**.
+</script></section><section data-markdown><script type="text/template"># Directiva **v-bind**:
+
+* La **intepolación {{}}** no funciona para atributos, se utiliza **v-bind** para relacionar atributos con datos de Vue.
+* Veamos [v-bind](./ejemplos/1_directivas_vue/1_v-bind.html).
+
+```html
+  <div id="app">
+    <span v-bind:title="message">
+      Hover your mouse over me !!
+    </span>
+  </div>
+  <script>
+    const App = {
+      data() {
+        return {
+          message: 'Fecha ' + new Date().toLocaleString()
+        }
+      }
+    }
+    vue_app = Vue.createApp(App).mount('#app')
+  __SCRIPT_END__
+```</script></section><section data-markdown><script type="text/template">
+# Directiva condicional **v-if**:
+
+* Veamos [v-if](./ejemplos/1_directivas_vue/2_v-if.html).
+
+```html
+  <div id="app">
+    <p>
+    <span v-if="seen">Now you see me</span>
+    <span v-else>Oh no 😢</span>
+    </p>
+  </div>
+  <script>
+    const App = {
+      data() {
+        return {
+          seen: true
+        }
+      }
+    }
+    vue_app = Vue.createApp(App).mount('#app')
+  __SCRIPT_END__
+```
+</script></section><section data-markdown><script type="text/template">
+# Bucles **v-for**:
+
+* Veamos [v-for](./ejemplos/2_lista/index.html).
+
+```html
+  <div id="app">
+    <ul>
+      <li v-for="product in products">
+        {{ product }}
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    const App = {
+      data() {
+        return {
+          products: [
+            'Harina',
+            'Arroz',
+            'Yerba'
+          ]
+        }
+      }
+    }
+   vue_app = Vue.createApp(App).mount('#app')
+  __SCRIPT_END__
+```
+* Modifiquemos **vue_app.products**, agregando: **vue_app.products.push("Manteca")** y eliminando: **vue_app.products.pop()**.
+</script></section><section data-markdown><script type="text/template">
+# Métodos y eventos **v-on**:
+
+* La directiva **v-on** nos permite actuar cuando se produzca algún **evento DOM**.
+* Dentro de la sección **methods** ponemos el método que se va a disparar cuando el evento se produzca.
+* Veamos [v-on](./ejemplos/1_directivas_vue/3_v-on.html).
+
+```html
+<div id="app">
+  <p>{{ message }}</p>
+  <button v-on:click="reverseMessage">Reverse Message</button>
+</div>
+
+<script>
+  const App = {
+    data() {
+      return {
+        message: 'Bienvenidos a Proyecto de Desarrollo!!'
+      }
+    },
+    methods: {
+      reverseMessage: function () {
+        this.message = this.message.split('').reverse().join('')
+      }
+    }
+  }
+  vue_app = Vue.createApp(App).mount('#app')
+__SCRIPT_END__
+```</script></section><section data-markdown><script type="text/template"># Eventos **v-on**:
+
+* Incluso es posible "colgarse" de múltiples eventos:
+
+```html
+<div v-on="
+  click   : onClick,
+  keyup   : onKeyup,
+  keydown : onKeydown
+">
+</div>
+```
+* Notar que se modifica el estado de nuestra applicación sin tocar el DOM, todo eso lo hace Vue.
+* El código queda simplificado y enfocado en la lógica de lo que hay que resolver.  
+</script></section><section data-markdown><script type="text/template"># Directiva **v-model**:
+
+* Hace la relación bidireccional entre un input y los datos de la aplicación Vue.
+* Veamos [v-model](./ejemplos/1_directivas_vue/4_v-model.html) y [v-models](./ejemplos/1_directivas_vue/4_v-models.html).
+
+```html
+<div id="two-way-binding">
+  <p>{{ message }}</p>
+  <input v-model="message">
+</div>
+
+<script>
+  const App = {
+    data() {
+      return {
+        message: 'Bienvenidos a Proyecto!!'
+      }
+    }
+  }
+ vue_app = Vue.createApp(App).mount('#two-way-binding')
+__SCRIPT_END__
+```</script></section><section data-markdown><script type="text/template"># Propiedades computadas:
+* Veamos [propiedades-computadas](./ejemplos/4_propiedades_computadas/index.html).
+* Nos evita poner demasiada lógica en la visualización.
+
+```html
+  <div id="app">
+    <ul>
+      <li v-for="product in products">
+        {{ product }}
+      </li>
+    </ul>
+    Cantidad de elementos: {{ countProducts }}
+  </div>
+  <script>
+    const App = {
+      data() {
+        return {
+          products: [
+            'Harina',
+            'Arroz',
+            'Yerba'
+          ]
+        }
+      },
+      computed: {
+        // a computed getter
+        countProducts: function () {
+          return this.products.length
+        }
+      }
+    }
+   vue_app = Vue.createApp(App).mount('#app')
+  __SCRIPT_END__
+```</script></section><section data-markdown><script type="text/template"># Watchers:
+* Veamos [watcher](./ejemplos/4_propiedades_computadas/watcher.html).
+* Para reaccionar cuando un dato cambia.
+
+```html
+  <div id="app">
+    <ul>
+      <li v-for="product in products">
+        {{ product }}
+      </li>
+    </ul>
+    Cantidad de elementos: {{ countProducts }}
+  </div>
+  <script>
+    const App = {
+      data() {
+        return {
+          products: [
+            'Harina',
+            'Arroz',
+            'Yerba'
+          ],
+          countProducts: 3
+        }
+      },
+      watch: {
+        products: { 
+          handler () {
+            this.countProducts=this.products.length
+          },
+          deep: true
+        }
+      }
+    }
+   vue_app = Vue.createApp(App).mount('#app')
+  __SCRIPT_END__
+``` </script></section></section><section ><section data-markdown><script type="text/template">
+# Consumiendo una API con Vuejs
+</script></section><section data-markdown><script type="text/template"># Ejemplo básico consultando una API con **fetch**
+
+* Veamos [lista-api](./ejemplos/3_lista_api/index.html)
+* En este caso utilizamos el hook **created** dentro del ciclo de vida de la instancia Vue.
+
+```html
+  <div id="app">
+    Datos de: https://jsonplaceholder.typicode.com/
+    <ul>
+      <li v-for="post in posts">
+        {{ post.id }} - <b>{{ post.title }}:</b> {{ post.body }}
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    const App = {
+      data() {
+        return {
+          posts: []
+        }
+      },
+      created() {
+        fetch('https://jsonplaceholder.typicode.com/posts')
+          .then(response => response.json())
+          .then(json =>{
+            this.posts = json
+          })
+      }
+    }
+    vue_app = Vue.createApp(App).mount('#app')
+  __SCRIPT_END__
+```
+</script></section><section data-markdown><script type="text/template"># Utilizando el cliente HTTP **axios**
+
+* Realiza los **XMLHttpRequests** del cliente (browser).
+* Realiza las peticiones HTTP en node.js (servidor).
+* Soporta API de [Promesas de JS](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Promise).
+* Intercepta y transforma los datos de requerimientos y respuestas.
+* Transforma automáticamente a JSON.
+* Soporte del lado del cliente para protección contra [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery).
+</script></section><section data-markdown><script type="text/template"># Ejemplo básico consultando una API con **axios**
+
+* Veamos [lista-api-axios](./ejemplos/3_lista_api/index_axios.html).
+* Ahora, abramos directamente el archivo local en el navegador.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Provincias Argentinas</title>
+  <meta charset="UTF-8" />
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js">__SCRIPT_END__
+  <script src="https://unpkg.com/axios/dist/axios.min.js">__SCRIPT_END__
+</head>
+<body>
+  <div id="app">
+    <div v-if="provincias && provincias.length">
+      <h1>Provincias Argentinas:</h1>
+      <ul>
+        <li v-for="p in provincias">
+          {{ p.id }} - {{ p.nombre }}
+        </li>
+      </ul>
+    </div>
+    <div v-if="errors && errors.length">
+      <h1>Errores:</h1>
+      <ul>
+        <li v-for="error of errors">
+          {{error.message}}
+        </li>
+      </ul>
+    </div>
+  Fuente: <a href="https://datos.gob.ar/" target="blank">https://datos.gob.ar/</a>
+  </div>
+  <script>
+    const App = {
+      data() {
+        return {
+          provincias: [],
+          errors: []
+        }
+      },
+      created() {
+        axios.get('https://apis.datos.gob.ar/georef/api/provincias')
+              .then(response => {
+              // JSON responses are automatically parsed.
+              this.provincias = response.data.provincias
+              })
+              .catch(e => {
+                this.errors.push(e)
+              })
+      }
+    }
+    vue_app = Vue.createApp(App).mount('#app')
+  __SCRIPT_END__
+</body>
+</html>
+```</script></section></section><section  data-markdown><script type="text/template">
+# [Ciclo de vida](https://vuejs.org/guide/essentials/lifecycle.html#lifecycle-diagram) de una instancia Vue:
+
+![Lifecycle](images/vue-lifecycle.png)
+</script></section><section  data-markdown><script type="text/template">
+# Referencias Vue
+
+* Guia Oficial Vue: https://vuejs.org/guide/introduction.html
+
+* Vue Mastery’s Intro to Vue 3: https://www.vuemastery.com/courses/intro-to-vue-3/intro-to-vue3/
+
+* Ejemplos Vue: https://vuejs.org/v2/examples/ 
+
+* Online [Playground](https://play.vuejs.org/#eNp9kUFLwzAUx79KfJcqzA3ZbXQDlYF6UFHBSy6je+sy0yQkL7NQ+t19SVn1ILv1/X//l/7SdnDr3PQYERZQhsorRyIgRbeSRjXOehKd8LgTvdh524iCq4U00lTWBBJNqMUy8cviAbW24tN6vb0orqQpZ8NxfBAPhI3TG0KehCj3N6uuy8t9X854yqkyLpI4Xjd2i3opgbkERuVs3IYJUOBX71Q9PQRr2LpLuxIq2zil0b84UqwmYSEySWzDZt9POSMfcXLKqz1WX//kh9CmTMKrx4D+iBJGRhtfIw14/f6MLT+PkM2j5vYZ+IbB6pgch9pdNFvW/tPLto/52ytTf4R1S2jC6VJJNDX73JfA/+P+zNV/defTed6Tpof+B7x8phs=): </script></section><section  data-markdown><script type="text/template">
+# ¿Dudas?
+</script></section><section  data-markdown><script type="text/template"># Seguimos con vuejs la próxima semana...
+</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

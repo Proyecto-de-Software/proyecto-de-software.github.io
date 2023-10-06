@@ -20,15 +20,15 @@
 # Proyecto de Software
 </script></section><section  data-markdown><script type="text/template"># Seguimos con Vue.js
 
-![vue-roadmap](images/vue-roadmap.png)
+![vue-roadmap](images/vue-roadmap.png)  <!-- .element width="50%" -->
 
 https://roadmap.sh/vue</script></section><section  data-markdown><script type="text/template">
 # Temario
 ### Vue.js
   - Componentes
-  - Vue CLI
+  - Vue CLI -> Vite
   - Ruteo: Vue Router
-  - Gestión de estado: Vuex</script></section><section ><section data-markdown><script type="text/template"># Componentes Vue
+  - Gestión de estado: Vuex -> Pinia</script></section><section ><section data-markdown><script type="text/template"># Componentes Vue
 
 * El sistema de componentes es un concepto importante.
 * Nos permite construir aplicaciones grandes a partir de componentes:
@@ -117,7 +117,8 @@ __SCRIPT_END__
 * **Importante**: las props se pueden pasar únicamente hacia abajo en el árbol de componentes.</script></section></section><section ><section data-markdown><script type="text/template">
 # Para proyectos más grandes: **Vue CLI**
 
-* Instalar **Vue CLI**:
+* **Vue CLI** es una herramienta de línea de comandos para generar proyectos Vue.js basada en **webpack**. Se esta reemplazando por **Vite**.
+* Instalación:
 ```bash
 npm install -g @vue/cli
 o
@@ -131,7 +132,8 @@ vue create my-project
 ```bash
 vue ui
 ```
-Ref: https://cli.vuejs.org/</script></section><section data-markdown><script type="text/template">
+* Vue CLI (https://cli.vuejs.org/).
+ </script></section><section data-markdown><script type="text/template">
 # **Vue CLI** (cont.)
 
 * Instalar dependencias con **npm** o **yarn** definidas en **package.json**:
@@ -145,14 +147,42 @@ npm/yarn run serve
 * Generar los archivos necesarios para producción:
 ```bash
 npm/yarn run build
-```</script></section></section><section  data-markdown><script type="text/template"># Actualmente muy usado: Vite
+```</script></section><section data-markdown><script type="text/template"># Actualmente oficialmente usado: **Vite**
 
 * Mejor experiencia en desarrollo.
 * Mayor eficiencia en build de producción.
 * Multiframework.
+* Utiliza [**esbuild**](https://esbuild.github.io/).
+* Vite vs webpack: https://www.solucionex.com/blog/el-fin-de-webpack-hola-vite 
+* Ref: https://vitejs.dev/guide/</script></section><section data-markdown><script type="text/template"># Vue + Vite
 
-https://vitejs.dev/guide/
-</script></section><section ><section data-markdown><script type="text/template"># Componentes single-file
+* Scaffolding oficial para instala vue.js actualmente:
+```bash
+$ npm create vue@latest
+```
+
+* Migración CLI a Vite: https://vueschool.io/articles/vuejs-tutorials/how-to-migrate-from-vue-cli-to-vite/
+</script></section><section data-markdown><script type="text/template"># Vue + Vite (cont.)
+
+* Instalar dependencias:
+```bash
+npm install
+```
+* Levantar el servicio para desarrollo:
+```bash
+npm run dev
+npx vite
+```
+* Preview de producción:
+```bash
+npm run preview
+npx vite preview
+```
+* Generar los archivos necesarios para producción:
+```bash
+npm run build
+npx vite build
+```</script></section></section><section ><section data-markdown><script type="text/template"># Componentes single-file
 
 * Para grandes proyectos las componentes utilizando **Vue.component** poseen varias **desventajas**:
   * Definiciones globales: cada componente debe tener un nombre único.
@@ -161,11 +191,11 @@ https://vitejs.dev/guide/
   * No hay etapa de contrucción: nos restringe a utilizar puramente HTML y JavaScript.
 
 * Todo esto se soluciona utilizando componentes single-file (con extensión **.vue**)
-y gracias a herramientas como [**Webpack**](https://webpack.js.org/) o [**Browserify**](http://browserify.org/).
+y gracias a herramientas como [**Webpack**](https://webpack.js.org/) y [**Vite**](https://vitejs.dev/).
 </script></section><section data-markdown><script type="text/template"># Ejemplo **Hello.vue**
 
 * Veamos el fuente [Hello.vue](./ejemplos/5_componentes/hello/)
-* En **package.json** se encuentran las dependencias, instalemos con **npm install** y corramos **npm run serve**. 
+* En **package.json** se encuentran las dependencias, instalemos con **npm install** y corramos **npm run dev**. 
 
 ```html
 <template>
@@ -217,14 +247,12 @@ p
   text-align center
 </style>
 ```
-* En este caso un manejador de templates: [**jade**](https://jade-lang.com/) y un preprocesador css: [**stylus**](https://stylus-lang.com/).</script></section><section data-markdown><script type="text/template"># Axios utilizando Vue CLI + Componentes single-file  
+* En este caso un manejador de templates: [**jade**](https://jade-lang.com/) y un preprocesador css: [**stylus**](https://stylus-lang.com/).</script></section><section data-markdown><script type="text/template"># Axios + Componentes single-file  
 
-* Creamos proyecto vacío con **vue cli**:
+* Creamos proyecto vacío con **vite**:
 
 ```bash
-vue create api_client
-cd api_client
-npm run serve
+npm create vue@latest
 ```
 
 * Agregamos **axios**:
@@ -299,10 +327,10 @@ __SCRIPT_END__
 <style>
 </style>
 ```
-* Levantemos el servicio con **npm run serve** y veamos lo contruido con **npm run build**.
+* Levantemos el servicio con **npm run dev** y veamos lo contruido con **npm run build**.
 </script></section></section><section ><section data-markdown><script type="text/template"># Ruteo en Vue
 
-* Para Vue 3 vamos a utilizar la librería [vue-router](https://github.com/vuejs/routers) con su [documentación](https://router.vuejs.org/).
+* Para Vue 3 vamos a utilizar la librería [vue-router](https://github.com/vuejs/router) con su [documentación](https://router.vuejs.org/).
 </script></section><section data-markdown><script type="text/template"># vue-router
 
 * Instalación:
@@ -493,12 +521,38 @@ export default {
 }
 __SCRIPT_END__
 ```
-* Veamos el ejemplo con [Múltiples Contadores](./ejemplos/7_vuex/simple_vuex/). </script></section></section><section  data-markdown><script type="text/template"># Actualmente vue.js eligió como manejador de estado un nuevo proyecto: Pinia.
+* Veamos el ejemplo con [Múltiples Contadores](./ejemplos/7_vuex/simple_vuex/). </script></section><section data-markdown><script type="text/template"># Evolución de Vuex: **Pinia**
 
-* Según la documentación oficial, es [VueX con otro nombre...](https://vuex.vuejs.org/)
+* Según la documentación oficial, es [una nueva versión de VueX](https://vuex.vuejs.org/)
 * https://pinia.vuejs.org/
-* Pinia vs VueX: https://pinia.vuejs.org/introduction.html#comparison-with-vuex
-* Veamos un ejemplo: https://github.com/piniajs/example-vue-3-vite</script></section><section  data-markdown><script type="text/template"># Para seguir leyendo: Vuejs
+* Pinia vs VueX: https://medium.com/@haidizakelek/vuex-or-pinia-8bfbeda11339
+* Veamos ejemplos: 
+  * [Pinia + Options API](./ejemplos/8_pinia/pinia_options_api/)
+  * [Pinia + Composition API](./ejemplos/8_pinia/example-vue-3-vite/) => https://github.com/piniajs/example-vue-3-vite
+</script></section></section><section ><section data-markdown><script type="text/template"># Options Api vs Composition Api
+
+![options-composition](images/options_composition.png)
+</script></section><section data-markdown><script type="text/template"># Options Api
+
+* Forma tradicional de escribir componentes en Vue 2 y anteriores.
+* Se basa en un objeto que contiene propiedades como **data**, **methods**, **computed**, **watch**, etc.
+* Los datos y métodos se definen en el objeto data y se acceden mediante **this** dentro del componente.
+* Ideal para **componentes simples** y fáciles de entender.
+</script></section><section data-markdown><script type="text/template"># Composition Api
+
+* Introducida en Vue 3 como una forma moderna y flexible de definir componentes.
+* Se basa en funciones que pueden ser reutilizadas y agrupadas en **composiciones**.
+* Permite una organización **modular** y **reutilizable** de la lógica del componente.
+* Facilita la agrupación de datos, métodos, efectos secundarios y reactividad en composiciones.
+* Ideal para **componentes más complejos y grandes**, mejora la mantenibilidad y la comprensión del código.
+</script></section><section data-markdown><script type="text/template"># Options Api vs Composition Api
+
+![options-vs-composition](images/options_vs_composition.png)<!-- .element width="50%" -->
+
+
+* https://www.webmound.com/composition-api-vs-options-api-in-vue-3/
+* https://medium.com/codex/options-api-vs-composition-api-4a745fb8610
+  </script></section></section><section  data-markdown><script type="text/template"># Para seguir leyendo: Vuejs
 
 * Vue Router: https://router.vuejs.org/
 * Vue Vuex : https://vuex.vuejs.org/ y Pinia: https://pinia.vuejs.org/

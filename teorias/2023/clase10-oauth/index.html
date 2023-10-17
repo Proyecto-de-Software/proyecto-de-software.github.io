@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Oauth</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/league.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/base16/zenburn.css" />
+
+    <link rel="stylesheet" href="./_assets/proyecto.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">
+# Proyecto de Software
+
+
+## Cursada 2023
+</script></section><section ><section data-markdown><script type="text/template">
+# Temario
+
+
+- Identificación, Autenticación y Autorización
+- Estándares: 
+	* Oauth	
+	* OpenID Connect
+</script></section><section data-markdown><script type="text/template">
+
+# ¿API?
+
+
+- Interfaz de programación de aplicaciones (IPA) o API (del inglés Application Programming Interface) es el conjunto de funciones y procedimientos que ofrece cierta biblioteca para ser utilizado por otro software como una capa de abstracción. 
+- Ejemplo: librerías del sistema operativo
+</script></section><section data-markdown><script type="text/template">
+# ¿Qué nos permiten las APIs?
+
+* En general:
+	* Intercambiar datos con un tercero.
+	* Aprovechar el software y/o capacidad de procesamiento y almacenamiento de terceros para utilizarlo en nuestro sistema pero sin necesariamente incluirlo en nuestro desarrollo sino sólo invocándolo.
+	* Los cambios en lo que está en la capa de atrás de la API no nos afectan. 
+	* Por ej. si la API define una función **listarDatos**, desde nuestro desarrollo no nos afecta que la implementación de esa función cambie de usar un while a un for siempre que devuelva lo que esperamos.
+</script></section></section><section ><section data-markdown><script type="text/template">
+# ¿Identificación? ¿Autorización? ¿Auntenticación?
+</script></section><section data-markdown><script type="text/template">
+# Conceptos
+
+- **Identificación**: es una secuencia de caracteres que **identifica** unívocamente al **usuario**: nombre de usuario.
+- **Autenticación**: es la **verificación** que realiza el sistema sobre la **identificación**. Se puede realizar a través de: 
+	* **Algo que se conoce**: clave de acceso
+	* **Algo que se posee**: tokens / tarjeta
+	* **Algo que se es**: huella digital, iris,  retina, voz
+- **Autorización**: son los **permisos asociados** al usuario autenticado.
+</script></section><section data-markdown><script type="text/template">
+
+# En el trabajo de la cátedra:
+
+- ¿Identificador? -> **Id de usuario**
+
+- ¿Con qué nos autenticamos? -> **contraseña**
+
+- ¿Quién nos autentica? -> **nuestra aplicación flask**
+</script></section><section data-markdown><script type="text/template">
+# En el trabajo de la cátedra:
+
+¿Quién nos autoriza?: nuestra app flask
+---------------------------------------
+
+¿Qué autorización podemos tener?: dependerá del rol del usuario
+---------------------------------------------------------------
+</script></section><section data-markdown><script type="text/template">
+# En el trabajo de la cátedra:
+
+# ¿Cómo lo controlamos?
+
+- ¿Identificador? -> Id de Usuario
+- ¿Con qué nos autenticamos? -> contraseña
+- ¿Quién nos autentica? -> nuestra aplicación flask
+- ¿Quién nos autoriza? -> nuestra aplicación flask
+- ¿Qué autorización podemos tener? -> dependerá del rol del usuario
+</script></section><section data-markdown><script type="text/template">
+# Escenario
+
+- Usuario introduce identificador y contraseña en el browser.
+- Aplicación flask valida e inicia sesión o no.
+- Devuelve al usuario la vista que se corresponde con la autorización definida.
+</script></section><section data-markdown><script type="text/template">
+# Limitaciones del esquema
+
+Varios sistemas:
+----------------
+
+- Múltiples pares usuario/contraseña, uno por cada sistema.
+- Se dificulta la interacción entre los sistemas, no hay confianza.
+- En cada sistema nuevo se debe redesarrollar la autenticación y todo lo relacionado, por ejemplo: recuperación de contraseña.
+</script></section><section data-markdown><script type="text/template">
+# Alternativas disponibles
+
+
+- OAuth
+- OpenID Connect
+- JWT
+- SAML
+ </script></section><section data-markdown><script type="text/template">
+# OAuth
+
+- El protocolo [OAuth](https://oauth.net/2/), es un protocolo de autorización, más exactamente, de delegación de acceso.
+- Es decir, permite definir cómo un tercero va a acceder a los recursos propios.
+
+![OAuth](images/oauth.png)
+</script></section><section data-markdown><script type="text/template">
+# Oauth - Funcionamiento
+
+- El usuario dispone de una serie de recursos propios en un servidor (el “proveedor”).
+- Un servidor externo (el “consumidor”) desea acceder a un subconjunto de esos recursos.
+- El consumidor redirige al usuario hacia el proveedor.
+- El usuario se autentica en el proveedor (si no lo estaba previamente).
+- El proveedor pregunta al usuario si autoriza al consumidor a que utilice esos determinados recursos.
+- El usuario autoriza al consumidor a utilizar esos recursos.
+- El servidor externo (consumidor) consigue acceso a esos recursos. 
+</script></section><section data-markdown><script type="text/template">
+# Oauth – ¿Quiénes participan?
+
+- Amazon
+- Dailymotion 
+- Twitter
+- Twitch
+- Google 
+- Facebook
+- Instagram
+- GitHub
+- Linkedin
+- PayPal
+- y [muchos más...](https://en.wikipedia.org/wiki/List_of_OAuth_providers)
+</script></section><section data-markdown><script type="text/template">
+# Oauth - Funcionamiento
+
+![OAuthFuncionamiento](images/oauthfuncionamiento.png)
+</script></section><section data-markdown><script type="text/template"># ¿Qué es OpenID Connect?
+
+- [OpenID Connect](https://openid.net/specs/openid-connect-federation-1_0-04.html) es una capa de identificación construida sobre OAuth 2.0. 
+- Permite al cliente verificar la identidad del usuario final basándose en la autenticación realizada por el servidor de autorizacion,
+- Facilita además obtener información básica del perfil del usuario final.
+- OpenID Connect permite cliente de todo tipo web, mobile, y clientes JavaScript clients.
+- Opcionalmente se puede utilizar encriptación, discovery de proveedores OpenID, o manejo de sesión.
+</script></section><section data-markdown><script type="text/template">
+# OpenID Connect
+
+![OpenIdConnect](images/OpenIDConnect-Map-4Feb2014.png)
+
+</script></section><section data-markdown><script type="text/template">
+# ¿Y nosotros?
+
+- Necesitamos 1ero. que todo poder usar la API y para eso necesitamos las keys (tokens) para el consumidor OAuth, de la API para eso debemos registrar la aplicación.
+- Obtener una extensión OAuth para Python.
+	- Hay varias opciones de [OAuth para Python](https://oauth.net/code/python/)
+
+- Usarlo :D
+</script></section><section data-markdown><script type="text/template">
+# OAuth en Python: seguimos con Flask
+
+
+- [AuthLib](https://authlib.org)
+	- "Reemplaza" a [Flask-OAuthlib](https://github.com/lepture/flask-oauthlib)  y [Flask-OAuth](https://pythonhosted.org/Flask-OAuth/) para [el cliente](https://docs.authlib.org/en/latest/client/flask.html#flask-client).
+	- Permite crear [proveedores del servicio](https://docs.authlib.org/en/latest/).
+
+- Algunos Ejemplos:
+   - https://github.com/authlib/demo-oauth-client/blob/master/flask-google-login/app.py
+   - https://realpython.com/flask-google-login/#oauthlib
+   - https://github.com/lepture/flask-oauthlib/blob/master/example/twitter.py
+
+
+</script></section><section data-markdown><script type="text/template">
+# JWT: JSON Web Token
+
+- JSON Web Token (JWT) es un estándar abierto.
+- Define una forma para transmitir información de forma segura entre las partes como un objeto JSON.
+- Utiliza firma digital para garantizar confiabilidad en la información transmitida.
+- Está definido en la [RFC 7519](https://tools.ietf.org/html/rfc7519)
+- [JWT Handbook](https://auth0.com/resources/ebooks/jwt-handbook)
+</script></section><section data-markdown><script type="text/template">
+
+# Estructura del token
+
+
+**header.payload.signature**
+
+- Por ejemplo, tiene la siguiente forma:
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
+eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.
+TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
+</script></section><section data-markdown><script type="text/template"># El encabezado
+
+Ejemplo:
+
+```json
+	{
+	"alg":"HS256",
+	"typ":"JWT"
+	}
+
+```
+
+- Es un objeto JSON.
+- Incluye algritmo (**"alg"**) y tipo del token (**typ"**).
+- "alg" es obligatorio.
+- Si el token no requiere encriptación: **alg: None**
+</script></section><section data-markdown><script type="text/template">
+# Los datos
+
+```json
+	{
+	"sub":"1234567890",
+	"name":"John Doe",
+	"admin":true
+	}
+
+```
+- Los datos que nos interesan van en el **payload**.
+- También es un objeto JSON.
+- No hay elementos obligatorios, aunque sí algunos con un significado específico.
+	- Por ejemplo: **"sub"**, que es un valor único que identifica  una de las partes. 
+- [+ Info](https://tools.ietf.org/html/rfc7519#section-4.1)
+</script></section><section data-markdown><script type="text/template">
+# La firma
+
+- Permite establecer la autenticidad del JWT: es decir que **los datos contenidos en el JWT no han sido alterados**.
+
+![JWT](images/firmaJWT.png)
+</script></section><section data-markdown><script type="text/template">
+# ¿Usamos JWT?
+
+- ¿Para qué necesitábamos esto?
+	- Proporciona un manera de transmitir información del cliente al servidor de forma segura y sin estado. <!-- .element: class="fragment" data-fragment-index="1" --> 
+
+</script></section><section data-markdown><script type="text/template">
+# Un ejemplo
+
+
+https://realpython.com/token-based-authentication-with-flask/
+</script></section><section data-markdown><script type="text/template">
+# SAML
+
+- [Site AML](https://wiki.oasis-open.org/security/FrontPage)
+
+![SAML](images/saml.png)
+
+- Security Assertion Markup Language (SAML). 
+	* Basado en XML. 
+	* Este protocolo sirve de base para algunos sistemas propietarios de single-sign-on, pero no es utilizado por los grandes proveedores de servicios en Internet.
+
+</script></section><section data-markdown><script type="text/template">
+
+# Ejemplo – OAuth + Google
+
+- Necesitamos 1ero. que todo poder usar la API y para eso necesitamos las keys (tokens) para el consumidor OAuth, de la API para eso debemos registrar la aplicación.
+- Obtener una extensión OAuth para python
+- Usarlo :D
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo – OAuth + Google
+
+- Para obtener una API key y una Secret Key debemos registrar la aplicación que las utilizará en https://console.developers.google.com/apis/credentials
+- Primero creamos un proyecto
+
+![GoogleOAuth](images/google1.png)
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo – OAuth + Google
+
+
+![GoogleOAuth](images/google2.png)
+
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo – OAuth + Google
+
+
+![GoogleOAuth](images/google3.png)
+
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo – OAuth + Google
+
+
+![GoogleOAuth](images/google4.png)
+
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo – OAuth + Google
+
+
+![GoogleOAuth](images/google5.png)
+
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo – OAuth + Google
+
+
+![GoogleOAuth](images/google6.png)
+
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo – OAuth + Google
+
+
+![GoogleOAuth](images/google7.png)
+
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo – OAuth + Google
+
+
+![GoogleOAuth](images/google8.png)
+
+</script></section><section data-markdown><script type="text/template"># Ejemplo OAuth
+
+- Vamos a necesitar un certificado ssl para poder probar.
+- Flask nos brinda una solución para desarrollo: ssl_context="adhoc"
+- Instalar:
+  - Authlib, requests y pyOpenSSL.
+
+```shell
+
+poetry install AuthLib
+poetry install requests
+poetry install pyOpenSSL
+
+poetry run flask  run --cert adhoc
+
+```
+ </script></section><section data-markdown><script type="text/template"># Ejemplo OAuth
+
+```python
+
+from src.web import create_app
+from pathlib import Path
+
+static_folder = Path(__file__).parent.absolute().joinpath("public")
+
+app = create_app(env="development", static_folder=static_folder)
+
+
+def main():
+    app.run()
+
+
+if __name__ == "__main__":
+    main()
+
+
+```
+</script></section><section data-markdown><script type="text/template"># Ejemplo OAuth
+
+```python
+
+## config.py
+....
+
+class DevelopmentConfig(Config):
+    """Development configuration."""
+
+    DB_SERVER = environ.get("DB_SERVER", "localhost")
+    DB_DATABASE = environ.get("DB_DATABASE", "proyecto_db")
+    DB_USER = environ.get("DB_USER", "proyecto_db")
+    DB_PASSWORD = environ.get("DB_PASSWORD", "proyecto_db")
+    DB_PORT = environ.get("DB_PORT", "5432")
+    SQLALCHEMY_DATABASE_URI = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}:{DB_PORT}/{DB_DATABASE}"
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+    GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
+
+...
+
+```</script></section><section data-markdown><script type="text/template"># Ejemplo OAuth
+
+```python
+
+# __init__.py
+from flask import Flask, url_for, render_template, session, redirect
+from os import environ, urandom
+from src.web.config import config
+from authlib.integrations.flask_client import OAuth
+
+
+
+def create_app(env="development", static_folder="static"):
+    app = Flask(__name__, static_folder=static_folder)
+
+    app.secret_key = environ.get("SECRET_KEY") or urandom(24)
+
+    app.config.from_object(config[env])
+
+    CONF_URL = 'https://accounts.google.com/.well-known/openid-configuration'
+    oauth = OAuth(app)
+    oauth.register(
+        name='google',
+        server_metadata_url=CONF_URL,
+        client_kwargs={
+            'scope': 'openid email profile'
+        }
+    )
+
+    @app.route('/')
+    def homepage():
+        user = session.get('user')
+        return render_template('index.html', user=user)
+
+    @app.route('/login')
+    def login():
+        redirect_uri = url_for('auth', _external=True)
+        return oauth.google.authorize_redirect(redirect_uri)
+
+    @app.route('/login/callback')
+    def auth():
+        token = oauth.google.authorize_access_token()
+        session['user'] = token['userinfo']
+        return redirect('/')
+
+    @app.route('/logout')
+    def logout():
+        session.pop('user', None)
+        return redirect('/')
+
+    return app
+
+```
+</script></section><section data-markdown><script type="text/template"># Ejemplo OAuth
+
+```html
+
+{% extends "layout.html" %}
+{% block title %}Ejemplo Proyecto{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+{% if user %}
+<pre>
+{{ user.email }}
+</pre>
+<a href="/logout">logout</a>
+{% else %}
+<a href="/login">login</a>
+{% endif %}
+{% endblock %}
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo – OAuth + Google
+
+
+![GoogleOAuth](images/google9.png)
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo – OAuth + Google
+
+
+![GoogleOAuth](images/google10.png)
+
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo – OAuth + Google
+
+
+![GoogleOAuth](images/google11.png)
+
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo 2 – OAuth + Google
+
+- Fuente: [Real Python](https://realpython.com/flask-google-login/)
+- Vamos a necesitar un certificado ssl para poder probar.
+- Flask nos brinda una solución para desarrollo: ssl_context="adhoc"
+
+```python
+# run.py
+from app import create_app
+
+if __name__ == "__main__":
+    app = create_app()
+    app.run(ssl_context="adhoc")
+
+```</script></section><section data-markdown><script type="text/template">
+# Ejemplo 2 – OAuth + Google
+
+- Recordar definir las rutas
+
+```python
+# __init__.py
+
+def create_app(environment="development"):
+    app.secret_key = environ.get("SECRET_KEY") or urandom(24)
+    
+    # OAuth 2 client setup
+    client = WebApplicationClient(GOOGLE_CLIENT_ID)
+    
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+
+
+    app.add_url_rule(
+        "/autenticacion", "auth_authenticate", auth.authenticate, methods=["POST"]
+    )
+    app.add_url_rule(
+        "/login/callback", "auth_callback", auth.callback, methods=["GET"]
+    )
+
+    app.add_url_rule(
+        "/login/bienvenido", "auth_bienvenido", auth.bienvenido, methods=["GET"]
+    )
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo 2 – OAuth + Google
+
+- Utilizar los valores client id y client secret generados en la consola de google.
+- En este caso lo pasamos desde el entorno
+
+```python
+# auth.py
+
+GOOGLE_CLIENT_ID = environ.get("GOOGLE_CLIENT_ID", None)
+GOOGLE_CLIENT_SECRET = environ.get("GOOGLE_CLIENT_SECRET", None)
+GOOGLE_DISCOVERY_URL = (
+    "https://accounts.google.com/.well-known/openid-configuration"
+)
+
+def get_google_provider_cfg():
+    return requests.get(GOOGLE_DISCOVERY_URL).json()
+
+client = WebApplicationClient(GOOGLE_CLIENT_ID)
+
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo 2 – OAuth + Google
+
+- Definimos los métodos que "atienden" las nuevas rutas
+
+```python
+# auth.py
+
+def login():
+    # Find out what URL to hit for Google login
+    google_provider_cfg = get_google_provider_cfg()
+    authorization_endpoint = google_provider_cfg["authorization_endpoint"]
+    
+
+    # Use library to construct the request for Google login and provide
+    # scopes that let you retrieve user's profile from Google
+    request_uri = client.prepare_request_uri(
+        authorization_endpoint,
+        redirect_uri="https://127.0.0.1:5000/login/callback",
+        scope=["openid", "email", "profile"],
+    )
+    return redirect(request_uri)
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Ejemplo 2 – OAuth + Google
+
+- Definimos los métodos que "atienden" las nuevas rutas
+
+```python
+# auth.py
+
+def callback():
+    # Get authorization code Google sent back to you
+    code = request.args.get("code")
+
+    google_provider_cfg = get_google_provider_cfg()
+    token_endpoint = google_provider_cfg["token_endpoint"]
+    token_url, headers, body = client.prepare_token_request(
+        token_endpoint,
+        authorization_response=request.url,
+        redirect_url=request.base_url,
+        code=code
+    )
+    token_response = requests.post(
+        token_url,
+        headers=headers,
+        data=body,
+        auth=(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET),
+    )
+
+    # Parse the tokens!
+    client.parse_request_body_response(json.dumps(token_response.json()))
+    
+    userinfo_endpoint = google_provider_cfg["userinfo_endpoint"]
+    uri, headers, body = client.add_token(userinfo_endpoint)
+    userinfo_response = requests.get(uri, headers=headers, data=body)
+    if userinfo_response.json().get("email_verified"):
+        unique_id = userinfo_response.json()["sub"]
+        users_email = userinfo_response.json()["email"]
+        picture = userinfo_response.json()["picture"]
+        users_name = userinfo_response.json()["given_name"]
+    else:
+        return "User email not available or not verified by Google.", 400
+        
+    # Create a user in your db with the information provided
+    # by Google
+    user = User(
+        id_=unique_id, name=users_name, email=users_email, profile_pic=picture
+    )
+
+    # Doesn't exist? Add it to the database.
+    print (userinfo_response.json())
+    if not User.get(unique_id):
+        User.create(unique_id, users_name, users_email, picture)
+
+    # Begin user session by logging the user in
+    login_user(user)
+
+    # Send user back to homepage
+    return redirect(url_for("auth_bienvenido"))
+
+```</script></section><section data-markdown><script type="text/template">
+# Ejemplo 2 – OAuth + Google
+
+- Definimos los métodos que "atienden" las nuevas rutas
+
+```python
+# auth.py
+
+def bienvenido():
+    return render_template("auth/bienvenido.html")
+
+```
+</script></section><section data-markdown><script type="text/template">
+# Referencias
+
+- OpenID:
+	* http://openid.net/
+	* http://openidexplained.com/
+- OAuth:
+	* http://oauth.net/
+	* https://oauth.net/code/python/
+	* http://wiki.oauth.net/
+	* http://es.scribd.com/doc/91623356/Entendiendo-oAuth
+	* http://oauthbible.com/
+- OpenID Connect:
+	* http://openid.net/connect/
+	* https://www.returngis.net/2019/04/oauth-2-0-openid-connect-y-json-web-tokens-jwt-que-es-que/
+- Flask
+	* https://realpython.com/flask-google-login/
+	* https://github.com/realpython/materials/tree/master/flask-google-login
+	* https://docs.authlib.org/en/latest/client/flask.html
+	* https://github.com/authlib/demo-oauth-client/tree/master/flask-google-login
+	* https://medium.com/thedevproject/how-to-setup-https-using-flask-for-local-development-b17ea906b231
+</script></section></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

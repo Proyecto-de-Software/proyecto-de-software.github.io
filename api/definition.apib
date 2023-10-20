@@ -168,7 +168,7 @@ Obtiene toda la información del perfil del usuario autenticado.
 
 # Group Solicitudes de Servicio
 
-## Listado de solicitudes de servicio realizadas por el usuario logueado [/api/me/requests{?page,per_page}]
+## Listado de solicitudes de servicio realizadas por el usuario logueado [/api/me/requests{?page,per_page,sort,order}]
 
 ### Obtiene el listado de solicitudes del usuario logueado [GET]
 
@@ -183,6 +183,9 @@ Obtiene el listado de solicitudes realizadas por el usuario autenticado.
         + Default: 1
   + per_page: 10 (integer, optional) - Cantidad de elementos por página.
         + Default: <config>
+  + sort: creation_date (text, optional) - Criterio de ordenación.
+  + order: desc (text, optional) - Orden DESCENDENTE o ASCENDENTE.
+        + Default: desc
 
 + Request (application/json)
     + Headers

@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Conceptos básicos y accesibilidad</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/league.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/base16/zenburn.css" />
+
+    <link rel="stylesheet" href="./_assets/proyecto.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section ><section data-markdown><script type="text/template">
+
+# Proyecto de Software
+
+## Conceptos básicos
+
+### Cursada 2024
+</script></section><section data-markdown><script type="text/template">
+# ¿Qué abordaremos en esta clase?
+
+- Lineamientos básicos a abordar.
+- HTML-CSS: aspectos básicos.
+- Introducción al DOM.
+- Accesibilidad web.</script></section></section><section ><section data-markdown><script type="text/template">
+# Lineamientos básicos
+
+**Usaremos y desarrollaremos con software libre**
+
+> El **software libre** es el software donde los usuarios tienen la **libertad** para ejecutar, copiar, distribuir, estudiar, modificar y mejorar el software.
+> **El acceso al código fuente es una condición necesaria.**
+
+La definición oficial pueden encontrarla en el [sitio del proyecto GNU](https://www.gnu.org/philosophy/free-sw.html "sitio del proyecto GNU") 
+</script></section><section data-markdown><script type="text/template"># Lineamientos básicos
+
+**Utilizaremos git y gitlab para el desarrollo**
+
+> **Git** es un **sistemas de control de versiones** distribuido libre diseñado para manejar proyectos con velocidad y eficiencia.
+> **GitLab** es una aplicación opensource que nos permite administrar repositorios en git mediante una interfaz web.
+
+Este tema se explicará en detalle la clase siguiente. 
+
+Es requisito en nuestra cursada el **trabajo en grupo**. El uso de git es una ENORME ventaja.
+</script></section></section><section ><section data-markdown><script type="text/template">
+# Objetivo general de la materia
+
+>**Desarrollar una aplicación web** integrando distintas herramientas y tecnologías.
+
+Programaremos en **Python** y **JavaScript**.
+</script></section><section data-markdown><script type="text/template">
+# Desarrollo web: ¿qué involucra? 
+
+![Roadmaps backend y frontend](images/roadmaps.png)
+[roadmap.sh: developer-roadmap](https://github.com/kamranahmedse/developer-roadmap)
+
+</script></section></section><section  data-markdown><script type="text/template">
+# Iniciemos por lo más simple...
+</script></section><section  data-markdown><script type="text/template">
+# La arquitectura web básica
+
+
+![Imagen de la arquitectura web](images/arquitectura-web.png)
+
+</script></section><section ><section data-markdown><script type="text/template">
+# Especificaciones públicas
+
+## ¿Dónde?
+
+RFC: [Request For Comments](http://www.faqs.org "Internet FAQ Archives")
+
+[El consorcio de la web](http://www.w3c.org "La W3C") 
+
+> **El consorcio de la web se encarga del desarrollo de estándares y guías que aseguren el crecimiento futuro de la web.** 
+</script></section><section data-markdown><script type="text/template">
+# ¡Muchas tecnologías!
+
+Si tenemos que decidir qué tipo de desarrollo proponer o con qué tecnologías trabajar, **¿por dónde empezamos?**, **¿qué deberíamos analizar?**
+
+Podemos analizar algunas tendencias y estadísticas.  <!-- .element: class="fragment" data-fragment-index="1" --></script></section><section data-markdown><script type="text/template">
+# Algunas estadísticas
+
+* [Sobre servidores](https://www.netcraft.com/blog/july-2024-web-server-survey/)
+* [Sobre navegadores](https://gs.statcounter.com/browser-market-share#monthly-202308-202408-bar)
+* [Estadísticas de Stackoverflow](https://survey.stackoverflow.co/2024/)
+* Y otras similares ...
+</script></section><section data-markdown><script type="text/template">
+# Para analizar
+
+- Estas estadísticas nos dan un panorama del contexto.
+- También nos permiten analizar las tendencias y características de usos.
+
+## Decidir qué tecnologías usar...
+
+- Podemos retomar esto al final de la cursada ...
+</script></section></section><section  data-markdown><script type="text/template">
+# La World Wide Web
+
+- Más de 30 años. [A Proposal, Tim Berners-Lee, CERN](http://www.w3.org/History/1989/proposal.html)
+- La propuesta era (y sigue siendo) sencilla:
+	- Un mecanismo para identificar todo recurso accesible en la web: **URL/URI**
+	- Un protocolo simple: **HTTP**
+	- Un lenguaje para definir hipertextos: **el lenguaje HTML**
+</script></section><section  data-markdown><script type="text/template">
+# Sobre las URI/URL
+
+- La especificación es la [RFC 3986](http://www.faqs.org/rfcs/rfc3986.html)
+
+## Ejemplos típicos
+
+```html
+    http://www.servidor.com.ar/especificacion#parte3
+    https://www.taller.com.ar/info.php?id=12&qq=11
+    mailto:proyecto@info.unlp.edu.ar
+    file:///home/claudia/git/proyecto2014/2020/teorias/clase2/index.html
+```
+
+- URL encoding
+	- Las URL se transmiten en ASCII.
+	- Algunos caracteres deben convertirse.
+
+
+```html
+    ../Clase%201/EjemplosClase1/Ejemplo%20con%20enlaces.html
+```
+</script></section><section ><section data-markdown><script type="text/template">
+# Sobre el protocolo HTTP
+
+
+- HTTP es un protocolo simple: una transacción HTTP consta de 4 pasos: **inicio conexión - solicitud - respuesta - cierre conexión**
+
+- HTTP es un **protocolo sin estado**: ¿qué significa esto?
+</script></section><section data-markdown><script type="text/template"># Algunas solicitudes HTTP
+
+- **GET**: retorna la información identificada por la URI-solicitada. 
+- **HEAD**: retorna sólo los encabezados, sin el cuerpo de la respuesta.
+- **POST**: se utiliza para el envío de datos al servidor. Estos datos se incluyen el el cuerpo en el mensaje.
+
+## La respuesta 
+
+- El servidor retorna un código que indica el estado de la solicitud. Por ejemplo, 200 y el recurso,  o "el famoso" 404.
+
+- Más info sobre  [solicitudes HTTP](https://developer.mozilla.org/es/docs/Web/HTTP/Methods)
+
+**Retomaremos esto al abordar el desarrollo de API REst.**
+</script></section></section><section ><section data-markdown><script type="text/template">
+# El Lenguaje HTML
+
+
+```html
+    <!DOCTYPE html>
+    <html lang="es">
+
+    <head>
+    <title>Título</title>
+    </head>
+
+    <body>
+	<h1>Proyecto de Software</h1>
+	<h2>Reglamento de cursada</h2>
+    </body>
+
+    </html>
+```
+
+- La última versión en [Web Hypertext Application Technology Working Group](https://html.spec.whatwg.org/)
+</script></section><section data-markdown><script type="text/template">
+# HTML: básico
+
+¿Qué indica la cláusula **doctype**?
+
+```html
+    <!DOCTYPE html>
+```
+
+Los elementos pueden tener atributos.
+
+```html
+    <html lang="es">
+```
+
+</script></section><section data-markdown><script type="text/template">
+¿Qué elementos contiene el encabezado? ¿Y el cuerpo?
+
+```html
+    <!DOCTYPE html>
+    <html lang="es">
+
+    <head>
+    <title>Título</title>
+    </head>
+
+    <body>
+	<h1>Proyecto de Software</h1>
+	<h2>Reglamento de cursada</h2>
+        Acá va el texto del reglamento 
+    </body>
+
+    </html>
+```
+- Más info: [Tutorial HTML & CSS Is Hard](https://internetingishard.netlify.app/html-and-css/)
+</script></section><section data-markdown><script type="text/template">
+# Los campos meta
+
+
+
+```html
+	<meta name="keywords" content="HTML,CSS,JavaScript">
+	<meta name="description" content="Guía  de la materia Proyecto de Software-UNLP.">
+ 
+```
+- ¿Qué pasa con los caracteres especiales?
+
+```html
+	<meta charset="UTF-8">
+ 
+```
+- ¿Qué les parece que indicamos con este campo?
+
+```html
+	<meta name="robots" content="noindex" />
+ 
+```
+</script></section><section data-markdown><script type="text/template">
+# Formularios en la arquitectura web
+
+Observemos este código 
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<title>Formularios web</title>
+</head>
+
+<body>
+    <h1> Mi color favorito</h1>
+    <form method="GET" action="proceso.php">
+        Nombre: <input name="nombre" type="text" placeholder="Ingresá tu nombre acá " />
+        Color Favorito: <input name="color_favorito" list="colores" />
+        <datalist id="colores">
+            <option value="Azul" />
+            <option value="Rojo" />
+            <option value="Verde" />
+            <option value="Rosa" />
+            <option value="Amarillo" />
+        </datalist>
+        <input type="submit" />
+    </form>
+</body>
+
+</html>
+```
+
+- Más [info sobre formularios](https://internetingishard.netlify.app/html-and-css/forms/)
+</script></section><section data-markdown><script type="text/template">
+# method="GET"
+
+El mensaje HTTP sería así:
+
+```http
+    GET /proceso.php?nombre=claudia&color_favorito=Azul HTTP/1.1
+    Host: www.servidor.com
+    User-Agent: Mozilla/5.0
+    Accept: image/gif, image/jpeg, text/html
+    Accept-language: es, en
+    Accept-Charset: iso-8859-1
+```</script></section><section data-markdown><script type="text/template">
+# method="POST"
+
+El mensaje HTTP sería así:
+
+```http
+    POST /proceso.php HTTP/1.1
+    Host: www.servidor.com
+    User-Agent: Mozilla/5.0
+    Accept: image/gif, image/jpeg, text/html
+    Accept-language: es, en
+    Accept-Charset: iso-8859-1
+
+    nombre=claudia&color_favorito=Azul
+```</script></section><section data-markdown><script type="text/template">
+# GET vs. POST
+
+
+
+|  GET                              | POST
+|-----------------------------------|-----------------|
+|Los datos son visibles en la URL   | No se ven        | 
+|Hay límite de caracteres           |  No tiene        | 
+|Los resultados pueden guardarse como favoritos | No se guardan       | 
+|Quedan en el historial del navegador | No se guardan     | 
+| | |
+
+- Entonces, ¿cuándo uso uno u otro?
+- Más info este [artículo](https://www.guru99.com/difference-get-post-http.html#7)
+</script></section></section><section ><section data-markdown><script type="text/template">
+# DOM: el Modelo de objetos del documento
+
+![ArbolDOM](images/dom.png)
+
+</script></section><section data-markdown><script type="text/template">
+# DOM: el modelo de objetos del documento
+
+- El modelo de objetos del documento es una **API**, que permite acceder a los contenidos de un documento HTML. 
+- Proporciona una **representación** estructurada, **orientada a objetos**, de los elementos individuales y el contenido del documento, con métodos para recuperar y fijar las propiedades de dichos objetos. 
+- Proporciona métodos para agregar y eliminar objetos al documento. 
+- También proporciona una **interfaz estándar** para trabajar con **eventos**.
+- La especificación en: [https://dom.spec.whatwg.org/](https://dom.spec.whatwg.org/) 
+</script></section><section data-markdown><script type="text/template">
+# DOM: el modelo de objetos del documento
+
+Entre otras cosas, define una forma de acceder a un elemento a través del atributo **id**.
+
+```html
+
+	<h1>Proyecto de Software</h1>
+	<h1 id="reglamento">Reglamento de cursada</h1>
+
+```
+
+```javascript
+	document.getElementById('reglamento')
+```
+
+**Retomaremos esto  con mayor profundidad.**
+</script></section></section><section ><section data-markdown><script type="text/template"># ¿Cómo cambiamos la visualización de un documento HTML?
+
+</script></section><section data-markdown><script type="text/template">#  Hojas de Estilo: CSS (Cascading Style Sheets)‏
+
+- El documento tiene una estructura y una forma de visualización
+	- **Estructura**: usando las etiquetas HTML más apropiadas.
+	- **Visualización**: usando hojas de estilo
+- Ver sitio [CSS Zen Garden](http://www.csszengarden.com/tr/espanol/)
+</script></section><section data-markdown><script type="text/template">
+# CSS: básico
+
+### Reglas: selectores y propiedades
+
+```
+	p { 
+            color: red;
+            font-size: 14px;
+         }
+	ol, ul { 
+            color: blue;
+            font-size: 18px;
+         }
+	ol li { 
+            color: blue;
+         }
+
+```
+
+- ¿A qué elementos estamos especificando estilos?
+- ¿Cuáles son los selectores y cuáles las propiedades?
+</script></section><section data-markdown><script type="text/template">
+# CSS: básico
+
+¿Dónde se ubican estas reglas?
+
+```html
+
+	<!DOCTYPE html>
+	<html lang="es">
+
+	<head>
+		<title>Formularios web</title>
+		<style>
+		     h1 {color:red}
+		</style>
+	</head>
+
+	<body>
+	    <h1 style="color:red"> Mi color favorito</h1>
+	</body>
+
+	</html>
+
+```
+Los archivos .css 
+
+```html
+	<link rel="stylesheet" href="estilo.css">
+
+```</script></section><section data-markdown><script type="text/template">
+
+# ¿Cómo se aplican?
+
+![Cajas en HTML](images/css-cascade.png)
+
+</script></section><section data-markdown><script type="text/template">
+
+# Tarea para el hogar...
+
+¿De qué color se muestra el texto "Mi color favorito"?
+
+```html
+	<!DOCTYPE html>
+	<html lang="es">
+	<head>
+		<title>Jugando con estilos</title>
+		<style>
+		     h1 {color:orange}
+   		     h1.verde {color: green}
+	             .azul {color: blue}
+		     #amarillo {color: yellow}
+		</style>
+	</head>
+
+	<body>
+	    <h1 class="verde" id="amarillo" style="color:red"> Mi color favorito</h1>
+	</body>
+
+	</html>
+
+```
+- ¿Y si incluimos un archivo css que contiene...?
+
+```css
+	h1 {color:grey}
+
+```</script></section><section data-markdown><script type="text/template"># Selectores
+
+
+| a       | Un elemento
+|--------|-----------------|
+|a, b, c | Varios elementos         | 
+|a  b     |  Elementos descendientes        | 
+|a > b   | Elemento hijo directo    | 
+|a + b  | Elementos adyascentes   | 
+|a:last-child   | Último elemento a  | 
+|... | ...|
+| | |
+</script></section></section><section ><section data-markdown><script type="text/template">
+# CSS: modelo de cajas
+
+- Todos los elementos de un doc HTML se representan mediante cajas rectangulares.
+- Cajas creadas por los elementos de línea y los elementos de bloque
+
+
+
+- Más info: [cap. 5 del tutorial Interneting Is Hard](https://internetingishard.netlify.app/html-and-css/css-box-model/)
+</script></section><section data-markdown><script type="text/template"># CSS: modelo de cajas (cont.)
+
+![Cajas en HTML](images/cajasHTML.png)
+</script></section></section><section ><section data-markdown><script type="text/template">
+# Diseño responsivo
+
+![Ejemplo](images/responsive.png)
+</script></section><section data-markdown><script type="text/template">
+# Diseño responsivo: viewport
+
+```html
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+```
+
+![Ejemplo](images/viewport.png)
+
+</script></section><section data-markdown><script type="text/template">
+# Diseño responsivo: media queries
+
+Permiten definir estilos específicos dependiendo del medio donde se mostrará la página.
+
+```html
+
+	<!DOCTYPE html>
+	<html lang="es">
+
+	<head>
+		<title>Diseños responsivos</title>
+        	<meta charset="UTF-8">
+        	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<style>
+			@media (min-width: 600px) {
+				body {
+				  background-color: lightgreen;
+				}
+	   		 }
+			@media (max-width: 599px) {
+				body {
+				  background-color: blue;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+	    <h1> Diseño responsivo</h1>
+	</body>
+
+	</html>
+
+```</script></section><section data-markdown><script type="text/template"># Diseño responsivo: más opciones 
+
+- Establecer estilo en imágenes: max-width: 100% 
+- Usar [flex](https://developer.mozilla.org/es/docs/Web/CSS/CSS_Flexible_Box_Layout/Conceptos_Basicos_de_Flexbox) y [grid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout)
+- Más info: https://web.dev/articles/responsive-web-design-basics?hl=es</script></section></section><section  data-markdown><script type="text/template">
+# Hay muchas herramientas 
+
+- [Bootstrap](https://getbootstrap.com/)
+- [Materialize](https://materializecss.com/)
+- [Bulma](https://bulma.io/)
+- Y muchos otros ...
+
+## ¿Qué son? ¿Usaron?
+</script></section><section  data-markdown><script type="text/template">
+# ¿Qué pasa cuando accedemos a la web con la pantalla apagada?
+
+# ¿Qué pasa si no disponemos de un mouse? ¿O un teclado?
+
+## Probemos algo...
+
+- [Sitio educ.ar](https://www.educ.ar/)
+- [Sitio Diario El Día](https://www.eldia.com/)
+</script></section><section ><section data-markdown><script type="text/template">
+# Algunas reflexiones
+
+- [OMS: discapacidad y salud - Datos marzo-2023](http://www.who.int/mediacentre/factsheets/fs352/es/)
+
+	- Según la OMS, **1300 millones de personas** (es decir, 1 de cada 6 personas en todo el mundo)  sufren una discapacidad importante.
+
+
+- [OMS: ceguera y discapacidad visual - Datos agosto-2023](https://www.who.int/es/news-room/fact-sheets/detail/blindness-and-visual-impairment)
+	- En el mundo hay al menos **2200 millones de personas** con deterioro de la visión cercana o lejana. </script></section><section data-markdown><script type="text/template">
+# Accesibilidad web
+
+> **"The power of the Web is in its universality. Access  by everyone regardless of disability is an essential aspect".**
+
+Tim Berners-Lee, W3C
+</script></section><section data-markdown><script type="text/template">
+# Tarea para el hogar ...
+Veamos el siguiente video:
+
+[![Video introductorio a aspectos de accesibilidad web](images/video_wai.png)](https://www.youtube.com/watch?v=20SHvU2PKsM&t=10s)
+</script></section></section><section  data-markdown><script type="text/template">
+# ¿Qué involucra pensar en la accesibilidad?
+
+- Hay personas que tienen dificultad para leer o comprender textos. 
+- Hay personas que no pueden ver, escuchar o moverse. 
+- No todos utilizan mouse y teclados. 
+- Conexión a Internet lenta. 
+- Se trabaja con tecnologías muy diversas. 
+- Pantallas de sólo texto, pequeñas o de distintas resoluciones. 
+</script></section><section ><section data-markdown><script type="text/template">
+# **WAI**: Web Accessibility Initiative
+
+## Objetivos
+
+> Desarrollar  estrategias, pautas, recursos para hacer la Web accesible a **personas con discapacidad**. Pero también será accesible en **otros entornos y aplicaciones**, como navegador de voz, teléfono móvil, PC de automóvil; y ante limitaciones bajo las que opere, como entornos ruidosos, habitaciones infra o supra iluminadas, entorno de manos libres.
+
+URL: https://www.w3.org/WAI/
+</script></section><section data-markdown><script type="text/template">
+# **WAI**: Web Accessibility Initiative
+
+![Componentes WAI](images/wai.png)
+
+Sacado del [sitio de la WAI de la  W3C](https://www.w3.org/WAI/standards-guidelines/es#intro)
+</script></section><section data-markdown><script type="text/template">
+# **WAI**: Web Accessibility Initiative
+
+- Para aplicaciones de usuario: [WAI-User Agent Accessibility Guidelines (UAAG)](https://www.w3.org/WAI/standards-guidelines/uaag/)
+
+- Para herramientas de autor: [WAI-Authoring Tool Accessibility Guidelines (ATAG)](https://www.w3.org/WAI/standards-guidelines/atag/)
+
+- Para contenido web: [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/WAI/standards-guidelines/wcag/)
+	- WCAG 1.0
+	- WCAG 2.0
+	- WCAG 2.1
+	- **WCAG 2.2** (2023)
+</script></section><section data-markdown><script type="text/template"># Desde hace años...
+
+![Componentes WAI](images/linea_de_tiempo_wai.png)
+
+Material elaborado por la Prof. Ivana Harari, en su presentación "Introducción a la accesibilidad digital".</script></section></section><section ><section data-markdown><script type="text/template">
+# Guías para contenido web accesible: **WCAG**
+
+
+- Definen **principios de diseño** web.
+- Cada principio tiene **pautas**.
+- Cada pauta tiene **criterios testeables**.
+- Cada criterio tiene **nivel de conformidad: A, AA y AAA**. 
+</script></section><section data-markdown><script type="text/template">
+# Principios de diseño para el Contenido Web (WCAG) 2.2
+
+- **1- Perceptible**: la información y los componentes de la interfaz de usuario deben ser mostrados a los usuarios en formas que ellos puedan entender. 
+- **2- Operable:** los componentes de la interfaz de usuario y la navegación debe ser manejable.
+- **3- Comprensible:** la información y las operaciones de usuarios deben ser comprensibles.
+- **4- Robustez:** el contenido deber ser suficientemente robusto para que pueda ser bien interpretado por una gran variedad de agentes de usuario, incluyendo tecnologías de asistencia.</script></section><section data-markdown><script type="text/template"># Cumplir pautas principio 1 - Perceptible
+
+* Proporcionar [alternativas textuales](https://www.w3.org/WAI/WCAG21/quickref/#text-alternatives) para contenido no textual.
+* Proporcionar [subtítulos y otras alternativas](https://www.w3.org/WAI/WCAG21/quickref/#time-based-media) para multimedia.
+* Crear contenido que se pueda [presentar de diferentes formas](https://www.w3.org/WAI/WCAG21/quickref/#adaptable), incluyendo a las tecnologías de apoyo, sin perder información.
+* Facilitar que los usuarios puedan [ver y oír el contenido](https://www.w3.org/WAI/WCAG21/quickref/#distinguishable).
+</script></section><section data-markdown><script type="text/template"># Cumplir pautas principio 2 - Operable
+
+* Proporcionar acceso a todas las funcionalidades [mediante el teclado](https://www.w3.org/WAI/WCAG21/quickref/#keyboard-accessible).
+* Conceder a los usuarios [tiempo suficiente](https://www.w3.org/WAI/WCAG21/quickref/#enough-time) para leer y usar el contenido.
+* No usar contenido que pudiera causar [convulsiones](https://www.w3.org/WAI/WCAG21/quickref/#seizure) o reacciones físicas.
+* Ayudar a los usuarios a [navegar y encontrar el contenido](https://www.w3.org/WAI/WCAG21/quickref/#navigable).
+* Facilitar [métodos de entrada diferentes al teclado](https://www.w3.org/WAI/WCAG21/quickref/#navigation-mechanisms).</script></section><section data-markdown><script type="text/template"># Cumplir pautas principio 3 - Comprensible
+
+* Proporcionar texto [legible y comprensible](https://www.w3.org/WAI/WCAG21/quickref/#readable).
+* Proporcionar contenido que sea [predecible](https://www.w3.org/WAI/WCAG21/quickref/#predictable) en apariencia y operación.
+* Ayudar a los usuarios a [evitar y corregir errores](https://www.w3.org/WAI/WCAG21/quickref/#input-assistance).
+</script></section><section data-markdown><script type="text/template"># Cumplir pautas principio 4 - Robustez
+
+* Maximizar la [compatibilidad](https://www.w3.org/WAI/WCAG21/quickref/#compatible) con herramientas de usuario actuales y futuras.
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+# Marco legal 
+
+> En distintos países existen normativas y leyes que obligan a que sitios web y apps nativas sean accesibles.
+</script></section><section data-markdown><script type="text/template">
+# En Argentina
+## Ley Nacional de Accesibilidad N° 26.653
+
+> La [ley N° 26.653](http://servicios.infoleg.gob.ar/infolegInternet/anexos/175000-179999/175694/norma.htm) de **"Accesibilidad Web"** busca promover la accesibilidad de la información, facilitando especialmente el acceso a todas las personas con discapacidad con el objeto de **garantizarles la igualdad real de oportunidades y trato**, evitando así todo tipo de discriminación.
+
+Sacado de: https://www.argentina.gob.ar/jefatura/innovacion-publica/onti/accesibilidad-web
+</script></section></section><section  data-markdown><script type="text/template">
+# Para  reflexionar...
+
+- ¿Por qué les parece que es  importante cumplir con los estándares?
+- Veamos uno de los [videos de perspectivas](https://www.w3.org/WAI/perspective-videos/)
+</script></section><section ><section data-markdown><script type="text/template"># ¿Cómo validamos?: chequeo inicial
+
+La W3C brinda un [check list](https://www.w3.org/WAI/test-evaluate/preliminary/) para revisar rápidamente la accesibilidad.
+
+![Chequeo inicialI](images/easy_check.png)
+</script></section><section data-markdown><script type="text/template">
+# ¿Cómo validamos?: evaluación manual
+
+![Chequeo manual](images/accesibilidad_manual.png)
+Material elaborado por la Prof. Ivana Harari, en su presentación "Introducción a la accesibilidad digital".
+</script></section><section data-markdown><script type="text/template"># ¿Cómo validamos?: con usuarios finales
+
+![Chequeo con usuarios finales](images/accesibilidad_usuarios.png)
+Material elaborado por la Prof. Ivana Harari, en su presentación "Introducción a la accesibilidad digital".
+</script></section><section data-markdown><script type="text/template"># Validadores 
+
+## HTML y CSS
+
+- Validador HTML:  http://validator.w3.org/
+- Validador de Hojas de Estilos: http://jigsaw.w3.org/css-validator/
+- NU: https://validator.w3.org/nu/
+</script></section><section data-markdown><script type="text/template">
+# Validadores 
+
+## Accesibilidad
+
+- WAVE: http://wave.webaim.org
+- TAW: http://www.tawdis.net
+- Tingtun Checker: http://checkers.eiii.eu/ 
+- [Lighthouse](https://chromewebstore.google.com/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=es)
+
+- Herramientas de la W3C: https://www.w3.org/WAI/ER/tools/
+</script></section></section><section ><section data-markdown><script type="text/template"># Curso de accesibilidad web de la facultad
+
+![curso de accesibilidad web](images/curso_accesibilidad_web.png)
+
+[+Info](https://www.extension.info.unlp.edu.ar/accesibilidad-digital/)</script></section><section data-markdown><script type="text/template">
+# Algunas referencias
+
+- [Principios WAI](http://accesibilidadweb.dlsi.ua.es/?menu=principios-2.1)
+- [Componentes WAI](https://www.w3.org/WAI/fundamentals/components/)
+- [Descripción general de las WCAG 2](https://www.w3.org/WAI/standards-guidelines/wcag/es)
+- [Accessible Rich Internet Applications (ARIA)](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) (Accessible Rich Internet Applications (ARIA) son un conjunto de roles y atributos que definen formas de hacer que el contenido y las aplicaciones web (especialmente aquellas desarrolladas con JavaScript) sean más accesibles para las personas con discapacidades.)
+- [All the tags](https://allthetags.com/)
+- Curso [HTML and CSS - Lecture 0 - CS50's Web Programming with Python and JavaScript](https://www.youtube.com/watch?v=zFZrkCIc2Oc&feature=youtu.be)
+</script></section></section><section  data-markdown><script type="text/template">
+# Seguimos la próxima ...
+
+
+</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

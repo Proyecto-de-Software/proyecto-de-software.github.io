@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Sesiones</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/league.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/base16/zenburn.css" />
+
+    <link rel="stylesheet" href="./_assets/proyecto.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">
+# Proyecto de Software
+</script></section><section  data-markdown><script type="text/template">
+# Temas de hoy
+
+- Sesiones
+</script></section><section ><section data-markdown><script type="text/template">
+# Cookies
+</script></section><section data-markdown><script type="text/template">
+# Cookies
+
+- Básicamente, son “tokens” en el requerimiento HTTP que permite identificar de alguna manera al cliente en el servidor.
+- Se almacenan en el cliente.
+- Muy usado por ser HTTP un protocolo sin estado.
+
+- Formato: **nombreCookie=valor;expires=fecha;**
+
+- En flask: Es un atributo del objeto request (diccionario) </script></section><section data-markdown><script type="text/template"># Cookies en flask
+
+- Obteniendo cookies del requerimiento del cliente:
+
+```python
+from flask import request
+
+@app.route('/')
+def index():
+    contador = request.cookies.get('contador_visitas')
+```
+
+- Seteando cookies en el cliente:
+
+```python
+from flask import make_response
+
+@app.route('/')
+def index():
+    resp = make_response(render_template(...))
+    resp.set_cookie('contador_visitas', '0')
+    return resp
+```
+
+- Referencia de [uso de cookies en flask](https://flask.palletsprojects.com/en/3.0.x/quickstart/#cookies)
+- Veamos un ejemplo aplicado en nuestra app http://localhost:5000/. </script></section><section data-markdown><script type="text/template"># Uso de cookies
+
+Las cookies se utilizan principalmente con tres propósitos:
+
+* **Gestión de Sesiones**: Inicios de sesión, carritos de compras, puntajes de juegos o cualquier otra cosa que el servidor deba recordar.
+* **Personalización**: Preferencias de usuario, temas y otras configuraciones.
+* **Rastreo**: Guardar y analizar el comportamiento del usuario.</script></section><section data-markdown><script type="text/template"># Seguridad de Cookies: Secure, HttpOnly y SameSite
+
+* **Secure**: Una cookie segura sólo se envía al servidor con una petición cifrada sobre el protocolo HTTPS. Incluso con Secure, no debería almacenarse **NUNCA** información sensible en la cookies.
+
+* **HttpOnly**: Para prevenir ataques cross-site scripting (XSS), las cookies HttpOnly son **inaccesibles desde la API de Javascript** Document.cookie; Solamente se envían al servidor. 
+
+* **SameSite**: Permiten a los servidores requerir que una cookie **no sea enviada con solicitudes cross-site**, lo que proporciona algo de protección contra ataques cross-site request forgery (CSRF).</script></section></section><section ><section data-markdown><script type="text/template"># Sesiones</script></section><section data-markdown><script type="text/template"># Manejo de sesiones tradicional
+
+
+Es un mecanismo para conservar ciertos datos a lo largo de varios accesos.
+
+- Permite registrar un número arbitrario de variables que se conservarán en las siguientes peticiones.
+- Identificador: A cada visitante se le asigna un identificador único, llamado **session id** (identificador de sesión).
+- Tradicionalmente (en lenguajes como PHP) la sesión es almacenada en un archivo en el servidor, el cliente SÓLO posee el sessionID para identificarla.
+
+- Hay dos formas de  propagar un identificador de sesión:
+  - Mediante cookies
+  - A través de la URL.
+  </script></section><section data-markdown><script type="text/template">
+# Sesiones en flask (client side)
+
+* Por defecto Flask usa sesiones basadas en cookies (**session cookie**).
+* La información de sesión se almacena **en el cliente** en una cookie firmada con una **secret key**. 
+* Cualquier modificación a la cookie queda invalidada por su firma. Pero es **visible en todo momento** en el cliente.
+* No es aconsejable guardar información sensible en una session cookie.
+
+Veamos una de estas sesiones en http://localhost:5000/iniciar_sesion decodificadas con https://github.com/noraj/flask-session-cookie-manager
+</script></section><section data-markdown><script type="text/template">
+# Sesiones en flask utilizando Flask-Session (server side) 
+
+* Flask posee extrensiones como **Flask-Session** que permiten un mejor manejo de las sesiones.
+* Con Flask-Session podemos elegir diferentes lugares donde almacenar la sesión en el servidor:
+  * redis
+  * memcached
+  * **filesystem**
+  * mongodb
+  * sqlalchemy
+* Se instala con pip: **pip install Flask-Session**.</script></section><section data-markdown><script type="text/template">
+# Uso de Flask-Session 
+
+```python
+from flask_session import Session
+# Configuración inicial de la app
+app = Flask(__name__)
+app.config.from_object(Config)
+#Server Side session
+app.config['SESSION_TYPE'] = 'filesystem'
+Session(app)
+```
+
+* Modifiquenos la app y veamos de nuevo... http://localhost:5000/iniciar_sesion
+</script></section><section data-markdown><script type="text/template"># Manejo de sesiones server-side
+
+- Los archivos con los datos de la sesión se generan en el servidor
+- El cliente sólo guarda el sessionid
+</script></section><section data-markdown><script type="text/template"># Ejemplo de uso de sesiones: no solo para login
+
+```python
+from flask import Flask, render_template, request, session
+from flask_session import Session
+
+app = Flask(__name__) 
+
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+
+Session(app)
+
+@app.route("/")
+def index():
+    if session.get("pos_equipos") is None:
+        session["pos_equipos"] = { "A" : "Campeón", "B": "Sub Campeón",
+                                "C": "Semi finalista", "D": "Semi finalista"}
+
+    return render_template ("index.html")
+
+
+@app.route("/equipos")
+def equipos():
+    return render_template("equipos.html", contenido=session["pos_equipos"])
+
+@app.route("/agregar", methods=["POST"])
+def agregar():
+    equipo = request.form.get("equipo")
+    posicion = request.form.get("posicion")
+    session["pos_equipos"][equipo] = posicion
+    return render_template("equipos.html", contenido=session["pos_equipos"])
+
+```</script></section></section><section  data-markdown><script type="text/template">
+# Repasando: Manejo de sesiones
+
+- ¿Qué es una sesión?<!-- .element: class="fragment" data-fragment-index="1" -->
+- ¿Porqué son necesarias?<!-- .element: class="fragment" data-fragment-index="2" -->
+- ¿Qué son las cookies? <!-- .element: class="fragment" data-fragment-index="3" -->
+- ¿Para qué sirven las cookies? <!-- .element: class="fragment" data-fragment-index="4" -->
+- ¿Dónde se alojan las cookies? <!-- .element: class="fragment" data-fragment-index="5" -->
+- ¿Dónde se aloja la sesión? <!-- .element: class="fragment" data-fragment-index="6" -->
+</script></section><section  data-markdown><script type="text/template"># Referencias:
+
+* Cookies en Flask: https://flask.palletsprojects.com/en/3.0.x/quickstart/#cookies
+* HTTP Cookies: https://developer.mozilla.org/es/docs/Web/HTTP/Cookies
+* Local Storage vs Session Storage vs Cookie: https://krishankantsinghal.medium.com/local-storage-vs-session-storage-vs-cookie-22655ff75a8
+* Sesiones en Flask: https://flask.palletsprojects.com/en/3.0.x/quickstart/#sessions
+* Artículo sesiones en flask: https://overiq.com/flask-101/sessions-in-flask/
+* Documentación de Flask-Session: https://flask-session.readthedocs.io/en/latest/</script></section><section  data-markdown><script type="text/template"># Fin                                            
+
+
+
+
+</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

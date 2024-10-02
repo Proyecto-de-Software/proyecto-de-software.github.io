@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Componentes Vue + Ruteo + Estado</title>
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="./dist/reset.css" />
+    <link rel="stylesheet" href="./dist/reveal.css" />
+    <link rel="stylesheet" href="./dist/theme/league.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/base16/zenburn.css" />
+
+    <link rel="stylesheet" href="./_assets/proyecto.css" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">
+# Proyecto de Software
+</script></section><section  data-markdown><script type="text/template"># Seguimos con Vue.js
+
+![vue-roadmap](images/vue-roadmap.png)  <!-- .element width="50%" -->
+
+https://roadmap.sh/vue</script></section><section  data-markdown><script type="text/template">
+# Temario
+### Vue.js
+  - Componentes
+  - Vue CLI -> Vite
+  - Ruteo: Vue Router
+  - Gestión de estado: Vuex -> Pinia
+  - Options Api vs Composition Api</script></section><section ><section data-markdown><script type="text/template"># Componentes Vue
+
+* El sistema de componentes es un concepto importante.
+* Nos permite construir aplicaciones grandes a partir de componentes:
+  * Más pequeños
+  * Reutilizables
+  * Auto-contenidos
+
+![Components](images/components.png)
+</script></section><section data-markdown><script type="text/template"># Componentes Vue
+
+* En Vue, una componente es una instancia Vue con opciones predefinidas.
+
+```javascript
+// Create Vue application
+const app = Vue.createApp(...)
+
+// Define a new component called todo-item
+app.component('todo-item', {
+  template: `<li>This is a todo</li>`
+})
+
+// Mount Vue application
+app.mount(...)
+```
+* Se puede utilizar dentro del template de otra componente:
+
+```html
+  <ol>
+    <!-- Create an instance of the todo-item component -->
+    <todo-item></todo-item>
+  </ol>
+```</script></section><section data-markdown><script type="text/template"># Componentes Vue
+
+* En una aplicación grande podríamos separar todo en componentes independientes.
+
+```html
+  <div id="app">
+    <app-nav></app-nav>
+    <app-view>
+      <app-sidebar></app-sidebar>
+      <app-content></app-content>
+    </app-view>
+  </div>
+```</script></section><section data-markdown><script type="text/template"># Ejemplo básico componentes Vue:
+
+* Veamos [componentes-basico](./ejemplos/5_componentes/basic.html) y [componentes-multiple](./ejemplos/5_componentes/multiple.html).
+
+```html
+<div id="components-demo">
+  <button-counter></button-counter>
+</div>
+
+<script>
+const app = Vue.createApp({});
+// Define a new component called button-counter
+app.component('button-counter', {
+  data: function () {
+    return {
+      count: 0
+    }
+  },
+template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+});
+app.mount('#components-demo');
+__SCRIPT_END__
+```</script></section><section data-markdown><script type="text/template"># Pasando datos a una componente con **props**:
+
+* Veamos [componentes-props](./ejemplos/5_componentes/props.html) y [componentes-multiple-apps](./ejemplos/5_componentes/multiple_apps_props.html)
+
+```html
+<div id="components-demo">
+	<blog-post title="My journey with Vue"></blog-post>
+	<blog-post title="Blogging with Vue"></blog-post>
+	<blog-post title="Why Vue is so fun"></blog-post></div>
+<script>
+  const app = Vue.createApp({});
+  
+  app.component('blog-post', {
+    props: ['title'],
+    template: '<h3>{{ title }}</h3>'
+  });
+  
+  app.mount('#components-demo');
+__SCRIPT_END__
+```
+* **Importante**: las props se pueden pasar únicamente hacia abajo en el árbol de componentes.</script></section></section><section ><section data-markdown><script type="text/template">
+# Para proyectos más grandes: **Vue CLI**
+
+* **Vue CLI** es una herramienta de línea de comandos para generar proyectos Vue.js basada en **webpack**. Se esta reemplazando por **Vite**.
+* Instalación:
+```bash
+npm install -g @vue/cli
+o
+yarn global add @vue/cli
+```
+* Crear un proyecto y seleccionar plugins:
+```bash
+vue create my-project
+```
+* También provee una interfaz web para realizar esto mismo:
+```bash
+vue ui
+```
+* Vue CLI (https://cli.vuejs.org/).
+ </script></section><section data-markdown><script type="text/template">
+# **Vue CLI** (cont.)
+
+* Instalar dependencias con **npm** o **yarn** definidas en **package.json**:
+```bash
+npm/yarn install
+```
+* Levantar el servicio para desarrollo:
+```bash
+npm/yarn run serve
+```
+* Generar los archivos necesarios para producción:
+```bash
+npm/yarn run build
+```</script></section><section data-markdown><script type="text/template"># Actualmente oficialmente usado: **Vite**
+
+* Mejor experiencia en desarrollo.
+* Mayor eficiencia en build de producción.
+* Multiframework.
+* Utiliza [**esbuild**](https://esbuild.github.io/).
+* Vite vs webpack: https://www.solucionex.com/blog/el-fin-de-webpack-hola-vite 
+* Ref: https://vitejs.dev/guide/</script></section><section data-markdown><script type="text/template"># Vue + Vite
+
+* Scaffolding oficial para instala vue.js actualmente:
+```bash
+$ npm create vue@latest
+```
+
+* Migración CLI a Vite: https://vueschool.io/articles/vuejs-tutorials/how-to-migrate-from-vue-cli-to-vite/
+</script></section><section data-markdown><script type="text/template"># Vue + Vite (cont.)
+
+* Instalar dependencias:
+```bash
+npm install
+```
+* Levantar el servicio para desarrollo:
+```bash
+npm run dev
+npx vite
+```
+* Preview de producción:
+```bash
+npm run preview
+npx vite preview
+```
+* Generar los archivos necesarios para producción:
+```bash
+npm run build
+npx vite build
+```</script></section></section><section ><section data-markdown><script type="text/template"># Componentes single-file
+
+* Para grandes proyectos las componentes utilizando **Vue.component** poseen varias **desventajas**:
+  * Definiciones globales: cada componente debe tener un nombre único.
+  * Templates como strings: no poseemos syntax highlight en el desarrollo.
+  * No tenemos soporte para CSS.
+  * No hay etapa de contrucción: nos restringe a utilizar puramente HTML y JavaScript.
+
+* Todo esto se soluciona utilizando componentes single-file (con extensión **.vue**)
+y gracias a herramientas como [**Webpack**](https://webpack.js.org/) y [**Vite**](https://vitejs.dev/).
+</script></section><section data-markdown><script type="text/template"># Ejemplo **Hello.vue**
+
+* Veamos el fuente [Hello.vue](./ejemplos/5_componentes/hello/)
+* En **package.json** se encuentran las dependencias, instalemos con **npm install** y corramos **npm run dev**. 
+
+```html
+<template>
+  <p>{{ greeting }} World!</p>
+</template>
+
+<script>
+module.exports = {
+  data: function () {
+    return {
+      greeting: 'Hello'
+    }
+  }
+}
+__SCRIPT_END__
+
+<style scoped>
+p {
+  font-size: 2em;
+  text-align: center;
+}
+</style>
+```</script></section><section data-markdown><script type="text/template"># Utilizando otros preprocesadores:
+
+```html
+<template lang="jade">
+div
+  p {{ greeting }} World!
+  OtherComponent
+</template>
+
+<script>
+import OtherComponent from './OtherComponent.vue'
+export default {
+  components: {
+    OtherComponent
+  },
+  data () {
+    return {
+      greeting: 'Hello'
+    }
+  }
+}
+__SCRIPT_END__
+
+<style lang="stylus" scoped>
+p
+  font-size 2em
+  text-align center
+</style>
+```
+* En este caso un manejador de templates: [**jade**](https://jade-lang.com/) y un preprocesador css: [**stylus**](https://stylus-lang.com/).</script></section><section data-markdown><script type="text/template"># Axios + Componentes single-file  
+
+* Creamos proyecto vacío con **vite**:
+
+```bash
+npm create vue@latest
+```
+
+* Agregamos **axios**:
+
+```bash
+npm install --save axios
+
+```</script></section><section data-markdown><script type="text/template"># Componente **ApiClient.vue**:
+
+```html
+<template>
+  <div>
+    <h1>Provincias:</h1>
+    <ul v-if="locations && locations.length">
+      <li v-for="(location, index) in locations" :key="index">
+        <strong>{{ location.id }}</strong> - {{ location.nombre }}
+      </li>
+    </ul>
+
+    <ul v-if="errors && errors.length">
+      <li v-for="(error, index) in errors" :key="index">
+        {{error.message}}
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      locations: [],
+      errors: []
+    }
+  },
+
+  // Fetches posts when the component is created.
+  created() {
+    axios.get('https://apis.datos.gob.ar/georef/api/provincias')
+          .then(response => {
+          // JSON responses are automatically parsed.
+          this.locations = response.data.provincias;
+          })
+          .catch(e => {
+            this.errors.push(e)
+          })
+  }
+}
+__SCRIPT_END__
+```</script></section><section data-markdown><script type="text/template"># Modificamos **App.vue** para incorporar el componente anterior:
+
+```html
+<template>
+  <div id="app">
+    <ApiClient/>
+  </div>
+</template>
+
+<script>
+import ApiClient from './components/ApiClient.vue'
+
+export default {
+  name: 'app',
+  components: {
+    ApiClient
+  }
+}
+__SCRIPT_END__
+
+<style>
+</style>
+```
+* Levantemos el servicio con **npm run dev** y veamos lo contruido con **npm run build**.
+</script></section></section><section ><section data-markdown><script type="text/template"># Ruteo en Vue
+
+* Para Vue 3 vamos a utilizar la librería [vue-router](https://github.com/vuejs/router) con su [documentación](https://router.vuejs.org/).
+</script></section><section data-markdown><script type="text/template"># vue-router
+
+* Instalación:
+
+```bash
+$ npm install --save vue-router@4
+```
+* Esto va a agregar **vue-router** a nuestro archivo **package.json**.
+</script></section><section data-markdown><script type="text/template"># main.js
+
+* Es recomendable escribir el código de ruteo en un archivo separado **router.js** y luego agregarla a la aplicación Vue dentro del **main.js**:
+
+```javascript
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router' // Router being imported
+
+createApp(App).use(router).mount('#app')
+```</script></section><section data-markdown><script type="text/template"># router.js
+
+* Importamos **createRouter** del paquete **vue-router**.
+
+* Lo exportamos al resto de la aplicación para que lo use.
+
+```javascript
+import { createRouter, createWebHistory } from 'vue-router'
+
+const routes = []
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+})
+
+export default router
+```</script></section><section data-markdown><script type="text/template"># Las rutas
+
+```javascript
+  const routes = [
+   {
+     path: '/',
+     name: 'Home',
+     component: Home
+   }
+  ]
+```
+
+* **path**: El path relativo a la base de la aplicación.
+* **name**: El nombre de la ruta para referenciarla en los componentes.
+* **component**: El componente que va a estar en esa ruta.
+* **redirect**: Una redirección.
+* **alias**: Alias.
+* **children**: Un arreglo con mas rutas que se concatenan a la ruta padre.
+* **params**: Parámetros del componente.
+</script></section><section data-markdown><script type="text/template"># Utilizando el router en una componente:
+
+
+* El componente de la ruta se va a renderizar dentro del tag **router-view**.
+* Para acceder a las rutas podemos utilizar un tag **a** que va a recargar la página o utilizar la propiedad **router-link** .
+
+```html
+<template>
+  <div id="app">
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/ruta1">Ruta 1</router-link> |
+      <router-link to="/ruta2">Ruta 2</router-link> |
+      <router-link to="/about">About</router-link>
+    </div>
+    <router-view/>
+  </div>
+</template>
+```
+* Veamos el ejemplo en [ejemplo-router](./ejemplos/6_router/ruteo/).</script></section></section><section ><section data-markdown><script type="text/template">
+# vuex
+</script></section><section data-markdown><script type="text/template"># Estado con un único componente
+
+![Vue-flow](images/vue-flow.png)
+
+* Únicamente se modifica el estado de la componente actual. </script></section><section data-markdown><script type="text/template">
+
+# Manejando el estado: vuex
+
+* En una aplicación grande es inevitable tener que compartir datos entre los distintos componentes.
+* Ir pasando las variables de componente en componente a través del árbol de componentes es engorroso.
+* La solución es **Vuex**, una librería para manejar un estado global para aplicaciones Vue.js. 
+</script></section><section data-markdown><script type="text/template"># Stores en vuex
+
+* Una **"store"** es básicamente un contenedor del estado de la aplicación.
+* Hay 2 cosas en la que las stores de Vuex se diferencian de un objeto global plano:
+
+  * Las stores Vuex **son reactivas**: cuando un componente saca sus valores de una store, este va a actualizarse reactivamente ante un cambio de estado.
+
+  * **No es posible cambiar directamente el estado** de una store. La única forma es si explícitamente se realizan **mutaciones**. Cada cambio deja un registro del mismo.
+</script></section><section data-markdown><script type="text/template">
+# Agregando vuex
+
+* Instalación:
+
+```bash
+$ npm install vuex@next --save
+```</script></section><section data-markdown><script type="text/template"># Interacción con Vuex
+
+![Vuex](images/vuex.png)</script></section><section data-markdown><script type="text/template">
+# Creamos una store
+
+* En un **store.js** por ejemplo: 
+
+```javascript
+import { createStore } from 'vuex'
+
+// Create a new store instance.
+const store = createStore({
+  state () {
+    return {
+      count: 0
+    }
+  },
+  mutations: {
+    increment (state, payload) {
+        state.count += payload.amount
+    },
+    decrement (state, payload) {
+        state.count -= payload.amount
+    }
+  }
+})
+
+export default store
+```</script></section><section data-markdown><script type="text/template">
+# Incorporamos el store a la app Vue
+
+* En el **main.js**.
+
+```javascript
+import { createApp } from 'vue'
+import App from './App.vue'
+import store from './store'
+
+createApp(App).use(store).mount('#app')
+```</script></section><section data-markdown><script type="text/template"># Accediendo al store
+
+* Se puede acceder al estado con **store.state**, y disparar un cambio en el estado utilizando el método **store.commit**:
+
+```javascript
+this.$store.commit('increment', { amount: 1 })
+console.log(this.$store.state.count) // -> 1
+```</script></section><section data-markdown><script type="text/template"># Utilizando el estado de una store
+
+* Podemos simplemente retornar el estado utilizando una **propiedad computada**, ya que el estado de la store es reactivo. 
+* Disparar cambios significa simplemente **commitear mutaciones** en métodos de la componente hacia la store.
+</script></section><section data-markdown><script type="text/template"># Componente accediendo al estado global (ejemplo Counter.vue)
+```html
+<template>
+  <div class="counter">
+    <h1>{{ msg }}</h1>
+    <p>count = {{ count }}</p>
+    <p>
+      <button v-on:click="increment">+{{ num }}</button>
+      <button v-on:click="decrement">-{{ num }}</button>
+    </p>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Counter',
+  props: {
+    msg: String,
+    num: Number
+  },
+  computed: {
+    count () {
+      return this.$store.state.count
+    }
+  },
+  methods: {
+    increment () {
+      this.$store.commit('increment', {
+        amount: this.num
+      })
+    },
+    decrement () {
+      this.$store.commit('decrement', {
+        amount: this.num
+      })
+    }
+  }
+}
+__SCRIPT_END__
+```
+* Veamos el ejemplo con [Múltiples Contadores](./ejemplos/7_vuex/simple_vuex/). </script></section><section data-markdown><script type="text/template"># Evolución de Vuex: **Pinia**
+
+* Según la documentación oficial, es [una nueva versión de VueX](https://vuex.vuejs.org/)
+* https://pinia.vuejs.org/
+* Pinia vs VueX: https://medium.com/@haidizakelek/vuex-or-pinia-8bfbeda11339
+* Veamos ejemplos: 
+  * [Pinia + Options API](./ejemplos/8_pinia/pinia_options_api/)
+  * [Pinia + Composition API](./ejemplos/8_pinia/example-vue-3-vite/) => https://github.com/piniajs/example-vue-3-vite
+</script></section></section><section ><section data-markdown><script type="text/template"># Options Api vs Composition Api
+
+![options-composition](images/options_composition.png)
+</script></section><section data-markdown><script type="text/template"># Options Api
+
+* Forma tradicional de escribir componentes en Vue 2 y anteriores.
+* Se basa en un objeto que contiene propiedades como **data**, **methods**, **computed**, **watch**, etc.
+* Los datos y métodos se definen en el objeto data y se acceden mediante **this** dentro del componente.
+* Ideal para **componentes simples** y fáciles de entender.
+</script></section><section data-markdown><script type="text/template"># Composition Api
+
+* Introducida en Vue 3 como una forma moderna y flexible de definir componentes.
+* Se basa en funciones que pueden ser reutilizadas y agrupadas en **composiciones**.
+* Permite una organización **modular** y **reutilizable** de la lógica del componente.
+* Facilita la agrupación de datos, métodos, efectos secundarios y reactividad en composiciones.
+* Ideal para **componentes más complejos y grandes**, mejora la mantenibilidad y la comprensión del código.
+</script></section><section data-markdown><script type="text/template"># Options Api vs Composition Api
+
+![options-vs-composition](images/options_vs_composition.png)<!-- .element width="50%" -->
+
+
+* https://www.webmound.com/composition-api-vs-options-api-in-vue-3/
+* https://medium.com/codex/options-api-vs-composition-api-4a745fb8610
+  </script></section></section><section  data-markdown><script type="text/template"># Para seguir leyendo: Vuejs
+
+* Vue Router: https://router.vuejs.org/
+* Vue Vuex : https://vuex.vuejs.org/ y Pinia: https://pinia.vuejs.org/
+* Webpack: https://www.youtube.com/watch?v=2UBKjshUwM8
+* Componentes y Plugins: https://madewithvuejs.com/
+* Gitlab.com usa vue: https://about.gitlab.com/2016/10/20/why-we-chose-vue/
+* Podcast Pinia vs Vuex - Vite vs Webpack para Vue: https://www.youtube.com/watch?v=FAmdgaYpaOc</script></section><section  data-markdown><script type="text/template"># ¿Dudas?
+</script></section><section  data-markdown><script type="text/template"># Fin
+
+</script></section></div>
+    </div>
+
+    <script src="./dist/reveal.js"></script>
+
+    <script src="./plugin/markdown/markdown.js"></script>
+    <script src="./plugin/highlight/highlight.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script src="./plugin/notes/notes.js"></script>
+    <script src="./plugin/math/math.js"></script>
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        slideNumber: true,
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath
+        ]
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

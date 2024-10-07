@@ -210,6 +210,28 @@ Veamos [hello_world](./ejemplos/0_hello_world/index.html).
 </html>
 ```
 Los datos y DOM están ahora relacionados utilizando **{{}}**. Modifiquemos **vue_app.message**.
+</script></section><section data-markdown><script type="text/template"># Ejemplo Two way data-binding:
+
+* Hace la relación bidireccional entre un input y los datos de la aplicación Vue.
+* Veamos [v-model](./ejemplos/1_directivas_vue/4_v-model.html).
+
+```html
+<div id="two-way-binding">
+  <p>{{ message }}</p>
+  <input v-model="message">
+</div>
+
+<script>
+  const App = {
+    data() {
+      return {
+        message: 'Bienvenidos a Proyecto!!'
+      }
+    }
+  }
+ vue_app = Vue.createApp(App).mount('#two-way-binding')
+__SCRIPT_END__
+```
 </script></section></section><section  data-markdown><script type="text/template"># ¿Dudas?
 </script></section><section  data-markdown><script type="text/template"># Seguimos con vuejs en video y la próxima semana...
 </script></section><section  data-markdown><script type="text/template">

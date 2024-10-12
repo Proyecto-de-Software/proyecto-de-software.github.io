@@ -2,14 +2,14 @@ FORMAT: 1A
 HOST: https://admin-grupoXX.proyecto2024.unlp.edu.ar/api
 
 # Documentación API a implementar
-Documentación online de la api a realizar en el trabajo integrador de la materia
-*Projecto de Software* de la **UNLP**.
+Documentación online de la API a realizar en el trabajo integrador de la materia
+*Proyecto de Software* de la **UNLP**.
 
 ## API de CEDICA
-En esta documentación describiremos los endpoints que creemos que son escenciales
+En esta documentación describiremos los endpoints que creemos que son esenciales
 para la implementación correcta de la aplicación.
 
-Estos endpionts serán implementados en la _**aplicación privada**_ que les solicitamos
+Estos endpoints serán implementados en la _**aplicación privada**_ que les solicitamos
 y consultados/usados desde la _**aplicación pública**_.
 
 ::: note
@@ -17,15 +17,15 @@ y consultados/usados desde la _**aplicación pública**_.
 Recordá que estos endpoints son los mínimos que nos imaginamos desde la cátedra
 como necesarios.
 
-Si dentro del grupo o el doncente asignado consideran que es necesario agregar
-algún otro debido a la particularidades de la solución elegida deberán agregarlos.
+Si dentro del grupo o el docente asignado consideran que es necesario agregar
+algún otro debido a las particularidades de la solución elegida deberán agregarlos.
 :::
 
 # Data Structures
 
 ## MessageData
 + title: `Consulta sobre inscripción` (string, required) - Título del mensaje.
-+ email: `maría@mailcom` (string, required) - Email del remitente.
++ email: `maría@mail.com` (string, required) - Email del remitente.
 + description: `Descripción detallada de la solicitud` (string, required) - Descripción del mensaje.
 + status: `created` (string) - Estado del mensaje.
 + created_at: `2023-10-10T12:00:00Z` (string) - Fecha de creación del mensaje (generada por sistema).
@@ -47,7 +47,7 @@ algún otro debido a la particularidades de la solución elegida deberán agrega
 ## ArticleListData
 + data (array[ArticleData]) - Lista de artículos.
 + page: `1` (number) - Número de página actual.
-+ `per_page`: `10` (number) - Cantidad de elementos por página.
++ per_page: `10` (number) - Cantidad de elementos por página.
 + total: `25` (number) - Total de elementos en la lista.
 
 
@@ -87,15 +87,16 @@ Envía un nuevo mensaje a la institución con la información proporcionada.
 + Request (application/json)
     + Attributes (MessageData)
         + title: `Consulta sobre inscripción` (string, required) - Título del mensaje.
-        + email: `maría@mailcom` (string, required) - Email del remitente.
+        + email: `maría@mail.com` (string, required) - Email del remitente.
         + description: `Quisiera saber los pasos para inscribirme en el curso de...` (string, required) - Descripción detallada del mensaje.
         + status: `created` (string, optional) - Estado inicial del mensaje, por defecto `created`.
+        + recaptcha_token: `token_de_recaptcha` (string, required) - Token de reCAPTCHA generado por el frontend.
       
 + Response 201 (application/json)
     + Attributes (MessageData)
         + title: `Consulta sobre inscripción` (string) - Título del mensaje creado.
         + description: `Quisiera saber los pasos para inscribirme en el curso de...` (string) - Descripción del mensaje.
-        + email: `maría@mailcom` (string) - Email del remitente.
+        + email: `maría@mail.com` (string) - Email del remitente.
         + created_at: `2023-10-10T12:00:00Z` (string) - Fecha de creación del mensaje generada por el sistema.
         + status: `created` (string) - Estado del mensaje.
 
@@ -104,4 +105,11 @@ Envía un nuevo mensaje a la institución con la información proporcionada.
 
             {
                 "error": "Parámetros inválidos o faltantes en la solicitud."
+            }
+
++ Response 401 (application/json)
+    + Body
+
+            {
+                "error": "Token de reCAPTCHA inválido."
             }

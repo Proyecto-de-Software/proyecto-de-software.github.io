@@ -116,7 +116,7 @@ __SCRIPT_END__
 __SCRIPT_END__
 ```
 * **Importante**: las props se pueden pasar únicamente hacia abajo en el árbol de componentes.</script></section></section><section ><section data-markdown><script type="text/template">
-# Para proyectos más grandes: **Vue CLI**
+# Para proyectos más grandes: **Vue CLI** (antes)
 
 * **Vue CLI** es una herramienta de línea de comandos para generar proyectos Vue.js basada en **webpack**. Se esta reemplazando por **Vite**.
 * Instalación:
@@ -153,7 +153,7 @@ npm/yarn run build
 * Mejor experiencia en desarrollo.
 * Mayor eficiencia en build de producción.
 * Multiframework.
-* Utiliza [**esbuild**](https://esbuild.github.io/).
+* Utiliza [**esbuild** https://esbuild.github.io/](https://esbuild.github.io/).
 * Vite vs webpack: https://www.solucionex.com/blog/el-fin-de-webpack-hola-vite 
 * Ref: https://vitejs.dev/guide/</script></section><section data-markdown><script type="text/template"># Vue + Vite
 
@@ -192,7 +192,7 @@ npx vite build
   * No hay etapa de contrucción: nos restringe a utilizar puramente HTML y JavaScript.
 
 * Todo esto se soluciona utilizando componentes single-file (con extensión **.vue**)
-y gracias a herramientas como [**Webpack**](https://webpack.js.org/) y [**Vite**](https://vitejs.dev/).
+y gracias a herramientas como [**Webpack** https://webpack.js.org/](https://webpack.js.org/) y [**Vite** https://vitejs.dev/](https://vitejs.dev/).
 </script></section><section data-markdown><script type="text/template"># Ejemplo **Hello.vue**
 
 * Veamos el fuente [Hello.vue](./ejemplos/5_componentes/hello/)
@@ -405,7 +405,7 @@ export default router
 </template>
 ```
 * Veamos el ejemplo en [ejemplo-router](./ejemplos/6_router/ruteo/).</script></section></section><section ><section data-markdown><script type="text/template">
-# vuex
+# Gestión de estado: Vuex -> Pinia
 </script></section><section data-markdown><script type="text/template"># Estado con un único componente
 
 ![Vue-flow](images/vue-flow.png)
@@ -414,7 +414,7 @@ export default router
 
 # Manejando el estado: vuex
 
-* En una aplicación grande es inevitable tener que compartir datos entre los distintos componentes.
+* En una aplicación grande es inevitable tener que **compartir datos entre los distintos componentes**.
 * Ir pasando las variables de componente en componente a través del árbol de componentes es engorroso.
 * La solución es **Vuex**, una librería para manejar un estado global para aplicaciones Vue.js. 
 </script></section><section data-markdown><script type="text/template"># Stores en vuex
@@ -449,6 +449,14 @@ const store = createStore({
       count: 0
     }
   },
+  actions: {
+    increaseCount({ commit }, payload ) {
+      commit("increment", { amount: payload.amount });
+    },
+    decreaseCount({ commit }, payload) {
+      commit("decrement", { amount: payload.amount });
+    }
+  },
   mutations: {
     increment (state, payload) {
         state.count += payload.amount
@@ -477,12 +485,20 @@ createApp(App).use(store).mount('#app')
 
 ```javascript
 this.$store.commit('increment', { amount: 1 })
-console.log(this.$store.state.count) // -> 1
-```</script></section><section data-markdown><script type="text/template"># Utilizando el estado de una store
+```
+
+* O utilizando una **action** del store que nos permite agregar lógica de negocio interno de la store:
+
+```javascript
+this.$store.dispatch('increaseCount', {amount: this.num})
+```
+</script></section><section data-markdown><script type="text/template"># Utilizando el estado de una store
 
 * Podemos simplemente retornar el estado utilizando una **propiedad computada**, ya que el estado de la store es reactivo. 
 * Disparar cambios significa simplemente **commitear mutaciones** en métodos de la componente hacia la store.
-</script></section><section data-markdown><script type="text/template"># Componente accediendo al estado global (ejemplo Counter.vue)
+* O utilizar **actions** que hagan el commit de las mutaciones es una buena práctica.
+
+![vuex-actions-commit](images/vuex-action-commit.png ) <!-- .element width="50%" -->  </script></section><section data-markdown><script type="text/template"># Componente accediendo al estado global (ejemplo Counter.vue)
 ```html
 <template>
   <div class="counter">
@@ -509,14 +525,10 @@ export default {
   },
   methods: {
     increment () {
-      this.$store.commit('increment', {
-        amount: this.num
-      })
+      this.$store.dispatch('increaseCount',{amount: this.num})
     },
     decrement () {
-      this.$store.commit('decrement', {
-        amount: this.num
-      })
+      this.$store.commit('decrement',{amount: this.num})
     }
   }
 }
@@ -524,13 +536,64 @@ __SCRIPT_END__
 ```
 * Veamos el ejemplo con [Múltiples Contadores](./ejemplos/7_vuex/simple_vuex/). </script></section><section data-markdown><script type="text/template"># Evolución de Vuex: **Pinia**
 
-* Según la documentación oficial, es [una nueva versión de VueX](https://vuex.vuejs.org/)
-* https://pinia.vuejs.org/
-* Pinia vs VueX: https://medium.com/@haidizakelek/vuex-or-pinia-8bfbeda11339
+Según la documentación oficial, es [una nueva versión de VueX](https://vuex.vuejs.org/)
+
+![pinia](images/pinia.svg) <!-- .element width="30%" -->
+
+Sitio de Pinia: https://pinia.vuejs.org/
+</script></section><section data-markdown><script type="text/template"># Características Pinia: **Múltiples stores**
+
+* Pinia genera un Store por módulo, a diferencia de VueX donde se tiene un único store con varios módulos.
+
+![pinia-store](images/pinia_store.jpg) <!-- .element width="55%" -->
+
+https://rubenr.dev/es/pinia-vuex
+</script></section><section data-markdown><script type="text/template"># Características Pinia: **No más mutaciones**
+* El estado se actualiza directamente en nuestras **actions**, reduciendo así la verbosidad y complejidad. Tampoco es necesario **context** en la acciones. 
+
+```javascript
+import { defineStore } from "pinia";
+
+export const useCounterStore = defineStore("counter", {
+  state: () => {
+    return { count: 0 };
+  },
+  actions: {
+    increment(value = 1) {
+      this.count += value;
+    },
+  },
+  getters: {
+    doubleCount: (state) => {
+      return state.count * 2;
+    },
+    doublePlusOne() {
+      return this.doubleCount + 1
+    },
+  },
+});
+```
+* Con vueX: Componente -> Acción -> Mutación -> Cambio de estado.</script></section><section data-markdown><script type="text/template"># Otras características Pinia
+* Completa integración con **TypeScript**.
+* Muy ligero, pesa sobre **1kb**.
+* Soporte para Vue **devtools**.
+* Soporte para **SSR**.</script></section><section data-markdown><script type="text/template"># Ejemplos: **Pinia**
 * Veamos ejemplos: 
-  * [Pinia + Options API](./ejemplos/8_pinia/pinia_options_api/)
-  * [Pinia + Composition API](./ejemplos/8_pinia/example-vue-3-vite/) => https://github.com/piniajs/example-vue-3-vite
-</script></section></section><section ><section data-markdown><script type="text/template"># Options Api vs Composition Api
+  * [Pinia + Options API](./ejemplos/8_pinia/0_pinia_options_api/)
+  * [Pinia + Composition API](./ejemplos/8_pinia/1_example-vue-3-vite/) => https://github.com/piniajs/example-vue-3-vite
+</script></section><section data-markdown><script type="text/template"># Pinia vs VueX
+
+![pinia-vs-vuex](images/vuex-pinia.png) <!-- .element width="40%" -->
+
+  Fuente: https://vmsoftwarehouse.com/vuex-vs-pinia-a-state-management-solution
+ </script></section><section data-markdown><script type="text/template"># Pinia vs VueX
+
+## Para seguir leyendo:
+
+* https://www.vuemastery.com/blog/advantages-of-pinia-vs-vuex/#a-pinia-example
+* https://medium.com/@haidizakelek/vuex-or-pinia-8bfbeda11339
+* https://imaginaformacion.com/tutoriales/pinia-vs-vuex-cual-es-mejor
+* https://vuejsdevelopers.com/2023/04/11/pinia-vs-vuex---why-pinia-wins/</script></section></section><section ><section data-markdown><script type="text/template"># Options Api vs Composition Api
 
 ![options-composition](images/options_composition.png)
 </script></section><section data-markdown><script type="text/template"># Options Api
@@ -550,8 +613,6 @@ __SCRIPT_END__
 
 ![options-vs-composition](images/options_vs_composition.png)<!-- .element width="50%" -->
 
-
-* https://www.webmound.com/composition-api-vs-options-api-in-vue-3/
 * https://medium.com/codex/options-api-vs-composition-api-4a745fb8610
   </script></section></section><section  data-markdown><script type="text/template"># Para seguir leyendo: Vuejs
 

@@ -1,0 +1,115 @@
+FORMAT: 1A
+HOST: https://admin-grupoXX.proyecto2024.unlp.edu.ar/api
+
+# Documentación API a implementar
+Documentación online de la API a realizar en el trabajo integrador de la materia
+*Proyecto de Software* de la **UNLP**.
+
+## API de CEDICA
+En esta documentación describiremos los endpoints que creemos que son esenciales
+para la implementación correcta de la aplicación.
+
+Estos endpoints serán implementados en la _**aplicación privada**_ que les solicitamos
+y consultados/usados desde la _**aplicación pública**_.
+
+::: note
+## Nota
+Recordá que estos endpoints son los mínimos que nos imaginamos desde la cátedra
+como necesarios.
+
+Si dentro del grupo o el docente asignado consideran que es necesario agregar
+algún otro debido a las particularidades de la solución elegida deberán agregarlos.
+:::
+
+# Data Structures
+
+## MessageData
++ title: `Consulta sobre inscripción` (string, required) - Título del mensaje.
++ email: `maría@mail.com` (string, required) - Email del remitente.
++ description: `Descripción detallada de la solicitud` (string, required) - Descripción del mensaje.
++ status: `created` (string) - Estado del mensaje.
++ created_at: `2023-10-10T12:00:00Z` (string) - Fecha de creación del mensaje (generada por sistema).
++ closed_at: `2023-10-10T12:00:00Z` (string) - Fecha de finalización del mensaje (generada por sistema).
+
+## ArticleData
++ title: `Apertura de inscripciones` (string, required) - Título del artículo.
++ summary: `Se informa que se abren las inscripciones para el curso de...` (string, required) - Resumen del artículo.
++ content: `Se informa que se abren las inscripciones para el curso de...` (string, required) - Contenido del artículo.
++ published_at: `2023-10-10T11:00:00Z` (string) - Fecha de publicación del artículo.
++ updated_at: `2023-10-10T12:00:00Z` (string, required) - Fecha de última actualización del artículo.
++ author: `María García` (string) - Autor del artículo.
++ status: `draft` (enum[string]) - Estado del artículo.
+    + Members
+        + `draft` - Borrador.
+        + `published` - Publicado.
+        + `archived` - Archivado.
+
+## ArticleListData
++ data (array[ArticleData]) - Lista de artículos.
++ page: `1` (number) - Número de página actual.
++ per_page: `10` (number) - Cantidad de elementos por página.
++ total: `25` (number) - Total de elementos en la lista.
+
+
+# Group Articles
+
+## Filtrar Artículos [/articles{?author,published_from,published_to,page,per_page}]
+Este endpoint permite buscar artículos filtrando por autor y/o rango de fechas de publicación, con soporte de paginación.
+
++ Parameters
+    + author: `María García` (string, optional) - Nombre del autor del artículo.
+    + published_from: `2023-10-10T01:00:00Z` (datetime, optional) - Filtra artículos publicados después de esta fecha.
+    + published_to: `2023-10-10T12:00:00Z` (datetime, optional) - Filtra artículos publicados antes de esta fecha.
+    + page: `1` (number, optional) - Número de página de resultados (para paginación).
+    + per_page: `10` (number, optional) - Número de artículos por página de resultados (para paginación).
+
+### Lista Artículos con filtro [GET]
+Obtiene una lista de artículos filtrados por autor y/o rango de fechas, con soporte de paginación.
+
++ Response 200 (application/json)
+    + Attributes (ArticleListData)
+
++ Response 400 (application/json)
+    + Body
+
+            {
+                "error": "Parámetros inválidos o faltantes en la solicitud."
+            }
+
+# Group Messages
+
+## Crear Nuevo Mensaje [/messages]
+Este endpoint permite a una persona enviar un mensaje o solicitud de contacto a la institución.
+
+### Crea Mensaje [POST]
+Envía un nuevo mensaje a la institución con la información proporcionada.
+
++ Request (application/json)
+    + Attributes (MessageData)
+        + title: `Consulta sobre inscripción` (string, required) - Título del mensaje.
+        + email: `maría@mail.com` (string, required) - Email del remitente.
+        + description: `Quisiera saber los pasos para inscribirme en el curso de...` (string, required) - Descripción detallada del mensaje.
+        + status: `created` (string, optional) - Estado inicial del mensaje, por defecto `created`.
+        + recaptcha_token: `token_de_recaptcha` (string, required) - Token de reCAPTCHA generado por el frontend.
+      
++ Response 201 (application/json)
+    + Attributes (MessageData)
+        + title: `Consulta sobre inscripción` (string) - Título del mensaje creado.
+        + description: `Quisiera saber los pasos para inscribirme en el curso de...` (string) - Descripción del mensaje.
+        + email: `maría@mail.com` (string) - Email del remitente.
+        + created_at: `2023-10-10T12:00:00Z` (string) - Fecha de creación del mensaje generada por el sistema.
+        + status: `created` (string) - Estado del mensaje.
+
++ Response 400 (application/json)
+    + Body
+
+            {
+                "error": "Parámetros inválidos o faltantes en la solicitud."
+            }
+
++ Response 401 (application/json)
+    + Body
+
+            {
+                "error": "Token de reCAPTCHA inválido."
+            }

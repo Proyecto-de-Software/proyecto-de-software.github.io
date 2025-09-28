@@ -43,21 +43,20 @@ Parámetros `page` (≥1) y `per_page` (1..100) en los endpoints que lo soportan
 ## SiteData
 + id: `1` (number) - Identificador único del sitio histórico.
 + name: `Fortín San Martín` (string, required) - Nombre del sitio histórico.
++ short_description: `Antiguo fortín militar...` (string, required) - Descripción corta del sitio histórico.
 + description: `Construcción del siglo XIX...` (string, required) - Descripción del sitio histórico.
 + city: `Córdoba` (string, required) - Ciudad donde se encuentra el sitio histórico.
 + province: `Córdoba` (string, required) - Provincia donde se encuentra el sitio histórico.
 + country: `AR` (string, required) - Código ISO del país donde se encuentra el sitio histórico.
 + lat: `-31.4201` (number, required) - Latitud.
 + long: `-64.1888` (number, required) - Longitud.
-+ tags: [`militar`, `siglo-xix`] (array[string], required) - Etiquetas asociadas al sitio histórico.
++ tags: `militar`, `siglo-xix` (array[string], required) - Etiquetas asociadas al sitio histórico.
 + state_of_conservation: `bueno` (enum[string], required) - Estado de conservación del sitio histórico.
     + Members
         + `excelente`
         + `bueno`
         + `regular`
         + `malo`
-+ rating_average: `4.6` (number) - Calificación promedio del sitio histórico.
-+ raiting_count: `128` (number) - Cantidad de reseñas.
 + inserted_at: `2024-03-15T14:30:00Z` (string, required) - Fecha de creación del registro.
 + updated_at: `2024-06-20T09:15:00Z` (string, required) - Fecha de última actualización del registro.
 
@@ -67,14 +66,6 @@ Parámetros `page` (≥1) y `per_page` (1..100) en los endpoints que lo soportan
     + page: `1` (number) - Número de página actual.
     + per_page: `20` (number) - Cantidad de elementos por página.
     + total: `57` (number) - Total de elementos en la lista.
-
-## ProfileData
-+ id: `1` (number) - Identificador único del usuario.
-+ email: `ana@example.com` (string, required) - Correo electrónico del usuario.
-+ full_name: `Ana Pérez` (string, required) - Nombre completo del usuario.
-+ avatar_url: `https://cdn.example.com/avatars/ana.png` (string, required) - URL del avatar del usuario.
-+ inserted_at: `2025-01-05T10:20:00Z` (string, required) - Fecha de creación del perfil.
-+ updated_at: `2025-06-12T08:00:00Z` (string, required) - Fecha de última actualización del perfil.
 
 ## ReviewData
 + id: `1` (number, required) - Identificador único de la reseña.
@@ -150,6 +141,71 @@ Obtiene una lista de sitios históricos que coinciden con los criterios de búsq
 
             { "error": { "code": "server_error", "message": "An unexpected error occurred" } }
 
+
+## Crear Sitio Históricos [/sites]
+
+### Crear un sitio histórico [POST]
+
+Crea un nuevo sitio histórico por un usuario de app pública.
+
+**Información del endpoint**
+
+<i class="fa fa-lock"></i> Requiere autenticación.
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
++ Attributes (SiteData)
+    + name: `Fortín de la Ciudadela` (string, required) - Nombre del sitio histórico.
+    + short_description: `Antiguo fortín militar...` (string, required) - Descripción corta del sitio histórico.
+    + description: `Un antiguo fortín del siglo XVIII` (string, required) - Descripción del sitio histórico.
+    + city: `Córdoba` (string, required) - Ciudad donde se ubica el sitio histórico.
+    + province: `Córdoba` (string, required) - Provincia donde se ubica el sitio histórico.
+    + tags: `militar`, `siglo-xviii` (array[string], required) - Etiquetas asociadas al sitio histórico.
+    + lat: `-31.4201` (number, required) - Latitud del sitio histórico.
+    + long: `-64.1888` (number, required) - Longitud del sitio histórico.
+    + state_of_conservation: `malo` (enum[string], required) - Estado de conservación del sitio histórico.
+        + Members
+            + `excelente`
+            + `bueno`
+            + `regular`
+            + `malo`
+
++ Response 201 (application/json)
+    + Attributes (SiteData)
+        + id: `10` (number) - ID del sitio histórico.
+        + short_description: `Antiguo fortín militar...` (string, required) - Descripción corta del sitio histórico.
+        + description: `Un antiguo fortín del siglo XVIII` (string, required) - Descripción del sitio histórico.
+        + city: `Córdoba` (string, required) - Ciudad donde se ubica el sitio histórico.
+        + province: `Córdoba` (string, required) - Provincia donde se ubica
+        + tags: `militar`, `siglo-xviii` (array[string], required) - Etiquetas asociadas al sitio histórico.
+        + lat: `-31.4201` (number, required) - Latitud del sitio histórico.
+        + long: `-64.1888` (number, required) - Longitud del sitio histórico.
+        + state_of_conservation: `malo` (enum[string], required) - Estado de conservación del sitio histórico.
+            + Members
+                + `excelente`
+                + `bueno`
+                + `regular`
+                + `malo`
+        + user_id: `5` (number) - ID del usuario que creó el sitio histórico.
+
++ Response 400 (application/json)
+    + Body
+    
+            { "error": { "code": "invalid_data", "message": "Invalid input data", "details": { "name": ["This field is required"] } } }
+
++ Response 401 (application/json)
+    + Body
+
+            { "error": { "code": "unauthorized", "message": "Unauthorized" } }
+
++ Response 500 (application/json)
+    + Body
+
+            { "error": { "code": "server_error", "message": "An unexpected error occurred" } }
+
 ## Sitio Histórico [/sites/{site_id}]
 
 ### Obtener un sitio histórico [GET]
@@ -170,6 +226,11 @@ Obtiene detalles de un sitio histórico específico por su ID.
     + Body
     
             { "error": { "code": "not_found", "message": "Site not found" } }
+
++ Response 500 (application/json)
+    + Body
+
+            { "error": { "code": "server_error", "message": "An unexpected error occurred" } }
 
 # Group Autenticación
 
@@ -196,36 +257,6 @@ Permite obtener el un JSON Web Token válido para el usuario y password.
     + Body
 
             { "error": {"code": "invalid_credentials", "message": "Credenciales inválidas."} }
-
-# Group Perfil de Usuario
-
-## Perfil del usuario autenticado [/profile]
-
-### Obtener perfil [GET]
-
-Obtiene el perfil del usuario autenticado.
-
-**Información del endpoint**
-
-<i class="fa fa-lock"></i> Requiere autenticación.
-
-+ Request (application/json)
-    + Headers
-
-            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-
-+ Response 200 (application/json)
-    + Attributes (ProfileData)
-
-+ Response 401 (application/json)
-   + Body
-
-            { "error": { "code": "unauthorized", "message": "Authentication required" } }
-
-+ Response 500 (application/json)
-    + Body
-
-            { "error": { "code": "server_error", "message": "An unexpected error occurred" } }
 
 # Group Reseñas
 

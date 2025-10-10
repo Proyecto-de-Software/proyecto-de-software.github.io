@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: https://admin-grupo00.proyecto2025.linti.unlp.edu.ar/api
+HOST: https://admin-grupoXX.proyecto2025.linti.unlp.edu.ar/api
 
 # Proyecto Sitios Históricos API
 API para explorar sitios históricos, gestionar el perfil de usuario y crear/consultar reseñas.
@@ -451,3 +451,99 @@ Elimina una reseña existente por su ID.
     + Body
 
             { "error": { "code": "server_error", "message": "An unexpected error occurred" } }
+
+# Group Favoritos
+
+## Favorito de un sitio [/sites/{site_id}/favorite]
+
+Representa la relación “el usuario autenticado marcó este sitio como favorito”.
+
+**Información del endpoint**
+
+<i class="fa fa-lock"></i> Requiere autenticación (JWT en `Authorization: Bearer <token>`).
+
++ Parameters
+    + site_id: `10` (number) - ID del sitio histórico.
+
+### Marcar como favorito [PUT]
+
+Crea (o asegura) que el sitio esté marcado como favorito por el usuario autenticado.
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
++ Response 204
+
++ Response 401 (application/json)
+
+        { "error": { "code": "unauthorized", "message": "Authentication required" } }
+
++ Response 404 (application/json)
+
+        { "error": { "code": "not_found", "message": "Site not found" } }
+
++ Response 500 (application/json)
+
+        { "error": { "code": "server_error", "message": "An unexpected error occurred" } }
+
+### Desmarcar como favorito [DELETE]
+
+Elimina (o asegura que no exista) la relación de favorito.
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
++ Response 204
+
++ Response 401 (application/json)
+
+        { "error": { "code": "unauthorized", "message": "Authentication required" } }
+
++ Response 404 (application/json)
+
+        { "error": { "code": "not_found", "message": "Site not found" } }
+
++ Response 500 (application/json)
+
+        { "error": { "code": "server_error", "message": "An unexpected error occurred" } }
+
+# Group Propio Usuario
+
+## Favoritos del usuario [/me/favorites{?page,per_page}]
+
+Lista paginada de sitios marcados como favoritos por el usuario autenticado.
+
+**Información del endpoint**
+
+<i class="fa fa-lock"></i> Requiere autenticación.
+
++ Parameters
+    + page: `1` (number, optional) - Mínimo 1.
+    + per_page: `20` (number, optional) - 1..100.
+
+### Listar favoritos [GET]
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+
++ Response 200 (application/json)
+    + Attributes
+        + data (array[SiteData]) - Sitios favoritos (sugerencia: incluir `inserted_at` de la relación).
+        + meta (object)
+            + page: 1 (number)
+            + per_page: 20 (number)
+            + total: 5 (number)
+
++ Response 401 (application/json)
+
+        { "error": { "code": "unauthorized", "message": "Authentication required" } }
+
++ Response 500 (application/json)
+
+        { "error": { "code": "server_error", "message": "An unexpected error occurred" } }

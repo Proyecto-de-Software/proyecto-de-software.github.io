@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Material de Cátedra</title>
+  
+</head>
+<body>
+
+
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.6;
+      color: rgba(0, 0, 0, 0.87);
+      background-color: #fafafa;
+    }
+
+    .main-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .content {
+      background: white;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 2rem;
+    }
+
+    .topic-section {
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideInUp 0.6s ease forwards;
+    }
+
+    .topic-section:nth-child(n) {
+      animation-delay: calc(0.1s * var(--i));
+    }
+
+    @keyframes slideInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .topic-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .topic-number {
+      background: #3f51b5;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      margin-right: 1rem;
+      font-size: 0.875rem;
+    }
+
+    .topic-title {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: rgba(0,0,0,0.87);
+    }
+
+    .resource-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .resource-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 60px;
+    }
+
+    .resource-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      background: #f0f0f0;
+      border: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s;
+    }
+
+    .resource-link:hover { background: #e4e4e4; }
+
+    .resource-link.web-main {
+      background: #e8f0fe;
+      border-color: #90caf9;
+    }
+
+    .resource-icon {
+      width: 20px;
+      height: 20px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .icon-web { background-image: url('https://proyecto-de-software.github.io/images/web.png'); }
+    .icon-pdf { background-image: url('https://proyecto-de-software.github.io/images/pdf.png'); }
+    .icon-youtube { background-image: url('https://proyecto-de-software.github.io/images/youtube.png'); }
+    .icon-zip { background-image: url('https://proyecto-de-software.github.io/images/zip.png'); }
+
+    .resource-label {
+      margin-top: 0.25rem;
+      font-size: 0.7rem;
+      color: #444;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-top: 0.2rem;
+      padding: 0.1rem 0.4rem;
+      font-size: 0.65rem;
+      border-radius: 10px;
+      font-weight: 500;
+    }
+
+    .badge.async {
+      background: rgba(255, 152, 0, 0.15);
+      color: #f57c00;
+    }
+  </style>
+  <div class="main-container">
+    <main class="content">
+
+      <!-- Tema 1 -->
+      <section class="topic-section" style="--i:1" id="conceptos">
+        <div class="topic-header"><div class="topic-number">1</div><h2 class="topic-title">Conceptos Básicos</h2></div>
+        <div class="resource-group">
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+</body>
+</html>

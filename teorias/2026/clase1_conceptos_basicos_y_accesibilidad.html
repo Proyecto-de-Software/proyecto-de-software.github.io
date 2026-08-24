@@ -90,7 +90,7 @@
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="11" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="w3c-y-whatwg-est%C3%A1ndares-de-la-web">W3C y WHATWG: estándares de la web</h1>
 <blockquote>
-<p>El <strong>W3C</strong> (World Wide Web Consortium) y el <strong>WHATWG</strong> (Web Hypertext Application Technology Working Group) se encargan del desarrollo de <strong>estándares, especificaciones y guías</strong> que aseguren la evolución e interoperabilidad de la web.</p>
+<p>El <strong>W3C</strong> (<a href="https://www.w3.org/">World Wide Web Consortium</a>) y el <strong>WHATWG</strong> (<a href="https://html.spec.whatwg.org/multipage/">Web Hypertext Application Technology Working Group</a>) se encargan del desarrollo de <strong>estándares, especificaciones y guías</strong> que aseguren la evolución e interoperabilidad de la web.</p>
 </blockquote>
 <ul>
 <li><strong>WHATWG</strong>: mantiene el &quot;HTML Living Standard&quot; (estándar continuo de HTML).</li>
@@ -101,7 +101,7 @@
 <h1 id="est%C3%A1ndares-web-b%C3%A1sicos">Estándares web básicos</h1>
 <ul>
 <li><strong>HTML5</strong>: estructura y semántica.</li>
-<li><strong>CSS3</strong>: presentación y estilo (Responsive).</li>
+<li><strong>CSS3</strong>: presentación y estilo (diseño rsponsivo).</li>
 <li><strong>DOM (Document Object Model)</strong>: la API que conecta HTML con JavaScript.</li>
 </ul>
 <p>Para explorar el impacto de los estilos en la estructura HTML: <a href="http://www.csszengarden.com/">CSS Zen Garden</a></p>
@@ -137,6 +137,24 @@
 </ul>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="16" data-theme="default" lang="es-AR" style="--theme:default;">
+<h1 id="css-%C2%BFd%C3%B3nde-se-ubican-las-reglas">CSS: ¿dónde se ubican las reglas?</h1>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-html">	<span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;es&quot;</span>&gt;</span>
+
+	<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+		<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Formularios web<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+		<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;estilo.css&quot;</span>&gt;</span>
+		<span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css">
+		     <span class="hljs-selector-tag">h1</span> {<span class="hljs-attribute">color</span>:red}
+		</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+	<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+	    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;color:red&quot;</span>&gt;</span> Mi color favorito<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+	<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+	<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="17" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="css-cascada-especificidad-y-herencia">CSS: cascada, especificidad y herencia</h1>
 <p>El navegador aplica los estilos según un orden de prioridad basado en:</p>
 <ol>
@@ -145,7 +163,7 @@
 <li><strong>Orden de aparición en el código:</strong> la regla posterior sobrescribe a la anterior.</li>
 </ol>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="17" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="18" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="dom-document-object-model">DOM: Document Object Model</h1>
 <blockquote>
 <p>El <a href="https://dom.spec.whatwg.org/">Document Object Model (DOM)</a> es una <strong>API orientada a objetos</strong> que representa la estructura de un documento HTML/XML como un árbol de nodos.</p>
@@ -160,39 +178,40 @@
 <tbody>
 <tr>
 <td><img src="images/dom.png" alt="Arbol DOM" /></td>
-<td>Proporciona métodos para agregar y eliminar objetos y eventos al documento.</td>
+<td>Proporciona métodos para agregar y eliminar <strong>objetos</strong> y <strong>eventos</strong> al documento.</td>
 </tr>
 </tbody>
 </table>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="18" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="19" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="herramientas-%C3%BAtiles---f12">Herramientas útiles - (F12)</h1>
 <center><img src="images/dev_tools.png" alt="Dev tools" width="900px" /></center>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="19" data-marpit-fragments="2" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="20" data-marpit-fragments="2" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="%C3%A9tica-inform%C3%A1tica-en-el-desarrollo-de-software">Ética Informática en el desarrollo de software</h1>
 <blockquote>
 <p><strong>¿Qué es la Ética Informática?</strong><br />
-Es la disciplina que analiza los problemas éticos, sociales y legales creados o transformados por la tecnología informática.</p>
+Es la disciplina que analiza los problemas éticos, sociales y legales creados o transformados por la tecnología informática.<br />
+–Terrel Bynum</p>
 </blockquote>
 <ul>
 <li data-marpit-fragment="1">Como desarrolladores, nuestras decisiones impactan directamente en las personas, la privacidad y la sociedad.</li>
 <li data-marpit-fragment="2">No basta con que el código funcione debe ser <strong>justo, transparente, seguro y accesible</strong>.</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="20" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="21" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="comencemos-analizando-c%C3%B3mo-interactuamos">Comencemos analizando cómo interactuamos</h1>
 <p>¿Qué sucede cuando accedemos a la web mediante lectores de pantalla o únicamente utilizamos el teclado?</p>
 <p><strong>TAREA PARA EL HOGAR:</strong> probar navegar algún sitio web utilizando exclusivamente las teclas <code>Tab</code>, <code>Shift+Tab</code> y <code>Enter</code>.</p>
 <p>¿Qué creen que sucederá?</p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="21" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="22" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="algunos-videos">Algunos videos</h1>
 <p><strong>TAREA PARA EL HOGAR:</strong> veamos el siguiente <a href="https://www.youtube.com/watch?v=20SHvU2PKsM&amp;t=10s">video introductorio a aspectos de accesibilidad web</a></p>
 <h2 id="perspectivas">Perspectivas</h2>
 <p><a href="https://www.w3.org/WAI/perspective-videos/"><img src="images/video_wai.png" alt="Perspectivas" /></a></p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="22" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="23" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="datos-y-contexto-general">Datos y contexto general</h1>
 <ul>
 <li>
@@ -210,14 +229,14 @@ Es la disciplina que analiza los problemas éticos, sociales y legales creados o
 </li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="23" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="24" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="accesibilidad-web">Accesibilidad Web</h1>
 <blockquote>
 <p><strong>&quot;The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect.&quot;</strong></p>
-<p>— Tim Berners-Lee, creador de la Web y director del W3C.</p>
+<p>— Tim Berners-Lee, creador de la Web.</p>
 </blockquote>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="24" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="25" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="%C2%BFqu%C3%A9-involucra-dise%C3%B1ar-pensando-en-accesibilidad">¿Qué involucra diseñar pensando en accesibilidad?</h1>
 <ul>
 <li>Garantizar la legibilidad y estructura lógica del contenido.</li>
@@ -227,7 +246,7 @@ Es la disciplina que analiza los problemas éticos, sociales y legales creados o
 <li>Garantizar la compatibilidad con tecnologías de asistencia (lectores de pantalla como NVDA, JAWS, VoiceOver).</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="25" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="26" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="wai-web-accessibility-initiative">WAI: Web Accessibility Initiative</h1>
 <h2 id="objetivos-del-w3c--wai">Objetivos del W3C / WAI</h2>
 <blockquote>
@@ -235,16 +254,16 @@ Es la disciplina que analiza los problemas éticos, sociales y legales creados o
 </blockquote>
 <p>URL oficial: <a href="https://www.w3.org/WAI/">https://www.w3.org/WAI/</a></p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="26" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="27" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="componentes-de-accesibilidad-wai">Componentes de Accesibilidad WAI</h1>
 <p><img src="images/wai.png" alt="Componentes WAI" /></p>
 <p>Fuente: <a href="https://www.w3.org/WAI/standards-guidelines/es#intro">W3C WAI Guidelines</a></p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="27" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="28" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="principios-de-dise%C3%B1o-pour-wcag-22">Principios de diseño POUR (WCAG 2.2)</h1>
 <center><img src="images/principios_pour_gemini.png" alt="Componentes WAI" width="990px" /></center>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="28" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="29" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="wai-aria-accesibilidad-en-interfaces-din%C3%A1micas">WAI-ARIA: accesibilidad en interfaces dinámicas</h1>
 <blockquote>
 <p><strong>ARIA</strong> (<em>Accessible Rich Internet Applications</em>) es un conjunto de atributos para transmitir información semántica a tecnologías asistivas cuando HTML nativo no alcanza.</p>
@@ -262,7 +281,7 @@ Es la disciplina que analiza los problemas éticos, sociales y legales creados o
 <p><img class="emoji" draggable="false" alt="⚠️" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@17.0.3/assets/svg/26a0.svg" data-marp-twemoji=""/> <strong>IMPORTANTE:</strong> <em>no usar ARIA si se puede usar un elemento HTML5 nativo que ya posea la semántica y el comportamiento requeridos.</em> (p. ej., usar <code>&lt;button&gt;</code> en lugar de <code>&lt;div role=&quot;button&quot;&gt;</code>).</p>
 </blockquote>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="29" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="30" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="marco-legal-y-normativo">Marco Legal y Normativo</h1>
 <blockquote>
 <p>En diversos países existen regulaciones que exigen el cumplimiento de niveles de accesibilidad web (habitualmente WCAG 2.1/2.2 nivel AA) para sitios públicos y privados.<br />
@@ -270,7 +289,7 @@ Es la disciplina que analiza los problemas éticos, sociales y legales creados o
 </blockquote>
 <p>Más detalles institucionales: <a href="https://www.argentina.gob.ar/jefatura/innovacion-publica/onti/accesibilidad-web">Oficina Nacional de Tecnologías de Información (ONTI)</a></p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="30" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="31" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="%C2%BFc%C3%B3mo-evaluamos-accesibilidad">¿Cómo evaluamos accesibilidad?</h1>
 <ol>
 <li><strong>Chequeo rápido</strong>: navegar solo con teclado (<code>Tab</code>).</li>
@@ -282,7 +301,7 @@ Es la disciplina que analiza los problemas éticos, sociales y legales creados o
 <li><strong>Prueba final</strong>: usuarios reales (siempre la mejor prueba).</li>
 </ol>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="31" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="32" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="1-revisiones-iniciales-y-r%C3%A1pidas">1. Revisiones iniciales y rápidas</h1>
 <p>Chequeo preliminar recomendado por la W3C:</p>
 <ul>
@@ -291,7 +310,7 @@ Es la disciplina que analiza los problemas éticos, sociales y legales creados o
 <li>Zoom del navegador al 200% para verificar la adaptabilidad sin desbordamientos.</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="32" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="33" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="2-herramientas">2. Herramientas</h1>
 <ul>
 <li>Validación técnica de código:
@@ -309,7 +328,7 @@ Es la disciplina que analiza los problemas éticos, sociales y legales creados o
 </li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="33" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="34" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="3-evaluaci%C3%B3n-manual-e-integraci%C3%B3n-con-usuarios-finales">3. Evaluación manual e integración con usuarios finales</h1>
 <ul>
 <li>Prueba con lectores de pantalla reales (<strong>NVDA</strong>, <strong>JAWS</strong>, <strong>VoiceOver</strong>).</li>
@@ -317,7 +336,7 @@ Es la disciplina que analiza los problemas éticos, sociales y legales creados o
 <li>Pruebas directas de usabilidad con personas con discapacidad para evaluar la experiencia real de usuario.</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="34" data-marpit-fragments="4" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="35" data-marpit-fragments="4" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="%C3%A9tica-inform%C3%A1tica-el-manejo-de-los-datos">Ética Informática: el manejo de los datos</h1>
 <blockquote>
 <p><strong>Privacidad por Diseño (Privacy by Design)</strong>: la protección de datos debe ser la configuración por defecto, no una opción secundaria.</p>
@@ -329,7 +348,7 @@ Es la disciplina que analiza los problemas éticos, sociales y legales creados o
 <li data-marpit-fragment="4"><strong>Marco Regulatorio</strong>: cumplimiento de <a href="https://www.argentina.gob.ar/aaip/datospersonales">leyes de protección de datos.</a></li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="35" data-marpit-fragments="4" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="36" data-marpit-fragments="4" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="%C3%A9tica-inform%C3%A1tica-buenas-pr%C3%A1cticas-en-el-desarrollo">Ética Informática: buenas prácticas en el desarrollo</h1>
 <ul>
 <li data-marpit-fragment="1"><strong>Código Limpio y Mantenible</strong>: pensar en el equipo y en quienes mantendrán el software a futuro.</li>
@@ -338,11 +357,11 @@ Es la disciplina que analiza los problemas éticos, sociales y legales creados o
 <li data-marpit-fragment="4"><strong>Sostenibilidad y Accesibilidad</strong>: crear código eficiente que minimice el consumo de recursos e incluya a todos los usuarios.</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="36" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="37" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="buenas-pr%C3%A1cticas---disposici%C3%B3n-n%C2%BA-1815">Buenas prácticas - (Disposición Nº 18/15)</h1>
 <center><img src="images/Ethical_Design_x_Gemini_datos.png" alt="Roadmap Web Developer" width="990px" /></center>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="37" data-marpit-fragments="3" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="38" data-marpit-fragments="3" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="%C3%A9tica-inform%C3%A1tica-uso-de-la-ia">Ética Informática: uso de la IA</h1>
 <p>Las herramientas de IA Generativa son un gran apoyo, pero requieren <strong>uso crítico y responsable</strong>:</p>
 <ul>
@@ -351,10 +370,10 @@ Es la disciplina que analiza los problemas éticos, sociales y legales creados o
 <li data-marpit-fragment="3"><strong>Derechos de Autor y Licencias</strong>: respetar las licencias del código utilizado para entrenar o generar modelos.</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="38" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="39" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="cuestionarios-y-actividades-de-teor%C3%ADa">Cuestionarios y actividades de teoría</h1>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="39" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="40" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="cuestionarios-de-autoevaluaci%C3%B3n">Cuestionarios de Autoevaluación</h1>
 <ul>
 <li>Cuestionario <a href="https://catedras.linti.unlp.edu.ar/mod/quiz/view.php?id=46017">Autoevaluación 1: conceptos básicos HTML - CSS - WCAG</a> disponible en la plataforma sobre los conceptos vistos en esta clase.</li>
@@ -367,12 +386,12 @@ Es la disciplina que analiza los problemas éticos, sociales y legales creados o
 <li>Curso básico en español: <a href="https://www.youtube.com/watch?v=XqFR2lqBYPs&amp;list=PL4ONm-ifcbQJNAzWesbl498Gof2ystb9A&amp;index=1">freeCodeCamp</a></li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="40" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="41" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="actividades-de-teor%C3%ADa">Actividades de Teoría</h1>
 <center><img src="images/Actividades_teoría_2026.png" alt="Roadmap Web Developer" width="500px" /></center>
 <p>Disponible en <a href="https://catedras.linti.unlp.edu.ar/pluginfile.php/157044/mod_resource/content/3/Cronograma%202026%20-%20TENTATIVO.pdf">Cátedras LINTI</a></p>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="41" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="42" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="actividad-1-evaluaci%C3%B3n-por-pares">Actividad 1: evaluación por pares</h1>
 <ul>
 <li><strong>Temas:</strong> HTML - CSS - Accesibilidad web</li>
@@ -384,14 +403,14 @@ Es la disciplina que analiza los problemas éticos, sociales y legales creados o
 <p><strong>Condición:</strong> para poder realizar la Parte II de la actividad es requisito obligatorio haber entregado en término la Parte I.</p>
 </blockquote>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="42" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="43" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="actividad-11-cuestionario-en-clase">Actividad 1.1: cuestionario en clase</h1>
 <ul>
 <li><strong>Temas:</strong> HTML - CSS - Accesibilidad web</li>
-<li><strong>Metodología:</strong> cuestionario múltipĺe choice en clase.</li>
+<li><strong>Metodología:</strong> cuestionario múltiple choice en clase.</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="43" data-theme="default" lang="es-AR" style="--theme:default;">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="44" data-theme="default" lang="es-AR" style="--theme:default;">
 <h1 id="%C2%A1gracias-seguimos-la-pr%C3%B3xima-clase">¡Gracias! Seguimos la próxima clase...</h1>
 </section>
 <script>!function(){"use strict";const t={h1:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"1"},style:"display: block; font-size: 2em; margin-block-start: 0.67em; margin-block-end: 0.67em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h2:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"2"},style:"display: block; font-size: 1.5em; margin-block-start: 0.83em; margin-block-end: 0.83em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h3:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"3"},style:"display: block; font-size: 1.17em; margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h4:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"4"},style:"display: block; margin-block-start: 1.33em; margin-block-end: 1.33em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h5:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"5"},style:"display: block; font-size: 0.83em; margin-block-start: 1.67em; margin-block-end: 1.67em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h6:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"6"},style:"display: block; font-size: 0.67em; margin-block-start: 2.33em; margin-block-end: 2.33em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},span:{proto:()=>HTMLSpanElement},pre:{proto:()=>HTMLElement,style:"display: block; font-family: monospace; white-space: pre; margin: 1em 0; --marp-auto-scaling-white-space: pre;"}},e="data-marp-auto-scaling-wrapper",i="data-marp-auto-scaling-svg",n="data-marp-auto-scaling-container";class s extends HTMLElement{container;containerSize;containerObserver;svg;svgComputedStyle;svgPreserveAspectRatio="xMinYMid meet";wrapper;wrapperSize;wrapperObserver;constructor(){super();const t=t=>([e])=>{const{width:i,height:n}=e.contentRect;this[t]={width:i,height:n},this.updateSVGRect()};this.attachShadow({mode:"open"}),this.containerObserver=new ResizeObserver(t("containerSize")),this.wrapperObserver=new ResizeObserver((...e)=>{t("wrapperSize")(...e),this.flushSvgDisplay()})}static get observedAttributes(){return["data-downscale-only"]}connectedCallback(){this.shadowRoot.innerHTML=`\n<style>\n  svg[${i}] { display: block; width: 100%; height: auto; vertical-align: top; }\n  span[${n}] { display: table; white-space: var(--marp-auto-scaling-white-space, nowrap); width: max-content; }\n</style>\n<div ${e}>\n  <svg part="svg" ${i}>\n    <foreignObject><span ${n}><slot></slot></span></foreignObject>\n  </svg>\n</div>\n    `.split(/\n\s*/).join(""),this.wrapper=this.shadowRoot.querySelector(`div[${e}]`)??void 0;const t=this.svg;this.svg=this.wrapper?.querySelector(`svg[${i}]`)??void 0,this.svg!==t&&(this.svgComputedStyle=this.svg?window.getComputedStyle(this.svg):void 0),this.container=this.svg?.querySelector(`span[${n}]`)??void 0,this.observe()}disconnectedCallback(){this.svg=void 0,this.svgComputedStyle=void 0,this.wrapper=void 0,this.container=void 0,this.observe()}attributeChangedCallback(){this.observe()}flushSvgDisplay(){const{svg:t}=this;t&&(t.style.display="inline",requestAnimationFrame(()=>{t.style.display=""}))}observe(){this.containerObserver.disconnect(),this.wrapperObserver.disconnect(),this.wrapper&&this.wrapperObserver.observe(this.wrapper),this.container&&this.containerObserver.observe(this.container),this.svgComputedStyle&&this.observeSVGStyle(this.svgComputedStyle)}observeSVGStyle(t){const e=()=>{const i=(()=>{const e=t.getPropertyValue("--preserve-aspect-ratio");if(e)return e.trim();return`x${(({textAlign:t,direction:e})=>{if(t.endsWith("left"))return"Min";if(t.endsWith("right"))return"Max";if("start"===t||"end"===t){let i="rtl"===e;return"end"===t&&(i=!i),i?"Max":"Min"}return"Mid"})(t)}YMid meet`})();i!==this.svgPreserveAspectRatio&&(this.svgPreserveAspectRatio=i,this.updateSVGRect()),t===this.svgComputedStyle&&requestAnimationFrame(e)};e()}updateSVGRect(){let t=Math.ceil(this.containerSize?.width??0);const e=Math.ceil(this.containerSize?.height??0);void 0!==this.dataset.downscaleOnly&&(t=Math.max(t,this.wrapperSize?.width??0));const i=this.svg?.querySelector(":scope > foreignObject");if(i?.setAttribute("width",`${t}`),i?.setAttribute("height",`${e}`),this.svg&&(this.svg.setAttribute("viewBox",`0 0 ${t} ${e}`),this.svg.setAttribute("preserveAspectRatio",this.svgPreserveAspectRatio),this.svg.style.height=t<=0||e<=0?"0":""),this.container){const t=this.svgPreserveAspectRatio.toLowerCase();this.container.style.marginLeft=t.startsWith("xmid")||t.startsWith("xmax")?"auto":"0",this.container.style.marginRight=t.startsWith("xmi")?"auto":"0"}}}const r=(t,{attrs:e={},style:i})=>class extends t{constructor(...t){super(...t);for(const[t,i]of Object.entries(e))this.hasAttribute(t)||this.setAttribute(t,i);this._shadow()}static get observedAttributes(){return["data-auto-scaling"]}connectedCallback(){this._update()}attributeChangedCallback(){this._update()}_shadow(){if(!this.shadowRoot)try{this.attachShadow({mode:"open"})}catch(t){if(!(t instanceof Error&&"NotSupportedError"===t.name))throw t}return this.shadowRoot}_update(){const t=this._shadow();if(t){const e=i?`<style>:host { ${i} }</style>`:"";let n="<slot></slot>";const{autoScaling:s}=this.dataset;if(void 0!==s){n=`<marp-auto-scaling exportparts="svg:auto-scaling" ${"downscale-only"===s?"data-downscale-only":""}>${n}</marp-auto-scaling>`}t.innerHTML=e+n}}};let o;const a=()=>o??(o=!!document.createElement("div",{is:"marp-auto-scaling"}).outerHTML.startsWith("<div is"),o),l=Symbol();let c;const d="marpitSVGPolyfill:setZoomFactor,",h=Symbol(),g=Symbol();const p=()=>{const t="Apple Computer, Inc."===navigator.vendor,e=t?[v]:[],i={then:e=>(t?(async()=>{if(void 0===c){const t=document.createElement("canvas");t.width=10,t.height=10;const e=t.getContext("2d"),i=new Image(10,10),n=new Promise(t=>{i.addEventListener("load",()=>t())});i.crossOrigin="anonymous",i.src="data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%2210%22%20viewBox%3D%220%200%201%201%22%3E%3CforeignObject%20width%3D%221%22%20height%3D%221%22%20requiredExtensions%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxhtml%22%3E%3Cdiv%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxhtml%22%20style%3D%22width%3A%201px%3B%20height%3A%201px%3B%20background%3A%20red%3B%20position%3A%20relative%22%3E%3C%2Fdiv%3E%3C%2FforeignObject%3E%3C%2Fsvg%3E",await n,e.drawImage(i,0,0),c=e.getImageData(5,5,1,1).data[3]<128}return c})().then(t=>{null==e||e(t?[v]:[])}):null==e||e([]),i)};return Object.assign(e,i)};let m,u;function v(t){const e="object"==typeof t&&t.target||document,i="object"==typeof t?t.zoom:t;window[g]||(Object.defineProperty(window,g,{configurable:!0,value:!0}),document.body.style.zoom=1.0001,document.body.offsetHeight,document.body.style.zoom=1,window.addEventListener("message",({data:t,origin:e})=>{if(e===window.origin)try{if(t&&"string"==typeof t&&t.startsWith(d)){const[,e]=t.split(","),i=Number.parseFloat(e);Number.isNaN(i)||(u=i)}}catch(t){console.error(t)}}));let n=!1;Array.from(e.querySelectorAll("svg[data-marpit-svg]"),t=>{var e,s,r,o;t.style.transform||(t.style.transform="translateZ(0)");const a=i||u||t.currentScale||1;m!==a&&(m=a,n=a);const l=t.getBoundingClientRect(),{length:c}=t.children;for(let i=0;i<c;i+=1){const n=t.children[i];if(n.getScreenCTM){const t=n.getScreenCTM();if(t){const i=null!==(s=null===(e=n.x)||void 0===e?void 0:e.baseVal.value)&&void 0!==s?s:0,c=null!==(o=null===(r=n.y)||void 0===r?void 0:r.baseVal.value)&&void 0!==o?o:0,d=n.children.length;for(let e=0;e<d;e+=1){const s=n.children[e];if("SECTION"===s.tagName){const{style:e}=s;e.transformOrigin||(e.transformOrigin=`${-i}px ${-c}px`),e.transform=`scale(${a}) matrix(${t.a}, ${t.b}, ${t.c}, ${t.d}, ${t.e-l.left}, ${t.f-l.top}) translateZ(0.0001px)`;break}}}}}}),!1!==n&&Array.from(e.querySelectorAll("iframe"),({contentWindow:t})=>{null==t||t.postMessage(`${d}${n}`,"null"===window.origin?"*":window.origin)})}function w({once:t=!1,target:e=document}={}){const i=function(t=document){if(t[h])return t[h];let e=!0;const i=()=>{e=!1,delete t[h]};Object.defineProperty(t,h,{configurable:!0,value:i});let n=[],s=!1;(async()=>{try{n=await p()}finally{s=!0}})();const r=()=>{for(const e of n)e({target:t});s&&0===n.length||e&&window.requestAnimationFrame(r)};return r(),i}(e);return t?(i(),()=>{}):i}m=1,u=void 0;const b=Symbol(),y=(e=document)=>{if("undefined"==typeof window)throw new Error("Marp Core's browser script is valid only in browser context.");if(((e=document)=>{const i=window[l];i||customElements.define("marp-auto-scaling",s);for(const n of Object.keys(t)){const s=`marp-${n}`,o=t[n].proto();a()&&o!==HTMLElement?i||customElements.define(s,r(o,{style:t[n].style}),{extends:n}):(i||customElements.define(s,r(HTMLElement,t[n])),e.querySelectorAll(`${n}[is="${s}"]`).forEach(t=>{t.outerHTML=t.outerHTML.replace(new RegExp(`^<${n}`,"i"),`<${s}`).replace(new RegExp(`</${n}>$`,"i"),`</${s}>`)}))}window[l]=!0})(e),e[b])return e[b];const i=w({target:e}),n=()=>{i(),delete e[b]},o=Object.assign(n,{cleanup:n,update:()=>y(e)});return Object.defineProperty(e,b,{configurable:!0,value:o}),o},f=document.currentScript;y(f?f.getRootNode():document)}();

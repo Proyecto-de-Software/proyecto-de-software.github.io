@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="440" viewBox="0 0 1200 440" role="img" aria-labelledby="title desc">
+  <title id="title">Flujo de envío de un formulario</title>
+  <desc id="desc">El navegador envía un POST a Flask, Flask selecciona la ruta, la función lee los datos del formulario y devuelve una response.</desc>
+  <defs>
+    <marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#2563eb"/></marker>
+    <marker id="green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#059669"/></marker>
+  </defs>
+  <rect width="1200" height="440" rx="28" fill="#f8fafc"/>
+  <g font-family="Arial, sans-serif" text-anchor="middle">
+    <rect x="70" y="35" width="220" height="72" rx="18" fill="#eff6ff" stroke="#60a5fa" stroke-width="3"/>
+    <text x="180" y="80" font-size="27" font-weight="700" fill="#1e3a8a">Navegador</text>
+    <rect x="490" y="35" width="220" height="72" rx="18" fill="#fff7ed" stroke="#fb923c" stroke-width="3"/>
+    <text x="600" y="80" font-size="27" font-weight="700" fill="#9a3412">Flask / ruta</text>
+    <rect x="910" y="35" width="220" height="72" rx="18" fill="#f5f3ff" stroke="#a78bfa" stroke-width="3"/>
+    <text x="1020" y="80" font-family="monospace" font-size="23" font-weight="700" fill="#5b21b6">solicitud_crear()</text>
+    <path d="M180 108V400M600 108V400M1020 108V400" stroke="#cbd5e1" stroke-width="4" stroke-dasharray="9 10"/>
+
+    <path d="M185 155H590" stroke="#2563eb" stroke-width="6" marker-end="url(#blue)"/>
+    <rect x="268" y="122" width="245" height="45" rx="22" fill="#dbeafe"/>
+    <text x="390" y="152" font-family="monospace" font-size="20" font-weight="700" fill="#1d4ed8">POST /solicitudes</text>
+
+    <path d="M605 235H1010" stroke="#2563eb" stroke-width="6" marker-end="url(#blue)"/>
+    <rect x="700" y="202" width="215" height="45" rx="22" fill="#ede9fe"/>
+    <text x="807" y="232" font-size="20" font-weight="700" fill="#6d28d9">ejecuta la función</text>
+
+    <rect x="870" y="270" width="300" height="61" rx="16" fill="#fff" stroke="#c4b5fd" stroke-width="3"/>
+    <text x="1020" y="296" font-size="19" font-weight="700" fill="#5b21b6">lee datos del formulario</text>
+    <text x="1020" y="319" font-family="monospace" font-size="17" fill="#6d28d9">request.form</text>
+
+    <path d="M1015 365H190" stroke="#059669" stroke-width="6" marker-end="url(#green)"/>
+    <rect x="486" y="338" width="228" height="54" rx="27" fill="#d1fae5"/>
+    <text x="600" y="373" font-size="22" font-weight="700" fill="#047857">response HTTP</text>
+  </g>
+</svg>

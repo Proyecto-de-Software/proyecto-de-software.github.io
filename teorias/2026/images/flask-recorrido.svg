@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430" role="img" aria-labelledby="title desc">
+  <title id="title">Recorrido de tecnologías de la materia</title>
+  <desc id="desc">Un camino desde Python y Flask hasta HTTP, PostgreSQL y ORM; desde HTTP se profundiza en REST, seguridad y autenticación.</desc>
+  <defs>
+    <filter id="s" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#0f172a" flood-opacity=".14"/></filter>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#64748b"/></marker>
+  </defs>
+  <rect width="1200" height="430" rx="28" fill="#f8fafc"/>
+  <path d="M218 130H293M468 130H543M718 130H793M968 130H1043" stroke="#64748b" stroke-width="6" marker-end="url(#a)"/>
+  <path d="M630 190V238H450V285" fill="none" stroke="#64748b" stroke-width="6" marker-end="url(#a)"/>
+  <path d="M560 340H645M815 340H900" stroke="#64748b" stroke-width="6" marker-end="url(#a)"/>
+
+  <g filter="url(#s)" font-family="Arial, sans-serif" text-anchor="middle">
+    <rect x="45" y="75" width="175" height="110" rx="22" fill="#fff" stroke="#60a5fa" stroke-width="3"/>
+    <text x="132" y="139" font-size="30" font-weight="700" fill="#1e3a8a">Python</text>
+
+    <rect x="295" y="75" width="175" height="110" rx="22" fill="#fef3c7" stroke="#f59e0b" stroke-width="5"/>
+    <text x="382" y="139" font-size="30" font-weight="700" fill="#92400e">Flask</text>
+    <rect x="330" y="163" width="105" height="34" rx="17" fill="#f59e0b"/>
+    <text x="382" y="187" font-size="17" font-weight="700" fill="#fff">HOY</text>
+
+    <rect x="545" y="75" width="175" height="110" rx="22" fill="#fff" stroke="#60a5fa" stroke-width="3"/>
+    <text x="632" y="139" font-size="30" font-weight="700" fill="#1e3a8a">HTTP</text>
+
+    <rect x="795" y="75" width="175" height="110" rx="22" fill="#fff" stroke="#34d399" stroke-width="3"/>
+    <text x="882" y="139" font-size="27" font-weight="700" fill="#065f46">PostgreSQL</text>
+
+    <rect x="1045" y="75" width="110" height="110" rx="22" fill="#fff" stroke="#34d399" stroke-width="3"/>
+    <text x="1100" y="139" font-size="30" font-weight="700" fill="#065f46">ORM</text>
+
+    <rect x="390" y="285" width="175" height="110" rx="22" fill="#fff" stroke="#a78bfa" stroke-width="3"/>
+    <text x="477" y="349" font-size="30" font-weight="700" fill="#5b21b6">REST</text>
+
+    <rect x="647" y="285" width="170" height="110" rx="22" fill="#fff" stroke="#f87171" stroke-width="3"/>
+    <text x="732" y="349" font-size="27" font-weight="700" fill="#991b1b">Seguridad</text>
+
+    <rect x="902" y="285" width="245" height="110" rx="22" fill="#fff" stroke="#f87171" stroke-width="3"/>
+    <text x="1024" y="349" font-size="25" font-weight="700" fill="#991b1b">Autenticación</text>
+  </g>
+</svg>

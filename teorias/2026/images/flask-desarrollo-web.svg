@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="440" viewBox="0 0 1200 440" role="img" aria-labelledby="title desc">
+  <title id="title">Recorrido básico de una aplicación web</title>
+  <desc id="desc">El navegador envía un request al servidor, la aplicación lo procesa y devuelve una response.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#0f172a" flood-opacity=".14"/></filter>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#2563eb"/></marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#059669"/></marker>
+  </defs>
+  <rect width="1200" height="440" rx="28" fill="#f8fafc"/>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="105" width="270" height="225" rx="22" fill="#fff" stroke="#cbd5e1" stroke-width="3"/>
+    <rect x="70" y="105" width="270" height="44" rx="22" fill="#e2e8f0"/>
+    <path d="M70 127h270" stroke="#cbd5e1" stroke-width="3"/>
+    <circle cx="95" cy="127" r="6" fill="#ef4444"/><circle cx="116" cy="127" r="6" fill="#f59e0b"/><circle cx="137" cy="127" r="6" fill="#22c55e"/>
+    <rect x="105" y="178" width="200" height="92" rx="12" fill="#eff6ff" stroke="#93c5fd" stroke-width="2"/>
+    <text x="205" y="217" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#1e3a8a">Cliente</text>
+    <text x="205" y="249" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#475569">navegador</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="825" y="70" width="305" height="300" rx="24" fill="#fff" stroke="#94a3b8" stroke-width="3"/>
+    <rect x="825" y="70" width="305" height="62" rx="24" fill="#1e293b"/>
+    <path d="M825 108h305" stroke="#1e293b" stroke-width="18"/>
+    <text x="977" y="108" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#fff">Servidor</text>
+    <rect x="865" y="165" width="225" height="145" rx="18" fill="#ecfdf5" stroke="#34d399" stroke-width="3"/>
+    <text x="977" y="222" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" font-weight="700" fill="#065f46">Aplicación</text>
+    <text x="977" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#047857">procesa y decide</text>
+  </g>
+
+  <path d="M360 155 C520 90 660 90 805 155" fill="none" stroke="#2563eb" stroke-width="7" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+  <rect x="485" y="66" width="196" height="54" rx="27" fill="#dbeafe"/>
+  <text x="583" y="101" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#1d4ed8">REQUEST</text>
+
+  <path d="M805 285 C655 350 510 350 360 285" fill="none" stroke="#059669" stroke-width="7" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+  <rect x="480" y="321" width="206" height="54" rx="27" fill="#d1fae5"/>
+  <text x="583" y="356" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#047857">RESPONSE</text>
+</svg>

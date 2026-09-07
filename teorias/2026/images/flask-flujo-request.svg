@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="455" viewBox="0 0 1200 455" role="img" aria-labelledby="title desc">
+  <title id="title">Flujo de un request en Flask</title>
+  <desc id="desc">El navegador envía GET barra, Flask busca la ruta, ejecuta home y devuelve la respuesta al navegador.</desc>
+  <defs>
+    <filter id="s" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#0f172a" flood-opacity=".14"/></filter>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#2563eb"/></marker>
+  </defs>
+  <rect width="1200" height="455" rx="28" fill="#f8fafc"/>
+  <g font-family="Arial, sans-serif" text-anchor="middle" filter="url(#s)">
+    <rect x="45" y="130" width="215" height="150" rx="22" fill="#fff" stroke="#60a5fa" stroke-width="3"/>
+    <rect x="75" y="160" width="155" height="70" rx="10" fill="#eff6ff" stroke="#93c5fd" stroke-width="2"/>
+    <text x="152" y="255" font-size="26" font-weight="700" fill="#1e3a8a">Navegador</text>
+
+    <rect x="355" y="130" width="215" height="150" rx="22" fill="#fff7ed" stroke="#fb923c" stroke-width="3"/>
+    <text x="462" y="192" font-size="30" font-weight="700" fill="#9a3412">Flask</text>
+    <text x="462" y="230" font-size="20" fill="#7c2d12">busca la ruta</text>
+
+    <rect x="665" y="130" width="215" height="150" rx="22" fill="#f5f3ff" stroke="#a78bfa" stroke-width="3"/>
+    <text x="772" y="200" font-family="monospace" font-size="30" font-weight="700" fill="#5b21b6">home()</text>
+    <text x="772" y="238" font-size="19" fill="#6d28d9">genera la respuesta</text>
+
+    <rect x="975" y="130" width="180" height="150" rx="22" fill="#ecfdf5" stroke="#34d399" stroke-width="3"/>
+    <text x="1065" y="192" font-size="28" font-weight="700" fill="#065f46">Response</text>
+    <text x="1065" y="231" font-family="monospace" font-size="20" fill="#047857">"Hola mundo"</text>
+  </g>
+  <path d="M260 205H335" stroke="#2563eb" stroke-width="7" marker-end="url(#a)"/>
+  <path d="M570 205H645" stroke="#2563eb" stroke-width="7" marker-end="url(#a)"/>
+  <path d="M880 205H955" stroke="#2563eb" stroke-width="7" marker-end="url(#a)"/>
+  <rect x="260" y="118" width="105" height="45" rx="22" fill="#dbeafe"/>
+  <text x="312" y="148" text-anchor="middle" font-family="monospace" font-size="21" font-weight="700" fill="#1d4ed8">GET /</text>
+  <path d="M1065 300V365H152V300" fill="none" stroke="#059669" stroke-width="7" stroke-linejoin="round" marker-end="url(#a)"/>
+  <rect x="500" y="338" width="220" height="54" rx="27" fill="#d1fae5"/>
+  <text x="610" y="373" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#047857">respuesta HTTP</text>
+</svg>

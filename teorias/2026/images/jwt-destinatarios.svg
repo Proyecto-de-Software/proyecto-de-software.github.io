@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="460" viewBox="0 0 1200 460" role="img" aria-labelledby="title desc"><title id="title">Mismo formato, distinto destinatario</title><desc id="desc">El ID token está dirigido a nuestra app, que lo lee para saber quién entró. El access token está dirigido a la API, que lo valida para decidir qué se puede hacer. Si el ID token llega a la API, ésta lo rechaza porque su aud no es la API.</desc><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10z" fill="#475569"/></marker><marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10z" fill="#b91c1c"/></marker></defs>
+<rect width="1200" height="460" rx="26" fill="#f8fafc"/>
+<g stroke-width="3">
+<rect x="110" y="34" width="420" height="140" rx="10" fill="#fef3c7" stroke="#d97706"/>
+<path d="M110 40 320 92 530 40" fill="none" stroke="#d97706"/>
+<rect x="110" y="250" width="420" height="140" rx="10" fill="#fef3c7" stroke="#d97706"/>
+<path d="M110 256 320 308 530 256" fill="none" stroke="#d97706"/>
+<rect x="720" y="49" width="440" height="110" rx="18" fill="#dcfce7" stroke="#16a34a"/>
+<rect x="720" y="258" width="440" height="128" rx="18" fill="#fffbeb" stroke="#b45309"/>
+</g>
+<g font-family="Arial,sans-serif" text-anchor="middle">
+<text x="320" y="120" font-size="24" font-weight="bold" fill="#172554">ID token (JWT)</text>
+<text x="320" y="148" font-size="21" fill="#334155">Para: <tspan font-weight="bold">nuestra app</tspan></text>
+<text x="320" y="336" font-size="24" font-weight="bold" fill="#172554">Access token (JWT u opaco)</text>
+<text x="320" y="364" font-size="21" fill="#334155">Para: <tspan font-weight="bold">la API</tspan></text>
+<text x="940" y="96" font-size="26" font-weight="bold" fill="#166534">Nuestra app</text>
+<text x="940" y="132" font-size="21" fill="#334155">lo lee: ¿quién entró?</text>
+<text x="940" y="296" font-size="26" font-weight="bold" fill="#92400e">La API</text>
+<text x="940" y="328" font-size="21" fill="#334155">lo valida: ¿qué se puede hacer?</text>
+<text x="940" y="362" font-size="18" fill="#64748b">en el ejemplo, Google Calendar; con Vue, la nuestra</text>
+</g>
+<g font-family="Courier New,monospace" font-size="17" fill="#92400e" text-anchor="middle"><text x="320" y="166">aud = client_id</text><text x="320" y="382">aud = https://api…</text></g>
+<g fill="none" stroke="#475569" stroke-width="4" marker-end="url(#a)"><path d="M530 104H714"/><path d="M530 320H714"/></g>
+<path d="M530 150C620 180 640 240 714 282" fill="none" stroke="#b91c1c" stroke-width="3" stroke-dasharray="9 7" marker-end="url(#r)"/>
+<g font-family="Arial,sans-serif" fill="#b91c1c"><circle cx="622" cy="212" r="17" fill="#fff" stroke="#b91c1c" stroke-width="2"/><text x="622" y="222" font-size="26" font-weight="bold" text-anchor="middle">✗</text><text x="660" y="206" font-size="18">la API lo rechaza:</text><text x="660" y="228" font-size="18"><tspan font-family="Courier New,monospace">aud</tspan> no es ella</text></g>
+<text x="600" y="432" font-family="Arial,sans-serif" font-size="22" text-anchor="middle" fill="#334155">Cada receptor mira <tspan font-family="Courier New,monospace">aud</tspan>: acepta sólo lo que está dirigido a él.</text>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc"><title id="title">Cómo se arma un JWT firmado</title><desc id="desc">El header y el payload, dos objetos JSON, se codifican en Base64URL. Sobre «header.payload» se calcula una firma RS256 con la clave privada del emisor. El JWT completo es header, payload y firma unidos por puntos.</desc><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10z" fill="#475569"/></marker></defs>
+<rect width="1200" height="630" rx="26" fill="#f8fafc"/>
+<g font-family="Arial,sans-serif">
+<rect x="30" y="20" width="400" height="124" rx="16" fill="#dbeafe" stroke="#1d4ed8" stroke-width="3"/>
+<rect x="30" y="160" width="400" height="214" rx="16" fill="#ffedd5" stroke="#c2410c" stroke-width="3"/>
+<rect x="30" y="392" width="400" height="80" rx="16" fill="#fee2e2" stroke="#b91c1c" stroke-width="3"/>
+<g font-size="19" font-weight="bold"><text x="48" y="46" fill="#1d4ed8">Header</text><text x="48" y="186" fill="#c2410c">Payload (claims)</text></g>
+<text x="230" y="425" font-size="20" text-anchor="middle" fill="#7f1d1d">Clave privada del emisor</text>
+<text x="230" y="453" font-size="17" text-anchor="middle" fill="#7f1d1d">(sólo la tiene Google)</text>
+<g font-size="21" text-anchor="middle" fill="#172554"><rect x="460" y="62" width="160" height="40" rx="20" fill="#fff" stroke="#94a3b8" stroke-width="2"/><text x="540" y="89">Base64URL</text><rect x="460" y="248" width="160" height="40" rx="20" fill="#fff" stroke="#94a3b8" stroke-width="2"/><text x="540" y="275">Base64URL</text><rect x="460" y="412" width="160" height="40" rx="20" fill="#fff" stroke="#b91c1c" stroke-width="2"/><text x="540" y="439">Firma RS256</text></g>
+<text x="540" y="474" font-size="15" text-anchor="middle" fill="#475569">sobre «header.payload»</text>
+</g>
+<g font-family="Courier New,monospace" font-size="16" fill="#172554"><text x="48" y="76">{ "alg": "RS256",</text><text x="48" y="100">&#160;&#160;"kid": "clave-2026",</text><text x="48" y="124">&#160;&#160;"typ": "JWT" }</text><text x="48" y="214">{</text><text x="48" y="238">&#160;&#160;"iss": "https://identidad.example",</text><text x="48" y="262">&#160;&#160;"sub": "persona-42",</text><text x="48" y="286">&#160;&#160;"aud": "app-hospital",</text><text x="48" y="310">&#160;&#160;"exp": 1790000000,</text><text x="48" y="334">&#160;&#160;"nonce": "valor-del-intento"</text><text x="48" y="358">}</text></g>
+<g font-family="Courier New,monospace" font-size="16"><g fill="#1d4ed8"><text x="650" y="78">eyJhbGciOiJSUzI1NiIsImtpZCI6ImNsYXZlLTIwMjYiLCJ0eX</text><text x="650" y="100">AiOiJKV1QifQ</text></g><g fill="#c2410c"><text x="650" y="248">eyJpc3MiOiJodHRwczovL2lkZW50aWRhZC5leGFtcGxlIiwic3V</text><text x="650" y="272">iIjoicGVyc29uYS00MiIsImF1ZCI6ImFwcC1ob3NwaXRhbCIsIm</text><text x="650" y="296">V4cCI6MTc5MDAwMDAwMCwibm9uY2UiOiJ2YWxvci1kZWwtaW50Z</text><text x="650" y="320">W50byJ9</text></g><text x="650" y="430" fill="#b91c1c">xQr09NCU7emNIiFYi0p8…</text></g>
+<text x="650" y="455" font-family="Arial,sans-serif" font-size="15" fill="#475569">(342 caracteres; recortada)</text>
+<g fill="none" stroke="#475569" stroke-width="3" marker-end="url(#a)"><path d="M430 82H455"/><path d="M620 82H644"/><path d="M430 268H455"/><path d="M620 268H644"/><path d="M430 432H455"/><path d="M620 432H644"/></g>
+<rect x="30" y="498" width="1140" height="66" rx="16" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="50" y="539" font-family="Arial,sans-serif" font-size="20" font-weight="bold" fill="#172554">JWT completo:</text>
+<text x="230" y="540" font-family="Courier New,monospace" font-size="22"><tspan fill="#1d4ed8">eyJhbGciOi…V1QifQ</tspan><tspan fill="#172554" font-weight="bold" font-size="30">.</tspan><tspan fill="#c2410c">eyJpc3MiOi…W50byJ9</tspan><tspan fill="#172554" font-weight="bold" font-size="30">.</tspan><tspan fill="#b91c1c">xQr09NCU7emN…</tspan></text>
+<text x="600" y="602" font-family="Arial,sans-serif" font-size="21" text-anchor="middle" fill="#334155">Header y payload sólo están codificados: cualquiera los lee. La firma necesita la clave privada.</text>
+</svg>

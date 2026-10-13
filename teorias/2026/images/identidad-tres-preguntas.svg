@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380" role="img" aria-labelledby="title desc"><title id="title">Identificación, autenticación y autorización</title><desc id="desc">Tres etapas: la persona dice quién es, el proveedor lo comprueba mediante OIDC y nuestra aplicación decide si puede aprobar la solicitud 42.</desc><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10z" fill="#475569"/></marker></defs>
+<rect width="1200" height="380" rx="26" fill="#f8fafc"/>
+<g font-family="Arial,sans-serif" text-anchor="middle" fill="#172554">
+<rect x="30" y="30" width="340" height="320" rx="20" fill="#f1f5f9" stroke="#64748b" stroke-width="3"/>
+<rect x="430" y="30" width="340" height="320" rx="20" fill="#e0e7ff" stroke="#4f46e5" stroke-width="3"/>
+<rect x="830" y="30" width="340" height="320" rx="20" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+<g font-size="30" font-weight="bold"><text x="200" y="82">Identificación</text><text x="600" y="82">Autenticación</text><text x="1000" y="82">Autorización</text></g>
+<g font-size="25"><text x="200" y="130">¿Quién dice ser?</text><text x="600" y="130">¿Cómo lo prueba?</text><text x="1000" y="130">¿Qué puede hacer aquí?</text></g>
+<g font-size="23" fill="#334155" font-style="italic"><text x="200" y="190">«Soy ana@hospital…»</text><text x="600" y="190">Google verificó</text><text x="600" y="220">su contraseña y 2FA</text><text x="1000" y="190">¿Aprobar la</text><text x="1000" y="220">solicitud 42?</text></g>
+<rect x="60" y="270" width="280" height="50" rx="25" fill="#fff" stroke="#64748b" stroke-width="2"/>
+<rect x="460" y="270" width="280" height="50" rx="25" fill="#fff" stroke="#4f46e5" stroke-width="2"/>
+<rect x="860" y="270" width="280" height="50" rx="25" fill="#fff" stroke="#16a34a" stroke-width="2"/>
+<g font-size="22"><text x="200" y="303">Responde: la persona</text><text x="600" y="303">Responde: el proveedor</text><text x="1000" y="303">Responde: nuestra app</text></g>
+</g>
+<g fill="none" stroke="#475569" stroke-width="4" marker-end="url(#a)"><path d="M370 190H425"/><path d="M770 190H825"/></g>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-labelledby="title desc"><title id="title">OAuth, OpenID Connect, JWT y nuestra aplicación</title><desc id="desc">OAuth 2.0 delega acceso y emite access tokens para una API. OpenID Connect se apoya en OAuth y agrega el ID token para la aplicación. Nuestra aplicación usa esa identidad para su sesión y sus permisos. JWT es un formato: el ID token siempre lo usa; el access token, a veces.</desc><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10z" fill="#b45309"/></marker></defs>
+<rect width="1200" height="500" rx="26" fill="#f8fafc"/>
+<g font-family="Arial,sans-serif" fill="#172554">
+<rect x="30" y="30" width="600" height="115" rx="18" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+<rect x="30" y="165" width="600" height="115" rx="18" fill="#e0e7ff" stroke="#4f46e5" stroke-width="3"/>
+<rect x="30" y="300" width="600" height="115" rx="18" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+<g font-size="28" font-weight="bold"><text x="60" y="78">Nuestra app: sesión y permisos</text><text x="60" y="213">OpenID Connect: identidad</text><text x="60" y="348">OAuth 2.0: acceso delegado</text></g>
+<g font-size="23" fill="#334155"><text x="60" y="118">¿Qué puede hacer aquí? → autorización</text><text x="60" y="253">¿Quién se autenticó? → ID token, para la app</text><text x="60" y="388">¿A qué accede el cliente? → access token, para la API</text></g>
+<rect x="890" y="135" width="280" height="190" rx="18" fill="#fef3c7" stroke="#d97706" stroke-width="3"/>
+<g text-anchor="middle"><text x="1030" y="185" font-size="30" font-weight="bold">JWT</text><text x="1030" y="225" font-size="22" fill="#334155">un formato,</text><text x="1030" y="253" font-size="22" fill="#334155">no un protocolo</text><text x="1030" y="298" font-size="19" font-family="Courier New,monospace" fill="#334155">header.payload.firma</text></g>
+<g font-size="21" fill="#92400e"><text x="645" y="207">ID token: siempre JWT</text><text x="645" y="392">access token: JWT u opaco</text></g>
+</g>
+<g fill="none" stroke="#b45309" stroke-width="4" marker-end="url(#a)"><path d="M630 222H885"/><path d="M630 357C760 357 800 320 885 300" stroke-dasharray="10 8"/></g>
+<text x="600" y="465" font-family="Arial,sans-serif" font-size="25" text-anchor="middle" fill="#334155">OIDC se apoya en OAuth; JWT es el formato de algunos de sus tokens.</text>
+</svg>

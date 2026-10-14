@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">Renderizado en el servidor vs SPA</title>
+  <desc id="desc">Arriba, el navegador pide una ruta y Flask devuelve una página HTML completa armada con un template. Abajo, en una SPA, Vue pide datos a la API de Flask con fetch, recibe JSON y actualiza sólo la parte de la página que cambió.</desc>
+  <defs>
+    <filter id="s" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#0f172a" flood-opacity=".14"/></filter>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#2563eb"/></marker>
+    <marker id="v" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#059669"/></marker>
+  </defs>
+  <rect width="1200" height="560" rx="28" fill="#f8fafc"/>
+
+  <g font-family="Arial, sans-serif">
+    <text x="45" y="52" font-size="26" font-weight="700" fill="#0f172a">Renderizado en el servidor (Flask + templates)</text>
+    <text x="45" y="322" font-size="26" font-weight="700" fill="#0f172a">SPA: Single Page Application (Vue + API Flask)</text>
+  </g>
+
+  <g font-family="Arial, sans-serif" text-anchor="middle" filter="url(#s)">
+    <rect x="45" y="80" width="240" height="130" rx="22" fill="#fff" stroke="#60a5fa" stroke-width="3"/>
+    <text x="165" y="140" font-size="26" font-weight="700" fill="#1e3a8a">Navegador</text>
+    <text x="165" y="174" font-size="18" fill="#1e40af">muestra lo que llega</text>
+
+    <rect x="640" y="80" width="260" height="130" rx="22" fill="#fff7ed" stroke="#fb923c" stroke-width="3"/>
+    <text x="770" y="135" font-size="28" font-weight="700" fill="#9a3412">Flask</text>
+    <text x="770" y="172" font-size="19" fill="#7c2d12">arma todo el HTML</text>
+
+    <rect x="45" y="350" width="240" height="130" rx="22" fill="#fff" stroke="#60a5fa" stroke-width="3"/>
+    <text x="165" y="400" font-size="26" font-weight="700" fill="#1e3a8a">Navegador</text>
+    <rect x="95" y="418" width="140" height="40" rx="10" fill="#ecfdf5" stroke="#34d399" stroke-width="2"/>
+    <text x="165" y="445" font-size="20" font-weight="700" fill="#065f46">Vue</text>
+
+    <rect x="640" y="350" width="260" height="130" rx="22" fill="#fff7ed" stroke="#fb923c" stroke-width="3"/>
+    <text x="770" y="405" font-size="28" font-weight="700" fill="#9a3412">API Flask</text>
+    <text x="770" y="442" font-size="19" fill="#7c2d12">sólo devuelve datos</text>
+  </g>
+
+  <g font-family="Arial, sans-serif" text-anchor="middle">
+    <path d="M285 115H620" stroke="#2563eb" stroke-width="6" marker-end="url(#a)"/>
+    <rect x="352" y="88" width="200" height="40" rx="20" fill="#dbeafe"/>
+    <text x="452" y="115" font-family="monospace" font-size="19" font-weight="700" fill="#1d4ed8">GET /solicitudes</text>
+    <path d="M640 180H305" stroke="#059669" stroke-width="6" marker-end="url(#v)"/>
+    <rect x="337" y="190" width="230" height="40" rx="20" fill="#d1fae5"/>
+    <text x="452" y="217" font-size="19" font-weight="700" fill="#047857">página HTML completa</text>
+
+    <path d="M285 385H620" stroke="#2563eb" stroke-width="6" marker-end="url(#a)"/>
+    <rect x="312" y="358" width="280" height="40" rx="20" fill="#dbeafe"/>
+    <text x="452" y="385" font-family="monospace" font-size="19" font-weight="700" fill="#1d4ed8">fetch /api/solicitudes</text>
+    <path d="M640 450H305" stroke="#059669" stroke-width="6" marker-end="url(#v)"/>
+    <rect x="392" y="460" width="120" height="40" rx="20" fill="#d1fae5"/>
+    <text x="452" y="487" font-family="monospace" font-size="19" font-weight="700" fill="#047857">JSON</text>
+  </g>
+
+  <g font-family="Arial, sans-serif" font-size="20" fill="#334155">
+    <text x="935" y="125">Cada click: request</text>
+    <text x="935" y="152">nuevo y la página</text>
+    <text x="935" y="179">se vuelve a cargar.</text>
+
+    <text x="935" y="395">La página no se</text>
+    <text x="935" y="422">recarga: Vue cambia</text>
+    <text x="935" y="449">sólo lo necesario.</text>
+  </g>
+</svg>
